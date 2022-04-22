@@ -1,4 +1,9 @@
 @extends('pages.main.layout')
+@section('css')
+<link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+@endsection
 @section('content')
 
 <div class="pagetitle">
@@ -53,26 +58,28 @@
                   </div>
                   @if(Auth::user()->role_id == '3')
                   @endif --}}
+                  <div class="mb-4">
+                    <form action="{{ url('/data_walidata/export-pdf2') }}" method="POST">
+                      @csrf
+                      <div class="row">
+                        <div class="col-8">
+                          <select id="opd_id" name="opd_id" class="form-select" aria-label="Default select example">
+                            <option  selected value="">Pilih OPD</option>
+                            @foreach($opd as $id => $nama)
+                            <option value="{{ $id }}">{{ $nama }}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                        <div class="col-4 d-flex">
+                          <button class="btn btn-primary mx-2" type="button" onclick="getData()"> Cari </button>
+                          <button class="btn btn-danger" type="submit"> Unduh Data </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
           <!-- Table with stripped rows -->
-          <div class="row mb-3">
-            <form action="{{ url('/get_all_opdall/cari') }}">
-              @csrf
-              <div class="col-sm-10">
-                <select id="opd_id" name="opd_id" class="form-select" aria-label="Default select example">
-                  <option  selected value="">Pilih OPD</option>
-                  @foreach($opd as $id => $nama)
-                  <option value="{{ $id }}">{{ $nama }}</option>
-                  @endforeach
-                </select>
-              </div>
-            <button class="btn btn-primary" type="submit">cari
-            </button>
-            </form>
-          </div>
-            
-          <a href="{{ url('/data_walidata/export-pdf2') }}" class="btn btn-md btn-danger mb-3 float-right" target="_blank">Unduh Berita Acara</a>
 
-          <table class="table datatable">
+          <table class="table" id="datatable">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -83,59 +90,6 @@
                 <th scope="col">Status</th>
               </tr>
             </thead>
-            <tbody>
-              <?php $no = 1; ?>
-              @foreach($data as $dt)
-              <tr>
-                <td>{{ $no++ }}</td>
-                <td>{{ $dt->nama_data }}</td>
-                <td>{{ $dt->opd->nama_opd }}</td>
-                <td>{{ $dt->jenis_data }}</td>
-                <td>{{ $dt->sumber_data }}</td>
-                <td>{{ $dt->status->status }}</td>
-                <td>
-                  {{-- <div class="progress mt-0">
-                      <div class="progress-bar" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">75%</div>
-                    </div> --}}
-                </td>
-                {{-- <td>
-                    @if(Auth::user()->role_id == '1')
-                    <div class="form-group" style="margin-bottom: 0;">
-                      <a href="/data_superadmin/edit/{{ $dt->id }}" class="btn btn-primary">Edit</a>
-                <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_superadmin/destroy/'.$dt->id) }}">
-
-                  @csrf
-                  <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
-                </form>
-        </div>
-        @elseif(Auth::user()->role_id == '2')
-        <div class="form-group" style="margin-bottom: 0;">
-          <a href="/data_walidata/edit/{{ $dt->id }}" class="btn btn-primary">Edit</a>
-          <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_walidata/destroy/'.$dt->id) }}">
-
-            @csrf
-            <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
-          </form>
-        </div>
-        @elseif(Auth::user()->role_id == '3')
-        <div class="btnConfirm" style="margin-bottom: 0;">
-          <a href="/data_produsen/edit/{{ $dt->id }}" class="btn btn-sm btn-primary">Edit</a>
-          <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_produsen/destroy/'.$dt->id) }}">
-
-            @csrf
-            <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
-          </form>
-          <a href="/data_produsen/setuju/{{ $dt->id }}" class="btn btn-sm btn-success">Setujui</a>
-          <a href="/data_produsen/tolak/{{ $dt->id }}" class="btn btn-sm btn-warning">Tolak</a>
-        </div>
-        @endif
-
-
-        </td> --}}
-
-        </tr>
-        @endforeach
-        </tbody>
         </table>
         <!-- End Table with stripped rows -->
 
@@ -149,12 +103,58 @@
 
 @push('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 <script>
-  $(function() { 
-    $('#opd_id').change(function() {
-      window.location.href = '{{ url()->current() }}/?opd_id=' + $(this).val(); 
-    });
+  function getData() {
+    var value = $('#opd_id').val();
+    load(value);
+  }
+  
+  $(document).ready(function() {
+    load('all');
   });
+  
+  function load(id) {
+    $('#datatable').dataTable({
+      "ordering": false,
+      bDestroy: true,
+      ajax: {
+        url: "{{ route('getData') }}",
+        data: {id:id}
+      },
+      columns: [
+      {
+        data: null,
+        searchable: false,
+        orderable: false,
+        render: function (data, type, row, meta) {
+          return meta.row + meta.settings._iDisplayStart + 1;
+        }  
+      },
+      {
+        data: 'nama_data', 
+        name: 'nama_data'
+      },
+      {
+        data: 'opd_id', 
+        name: 'opd_id'
+      },
+      {
+        data: 'jenis_data', 
+        name: 'jenis_data'
+      },
+      {
+        data: 'sumber_data', 
+        name: 'sumber_data'
+      },
+      {
+        data: 'status_id', 
+        name: 'status_id'
+      },
+      ],
+    });
+  }
 </script>
 
 @endpush

@@ -30,6 +30,7 @@
   <!-- Template Main CSS File -->
   <link href="../../assets/css/style.css" rel="stylesheet">
 
+  @yield('css')
   <!-- =======================================================
   * Template Name: NiceAdmin - v2.2.1
   * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/

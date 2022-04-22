@@ -95,4 +95,9 @@ class Data extends Model
     {
         return $query->where('status_id', '=', 1);
     }
+
+    public function scopeOPD($query, $id)
+    {
+        return $query->where('opd_id', '=', $id);
+    }
 }

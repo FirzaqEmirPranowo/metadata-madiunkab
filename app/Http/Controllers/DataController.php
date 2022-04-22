@@ -11,6 +11,7 @@ use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
+use Yajra\DataTables\Facades\DataTables;
 
 
 class DataController extends Controller
@@ -62,6 +63,25 @@ class DataController extends Controller
         // $verifikasi = Data::verifikasi_data();
         // dd($get_allopd);
         return view('pages.contents.index_get_opd', compact('data', 'opd'));
+    }
+
+    public function getData(Request $request)
+    {
+        if ($request->id == 'all') {
+            $data = Data::with('opd')->setuju();
+        } else {
+            $data = Data::with('opd')->setuju()->OPD($request->id);
+        }
+
+        return DataTables::of($data)
+            ->editColumn('opd_id', function ($data) {
+                return $data->opd->nama_opd;
+            })
+            ->editColumn('status_id', function ($data) {
+                return $data->status->status;
+            })
+            ->addIndexColumn()
+            ->make(true);
     }
 
     public function verifikasi_data()
@@ -253,13 +273,14 @@ class DataController extends Controller
     {
         $data = Data::data_produsen_setuju();
         $pdf = PDF::loadView('pages.contents.pdf', compact('data'));
-        return $pdf->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'serif'])->stream();
+        return $pdf->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'serif'])->stream();
     }
 
-    public function pdf2()
+    public function pdf2(Request $request)
     {
-        $data = Data::data_produsen_setuju_all();
+        $data = Data::with('opd')->setuju()->OPD($request->opd_id)->get();
         $pdf = PDF::loadView('pages.contents.pdf', compact('data'));
+
         return $pdf->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'serif'])->stream();
     }
 }
