@@ -56,12 +56,12 @@ class DataController extends Controller
 
     public function get_all_opdall(Request $request)
     {
-        $data = Data::with('opd')->setuju()
-            ->when($request->filled('opd_id'), fn ($q) => $q->where('opd_id', $request->get('opd_id')))
-            ->get();
+        $data = Data::with('opd')->setuju()->OPD($request->id);
+        // ->when($request->filled('opd_id'), fn ($q) => $q->where('opd_id', $request->get('opd_id')))
+        // ->get();
         $opd = Opd::pluck('nama_opd', 'id');
         // $verifikasi = Data::verifikasi_data();
-        // dd($get_allopd);
+        // dd($data);
         return view('pages.contents.index_get_opd', compact('data', 'opd'));
     }
 
@@ -280,6 +280,7 @@ class DataController extends Controller
     {
         $data = Data::with('opd')->setuju()->OPD($request->opd_id)->get();
         $pdf = PDF::loadView('pages.contents.pdf', compact('data'));
+
 
         return $pdf->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'serif'])->stream();
     }

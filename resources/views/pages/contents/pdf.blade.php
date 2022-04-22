@@ -13,7 +13,7 @@
         <th scope="col">Produsen (PIC)</th>
         <th scope="col">Jenis</th>
         <th scope="col">Sumber</th>
-        <th scope="col">Status</th>
+        {{-- <th scope="col">Status</th> --}}
       </tr>
     </thead>
     <tbody>
@@ -25,7 +25,7 @@
         <td>{{ $dt->opd->nama_opd }}</td>
         <td>{{ $dt->jenis_data }}</td>
         <td>{{ $dt->sumber_data }}</td>
-        <td>{{ $dt->status->status }}</td>
+        {{-- <td>{{ $dt->status->status }}</td> --}}
       </tr>
         @endforeach
     </tbody>

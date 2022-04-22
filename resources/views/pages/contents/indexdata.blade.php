@@ -135,19 +135,19 @@
                     <div class="dropdown">
                       <button class="dropbtn">Opsi</button>
                       <div class="dropdown-content">
-                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_produsen/edit/'.$dt->id) }}">
+                        <form  action="{{ url('/data_produsen/edit/'.$dt->id) }}">
                           @csrf
                           <button type="submit" class="btn btn-sm btn-primary">Edit</button>
                         </form>
-                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_produsen/destroy/'.$dt->id) }}">
+                        <form onsubmit="return confirm('Apakah anda Menghapus data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/destroy/'.$dt->id) }}">
                           @csrf
                           <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
                         </form>
-                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_produsen/setuju/'.$dt->id) }}">
+                        <form onsubmit="return confirm('Apakah anda Menyetujui data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/setuju/'.$dt->id) }}">
                           @csrf   
                           <button type="submit" class="btn btn-sm btn-success">Setujui</button>
                         </form>
-                        <form action="{{ url('/data_produsen/tolak/'.$dt->id) }}">
+                        <form onsubmit="return confirm('Apakah anda Menolak data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/tolak/'.$dt->id) }}">
                           @csrf
                           <button type="submit" class="btn btn-sm btn-danger">Tolak</button>
                         </form>                 
