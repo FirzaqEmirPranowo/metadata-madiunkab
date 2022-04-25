@@ -21,7 +21,7 @@
             
             <a href="/opd/create" class="btn btn-md btn-success mb-3 float-right">Tambah OPD</a>
                 
-            <a href="" class="btn btn-md btn-success mb-3 float-right" data-bs-toggle="modal" data-bs-target="#basicModal">Import Excel</a>
+            <a href="" class="btn btn-md btn-warning mb-3 float-right" data-bs-toggle="modal" data-bs-target="#basicModal">Import Excel</a>
             <!-- Table with stripped rows -->
               <div class="modal fade" id="basicModal" tabindex="-1">
                 <div class="modal-dialog">
@@ -56,14 +56,21 @@
                 <tr>
                   <td>{{ $no++ }}</td>
                   <td>{{ $dt->nama_opd }}</td>
-                  <td><div class="form-group" style="margin-bottom: 0;">
-                    <a href="{{ url('/opd/edit/'.$dt->id) }}" class="btn btn-primary">Edit</a>
-                    <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/opd/destroy/'.$dt->id) }}">
-                                
-                      @csrf
-                      <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
+                  <td>
+                <div class="form-group" style="margin-bottom: 0;">
+                  {{-- <a href="{{ url('/user/edit', $dt->id) }}" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a> --}}
+                  <form  action="{{ url('/opd/edit/'.$dt->id) }}">
+                        
+                    <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></button>
                   </form>
-                </div></td>
+                  <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/opd/destroy/'.$dt->id) }}" >
+                              
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                </form>
+              </div>
+              </td>
                 </tr>
                   @endforeach
               </tbody>

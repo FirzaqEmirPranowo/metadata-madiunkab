@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="pagetitle">
-    <h1>Daftar User</h1>
+    <h1>Tambah User</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
@@ -27,7 +27,7 @@
                 method="POST">
                 @csrf
               <div class="row mb-3">
-                <label for="inputText" class="col-sm-2 col-form-label">Nama</label>
+                <label for="inputText" class="col-sm-2 col-form-label">Username</label>
                 <div class="col-sm-10">
                   <input id="nama" name="nama" type="text" class="form-control">
                 </div>
@@ -62,9 +62,9 @@
               </div>
 
               <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Submit Button</label>
+                <label class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10">
-                  <button type="submit" class="btn btn-primary">Submit Form</button>
+                  <button type="submit" class="btn btn-primary">SIMPAN</button>
                 </div>
               </div>
 

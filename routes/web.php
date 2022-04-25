@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\OpdController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PortalController;
 use App\Imports\OpdImport;
 use App\Imports\DataImport;
 use App\Imports\UserImport;
@@ -24,12 +25,19 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/masuk', function () {
+    return redirect('login');
 });
-
+Route::get('/', [PortalController::class, 'index']);
+Route::get('/tentang', [PortalController::class, 'tentang']);
+Route::get('/datas', [PortalController::class, 'data']);
+Route::get('/berita', [PortalController::class, 'berita']);
+Route::get('/ckan', [PortalController::class, 'ckan']);
 Auth::routes();
-
 // Route::get('/d_superadmin', [App\Http\Controllers\HomeController::class, 'index'])->name('d_superadmin');
 // Route::get('/d_walidata', [App\Http\Controllers\HomeController::class, 'index'])->name('d_walidata');
 // Route::get('/d_produsen', [App\Http\Controllers\HomeController::class, 'index'])->name('d_produsen');
@@ -82,7 +90,7 @@ Route::middleware(['role:superadmin'])->group(function () {
 
 Route::middleware(['role:walidata'])->group(function () {
     Route::get('/d_walidata', [HomeController::class, 'index2'])->name('d_walidata');
-    Route::get('/data_walidata', [DataController::class, 'index'])->name('data_walidata');
+    Route::get('/data_walidata/draft', [DataController::class, 'index'])->name('draft');
     Route::get('/data_walidata/create', [DataController::class, 'create'])->name('data_walidata');
     Route::post('/data_walidata/store', [DataController::class, 'store'])->name('data_walidata');
     Route::get('/data_walidata/edit/{id}', [DataController::class, 'edit'])->name('data_walidata');
@@ -96,6 +104,8 @@ Route::middleware(['role:walidata'])->group(function () {
 
     Route::post('/data_walidata/export-pdf2', [DataController::class, 'pdf2'])->name('data_walidata');
     Route::get('/data_walidata/verifikasi_data', [DataController::class, 'verifikasi_data'])->name('data_walidata');
+    Route::get('/data_walidata/tolak_konfirmasi_walidata', [DataController::class, 'tolak_konfirmasi_walidata'])->name('tolak_konfirmasi_walidata');
+    Route::get('/data_walidata/selesai_konfirmasi_walidata', [DataController::class, 'selesai_konfirmasi_walidata'])->name('selesai_konfirmasi_walidata');
 
     Route::get('getData', [DataController::class, 'getData'])->name('getData');
 
@@ -109,7 +119,7 @@ Route::middleware(['role:walidata'])->group(function () {
 
 Route::middleware('role:produsen')->group(function () {
     Route::get('/d_produsen', [HomeController::class, 'index3'])->name('d_produsen');
-    Route::get('/data_produsen', [DataController::class, 'index'])->name('data_produsen');
+    Route::get('/data_produsen/draft', [DataController::class, 'index'])->name('draft');
     Route::get('/data_produsen/create', [DataController::class, 'create'])->name('data_produsen');
     Route::post('/data_produsen/store', [DataController::class, 'store'])->name('data_produsen');
     Route::get('/data_produsen/edit/{id}', [DataController::class, 'edit'])->name('data_produsen');
@@ -118,7 +128,8 @@ Route::middleware('role:produsen')->group(function () {
     Route::get('/data_produsen/setuju/{id}', [DataController::class, 'setuju'])->name('data_produsen');
     Route::get('/data_produsen/tolak/{id}', [DataController::class, 'tolak'])->name('data_produsen');
     Route::get('/data_produsen/export-pdf', [DataController::class, 'pdf'])->name('data_produsen');
-    Route::get('/data_produsen/selesai_konfirmasi', [DataController::class, 'selesai_konfirmasi'])->name('data_produsen');
+    Route::get('/data_produsen/selesai_konfirmasi', [DataController::class, 'selesai_konfirmasi'])->name('setuju');
+    Route::get('/data_produsen/tolak_konfirmasi', [DataController::class, 'tolak_konfirmasi'])->name('tolak');
     Route::get('/data_produsen/verifikasi_data', [DataController::class, 'input_produsen'])->name('data_produsen');
 
     Route::post('/data_produsen/import', function () {

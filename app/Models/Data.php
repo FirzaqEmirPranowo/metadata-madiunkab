@@ -65,6 +65,60 @@ class Data extends Model
             // ->where('opds.id', '=', Auth::user()->opd_id)
             ->get();
     }
+    public function data_draft_walidata()
+    {
+        // return Data::where('opd_id', '=', Auth::user()->opd_id)->get();
+        return DB::table("data")
+            ->join("opds", function ($join) {
+                $join->on("data.opd_id", "=", "opds.id");
+            })
+            ->join("status", function ($join) {
+                $join->on("data.status_id", "=", "status.id");
+            })
+            ->join("users", function ($join) {
+                $join->on("data.user_id", "=", "users.id");
+            })
+            ->select("data.id", "nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id")
+            // ->where('opds.id', '=', Auth::user()->opd_id)
+            ->where('status_id', '=', '3')
+            ->get();
+    }
+    public function data_tolak_walidata()
+    {
+        // return Data::where('opd_id', '=', Auth::user()->opd_id)->get();
+        return DB::table("data")
+            ->join("opds", function ($join) {
+                $join->on("data.opd_id", "=", "opds.id");
+            })
+            ->join("status", function ($join) {
+                $join->on("data.status_id", "=", "status.id");
+            })
+            ->join("users", function ($join) {
+                $join->on("data.user_id", "=", "users.id");
+            })
+            ->select("data.id", "nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id")
+            // ->where('opds.id', '=', Auth::user()->opd_id)
+            ->where('status_id', '=', '2')
+            ->get();
+    }
+    public function selesai_konfirmasi_walidata()
+    {
+        // return Data::where('opd_id', '=', Auth::user()->opd_id)->get();
+        return DB::table("data")
+            ->join("opds", function ($join) {
+                $join->on("data.opd_id", "=", "opds.id");
+            })
+            ->join("status", function ($join) {
+                $join->on("data.status_id", "=", "status.id");
+            })
+            ->join("users", function ($join) {
+                $join->on("data.user_id", "=", "users.id");
+            })
+            ->select("data.id", "nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id")
+            // ->where('opds.id', '=', Auth::user()->opd_id)
+            ->where('status_id', '=', '1')
+            ->get();
+    }
     public function data_produsen()
     {
         // return Data::where('opd_id', '=', Auth::user()->opd_id)->get();
@@ -79,7 +133,7 @@ class Data extends Model
                 $join->on("data.user_id", "=", "users.id");
             })
             ->select("nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id", "data.id")
-            ->where('status_id', '!=', '1')
+            ->where('status_id', '=', '3')
             ->where('opds.id', '=', Auth::user()->opd_id)
             ->get();
     }
@@ -98,7 +152,26 @@ class Data extends Model
                 $join->on("data.user_id", "=", "users.id");
             })
             ->select("nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id", "data.id")
-            ->where('status_id', '!=', '3')
+            ->where('status_id', '=', '1')
+            ->where('opds.id', '=', Auth::user()->opd_id)
+            ->get();
+    }
+
+    public function tolak_konfirmasi()
+    {
+        // return Data::where('opd_id', '=', Auth::user()->opd_id)->get();
+        return DB::table("data")
+            ->join("opds", function ($join) {
+                $join->on("data.opd_id", "=", "opds.id");
+            })
+            ->join("status", function ($join) {
+                $join->on("data.status_id", "=", "status.id");
+            })
+            ->join("users", function ($join) {
+                $join->on("data.user_id", "=", "users.id");
+            })
+            ->select("nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id", "data.id")
+            ->where('status_id', '=', '2')
             ->where('opds.id', '=', Auth::user()->opd_id)
             ->get();
     }

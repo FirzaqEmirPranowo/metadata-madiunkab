@@ -34,13 +34,13 @@ class DataController extends Controller
             // dd($data);s
             return view('pages.contents.indexdata', compact('data', 'opd',));
         } elseif (Auth::user()->role_id == '2') {
-            $data = Data::data_nonprodusen();
+            $data = Data::data_draft_walidata();
             // dd($data);
             return view('pages.contents.indexdata', compact('data'));
         } elseif (Auth::user()->role_id == '3') {
             // $q = Auth::user()->id;
             $data = Data::data_produsen();
-            // dd($data);s
+            // dd($data);
 
             $data2 = collect(Data::get_draft());
             $draft = $data2->count();
@@ -54,17 +54,38 @@ class DataController extends Controller
         $data = Data::selesai_konfirmasi();
         $data2 = collect(Data::get_draft());
         $draft = $data2->count();
+        // dd($data);
 
-        return view('pages.contents.indexdata', compact('data', 'draft'));
+        return view('pages.contents.selesai_konfirmasi', compact('data', 'draft'));
+    }
+    public function tolak_konfirmasi()
+    {
+        $data = Data::tolak_konfirmasi();
+        $data2 = collect(Data::get_draft());
+        $draft = $data2->count();
+
+        return view('pages.contents.tolak_konfirmasi', compact('data', 'draft'));
+    }
+    public function selesai_konfirmasi_walidata()
+    {
+        $data = Data::selesai_konfirmasi_walidata();
+        // dd($data);
+        return view('pages.contents.selesai_konfirmasi_walidata', compact('data'));
+    }
+    public function tolak_konfirmasi_walidata()
+    {
+        $data = Data::data_tolak_walidata();
+        // dd($data);
+        return view('pages.contents.tolak_konfirmasi_walidata', compact('data'));
     }
 
-    // public function get_all_opd()
-    // {
-    // $get_all = Data::data_produsen_setuju_all();
-    // $verifikasi = Data::verifikasi_data();
-    // dd($verifikasi);
-    // return view('pages.contents.indexall_opd', compact('get_all'));
-    // }
+    public function get_all_opd()
+    {
+        $get_all = Data::data_produsen_setuju_all();
+        $verifikasi = Data::verifikasi_data();
+        // dd($verifikasi);
+        return view('pages.contents.indexall_opd', compact('get_all'));
+    }
 
     public function get_all_opdall(Request $request)
     {
@@ -156,9 +177,9 @@ class DataController extends Controller
         if (Auth::user()->role_id == '1') {
             return redirect('/data_superadmin');
         } elseif (Auth::user()->role_id == '2') {
-            return redirect('/data_walidata');
+            return redirect('/data_walidata/draft');
         } elseif (Auth::user()->role_id == '3') {
-            return redirect('/data_produsen');
+            return redirect('/data_produsen/draft');
         } else {
             return redirect('/home');
         }

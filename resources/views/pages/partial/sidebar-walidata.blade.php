@@ -5,7 +5,7 @@
     <li class="nav-heading">Dashboard</li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="/d_walidata">
+      <a class="nav-link" href="/d_walidata">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
       </a>
@@ -13,24 +13,41 @@
 
     <li class="nav-heading">Perencanaan Data</li>
 
+    
     <li class="nav-item">
-      <a class="nav-link collapsed" href="/data_walidata">
-        <i class="bi bi-clipboard-data"></i>
-        <span>Konfirmasi Data</span>
+      <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-menu-button-wide"></i><span>Konfirmasi Data</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
-    </li><!-- End Dashboard Nav -->
+      <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+        <li>
+          <a class="nav-link {{ Request::segment(2) === 'draft' ? 'active' : null }}" href="/data_walidata/draft">
+            <i class="bi bi-circle"></i><span>Draft</span>
+          </a>
+        </li>
+        <li>
+          <a href="/data_walidata/tolak_konfirmasi_walidata">
+            <i class="bi bi-circle"></i><span>Ditolak</span>
+          </a>
+        </li>
+        <li>
+          <a href="/data_walidata/selesai_konfirmasi_walidata">
+            <i class="bi bi-circle"></i><span>Disetujui</span>
+          </a>
+        </li>
+      </ul>
+    </li>
     <li class="nav-item">
-      <a class="nav-link " data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+      <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
         <i class="bi bi-menu-button-wide"></i><span>Berita Acara</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
         <li>
-          <a href="/get_data_opd">
+          <a class="nav-link {{ Request::segment(1) === 'get_data_opd' ? 'active' : null }}" href="/get_data_opd">
             <i class="bi bi-circle"></i><span>Semua Opd</span>
           </a>
         </li>
         <li>
-          <a href="/get_all_opdall">
+          <a class="nav-link {{ Request::segment(1) === 'get_all_opdall' ? 'active' : null }}" href="/get_all_opdall">
             <i class="bi bi-circle"></i><span>Opd Tertentu</span>
           </a>
         </li>
