@@ -29,21 +29,33 @@ class DataController extends Controller
     public function index()
     {
         if (Auth::user()->role_id == '1') {
-            $data = Data::with('opd')->with('status')->get();
+            $data = Data::data_nonprodusen();
             $opd = Opd::all();
             // dd($data);s
             return view('pages.contents.indexdata', compact('data', 'opd',));
         } elseif (Auth::user()->role_id == '2') {
-            $data = Data::with('opd')->get();
+            $data = Data::data_nonprodusen();
+            // dd($data);
             return view('pages.contents.indexdata', compact('data'));
         } elseif (Auth::user()->role_id == '3') {
+            // $q = Auth::user()->id;
             $data = Data::data_produsen();
+            // dd($data);s
+
             $data2 = collect(Data::get_draft());
             $draft = $data2->count();
-
             // dd($draft);
             return view('pages.contents.indexdata', compact('data', 'draft'));
         }
+    }
+
+    public function selesai_konfirmasi()
+    {
+        $data = Data::selesai_konfirmasi();
+        $data2 = collect(Data::get_draft());
+        $draft = $data2->count();
+
+        return view('pages.contents.indexdata', compact('data', 'draft'));
     }
 
     // public function get_all_opd()
@@ -91,6 +103,13 @@ class DataController extends Controller
         // dd($verifikasi);
         return view('pages.contents.indexverifikasi', compact('verifikasi'));
     }
+    public function input_produsen()
+    {
+        $verifikasi = Data::verifikasi_opd();
+        // $verifikasi = Data::verifikasi_data();
+        // dd($verifikasi);
+        return view('pages.contents.indexverifikasi', compact('verifikasi'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -117,13 +136,20 @@ class DataController extends Controller
         // 'status_data' => "0",
 
         // dd($request);
+
         $status_id = 3;
+        if (Auth::user()->role == '3' | Auth::user()->opd_id == $request->opd_id) {
+            $status_id = 1;
+        }
+        $user_id = Auth::user()->id;
+        // dd(Auth::user());
         Data::create([
             'nama_data' => $request->nama_data,
             'opd_id' => $request->opd_id,
             'jenis_data' => $request->jenis_data,
             'sumber_data' => $request->sumber_data,
             'status_id' => $status_id,
+            'user_id' => $user_id,
 
         ]);
 
@@ -157,6 +183,7 @@ class DataController extends Controller
      */
     public function edit($id)
     {
+        $id = decrypt($id);
         $data = Data::findOrFail($id);
         // dd($data->opd->nama_opd);
         // dd($data->sumber_data);
@@ -175,6 +202,7 @@ class DataController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $id = decrypt($id);
         // dd($request);
         $data = Data::findOrFail($id);
         $get_statusdata = Data::findOrFail($id)->status_id;
@@ -200,6 +228,7 @@ class DataController extends Controller
 
     public function setuju(Request $request, $id)
     {
+        $id = decrypt($id);
         // dd($request);
         $data = Data::findOrFail($id);
         // dd($data);
@@ -230,6 +259,7 @@ class DataController extends Controller
     }
     public function tolak(Request $request, $id)
     {
+        $id = decrypt($id);
         $data = Data::findOrFail($id);
         $tolak = 2;
         $data->update([
@@ -254,6 +284,7 @@ class DataController extends Controller
      */
     public function destroy($id)
     {
+        $id = decrypt($id);
         $user = Data::findOrFail($id);
         // dd($user);
         $user->delete();

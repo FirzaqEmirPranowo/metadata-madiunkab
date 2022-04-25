@@ -1,9 +1,42 @@
-<style>
-    .page-break {
-        page-break-after: always;
-    }
-</style>
-<h1>BERITA ACARA</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style type="text/css">
+    body {font-family:'Times New Roman', Times, serif; background-color: #ccc}
+    .rangkasurat {width: 80px; margin:0 auto; background-color: #fff ;height: 500px; padding: 20px;}
+    table {border-buttons: 5px solid #000; padding: 2px}
+    .tengah{text-align: center;line-height: 5px;}
+        .page-break {
+            page-break-after: always;
+        }
+    </style>
+</head>
+<body>
+  <div class="rangkasurat">
+    <table width="100%">
+<tr>
+  <td><img src="{{ '../../../../public/assets/img/logo.png' }}" width="140px"></td>
+  <td class="tengah">
+    <h2>PEMERINTAH KABUPATEN MADIUN</h2>
+    <h2>SEKRETARIAT DAERAH</h2>
+    <b>Jalan Alun - alun Utara Nomer 1-2 Madiun</b><br>
+    <b>Telepon ( 0351 ) 448000 - 44870007</b><br>
+    <b>Website http://www.madiunkab.go.id</b><br>
+    <b>CARUBAN - 63153</b><br>
+  </td>
+</tr>
+    </table>
+  </div>
+  
+</body>
+</html>
+{{-- <h1>BERITA ACARA</h1> --}}
+
+
 <div class="page-break"></div>
 <table class="table datatable">
     <thead>

@@ -23,6 +23,7 @@ class Data extends Model
         'jenis_data',
         'sumber_data',
         'status_id',
+        'user_id',
     ];
     // protected $primaryKey = 'id';
     protected $guarded = [];
@@ -47,9 +48,59 @@ class Data extends Model
     {
         return $this->belongsTo(Status::class);
     }
+    public function data_nonprodusen()
+    {
+        // return Data::where('opd_id', '=', Auth::user()->opd_id)->get();
+        return DB::table("data")
+            ->join("opds", function ($join) {
+                $join->on("data.opd_id", "=", "opds.id");
+            })
+            ->join("status", function ($join) {
+                $join->on("data.status_id", "=", "status.id");
+            })
+            ->join("users", function ($join) {
+                $join->on("data.user_id", "=", "users.id");
+            })
+            ->select("data.id", "nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id")
+            // ->where('opds.id', '=', Auth::user()->opd_id)
+            ->get();
+    }
     public function data_produsen()
     {
-        return Data::where('opd_id', '=', Auth::user()->opd_id)->get();
+        // return Data::where('opd_id', '=', Auth::user()->opd_id)->get();
+        return DB::table("data")
+            ->join("opds", function ($join) {
+                $join->on("data.opd_id", "=", "opds.id");
+            })
+            ->join("status", function ($join) {
+                $join->on("data.status_id", "=", "status.id");
+            })
+            ->join("users", function ($join) {
+                $join->on("data.user_id", "=", "users.id");
+            })
+            ->select("nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id", "data.id")
+            ->where('status_id', '!=', '1')
+            ->where('opds.id', '=', Auth::user()->opd_id)
+            ->get();
+    }
+
+    public function selesai_konfirmasi()
+    {
+        // return Data::where('opd_id', '=', Auth::user()->opd_id)->get();
+        return DB::table("data")
+            ->join("opds", function ($join) {
+                $join->on("data.opd_id", "=", "opds.id");
+            })
+            ->join("status", function ($join) {
+                $join->on("data.status_id", "=", "status.id");
+            })
+            ->join("users", function ($join) {
+                $join->on("data.user_id", "=", "users.id");
+            })
+            ->select("nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id", "data.id")
+            ->where('status_id', '!=', '3')
+            ->where('opds.id', '=', Auth::user()->opd_id)
+            ->get();
     }
 
     public function verifikasi_data()
@@ -63,6 +114,21 @@ class Data extends Model
             })
             ->select("data.id", "nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status")
             ->where("status_id", "=", 1)
+            ->get();
+    }
+
+    public function verifikasi_opd()
+    {
+        return DB::table("data")
+            ->join("opds", function ($join) {
+                $join->on("data.opd_id", "=", "opds.id");
+            })
+            ->join("status", function ($join) {
+                $join->on("data.status_id", "=", "status.id");
+            })
+            ->select("data.id", "nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status")
+            ->where("status_id", "=", 1)
+            ->where('opd_id', '=', Auth::user()->opd_id)
             ->get();
     }
 

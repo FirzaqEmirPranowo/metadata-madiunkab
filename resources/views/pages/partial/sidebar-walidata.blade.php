@@ -16,7 +16,7 @@
     <li class="nav-item">
       <a class="nav-link collapsed" href="/data_walidata">
         <i class="bi bi-clipboard-data"></i>
-        <span>Data</span>
+        <span>Konfirmasi Data</span>
       </a>
     </li><!-- End Dashboard Nav -->
     <li class="nav-item">
@@ -40,7 +40,7 @@
     <li class="nav-heading">Pengumpulan Data</li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="index.html">
+      <a class="nav-link collapsed" href="/data_walidata/verifikasi_data">
         <i class="bi bi-list-check"></i>
         <span>Daftar Data</span>
       </a>

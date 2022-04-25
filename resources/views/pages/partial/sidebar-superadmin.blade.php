@@ -16,16 +16,16 @@
       <li class="nav-item">
         <a class="nav-link collapsed " href="/data_superadmin">
           <i class="bi bi-file-earmark-bar-graph"></i>
-          <span>Daftar Data</span>
+          <span>Konfirmasi Data</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
       {{-- <li class="nav-heading">Perencanaan Data</li> --}}
 
       <li class="nav-item">
-        <a class="nav-link collapsed " href="index.html">
+        <a class="nav-link collapsed " href="/data_superadmin/verifikasi_data">
           <i class="bi bi-file-earmark-check"></i>
-          <span>Verifikasi Data</span>
+          <span>Daftar Data</span>
         </a>
       </li><!-- End Dashboard Nav -->
 

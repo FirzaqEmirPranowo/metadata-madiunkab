@@ -47,11 +47,13 @@ Route::middleware(['role:superadmin'])->group(function () {
     Route::post('/data_superadmin/update/{id}', [DataController::class, 'update'])->name('data_superadmin');
     Route::get('/data_superadmin/destroy/{id}', [DataController::class, 'destroy'])->name('data_superadmin');
     // Route::resource('data_superadmin', DataController::class);
+    Route::get('/data_superadmin/get_all_opdall', [DataController::class, 'get_all_opdall'])->name('data_superadmin');
+
     Route::post('/data/import', function () {
         Excel::import(new DataImport, request()->file('file'));
         return back();
     });
-    Route::get('/verifikasi_data', [DataController::class, 'verifikasi_data'])->name('verifikasi_data');
+    Route::get('/data_superadmin/verifikasi_data', [DataController::class, 'verifikasi_data'])->name('data_superadmin');
 
 
     Route::get('/opd', [OpdController::class, 'index'])->name('opd');
@@ -86,12 +88,14 @@ Route::middleware(['role:walidata'])->group(function () {
     Route::get('/data_walidata/edit/{id}', [DataController::class, 'edit'])->name('data_walidata');
     Route::post('/data_walidata/update/{id}', [DataController::class, 'update'])->name('data_walidata');
     Route::get('/data_walidata/destroy/{id}', [DataController::class, 'destroy'])->name('data_walidata');
+    Route::get('/data_walidata/get_all_opdall', [DataController::class, 'get_all_opdall'])->name('data_walidata');
 
     Route::get('/get_data_opd', [DataController::class, 'get_all_opd'])->name('data_walidata');
     Route::get('/get_all_opdall', [DataController::class, 'get_all_opdall'])->name('data_walidata');
     Route::get('/get_all_opdall/cari/{id}', [DataController::class, 'cari_opd'])->name('data_walidata');
 
-    Route::post('/data_walidata/export-pdf2', [DataController::class, 'pdf2'])->name('data_produsen');
+    Route::post('/data_walidata/export-pdf2', [DataController::class, 'pdf2'])->name('data_walidata');
+    Route::get('/data_walidata/verifikasi_data', [DataController::class, 'verifikasi_data'])->name('data_walidata');
 
     Route::get('getData', [DataController::class, 'getData'])->name('getData');
 
@@ -114,6 +118,9 @@ Route::middleware('role:produsen')->group(function () {
     Route::get('/data_produsen/setuju/{id}', [DataController::class, 'setuju'])->name('data_produsen');
     Route::get('/data_produsen/tolak/{id}', [DataController::class, 'tolak'])->name('data_produsen');
     Route::get('/data_produsen/export-pdf', [DataController::class, 'pdf'])->name('data_produsen');
+    Route::get('/data_produsen/selesai_konfirmasi', [DataController::class, 'selesai_konfirmasi'])->name('data_produsen');
+    Route::get('/data_produsen/verifikasi_data', [DataController::class, 'input_produsen'])->name('data_produsen');
+
     Route::post('/data_produsen/import', function () {
         Excel::import(new DataImport, request()->file('file'));
         return back();

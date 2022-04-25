@@ -26,7 +26,7 @@
                 @elseif(Auth::user()->role_id == '2')
                 action="{{ url('data_walidata/update', $data->id) }}"
                 @elseif(Auth::user()->role_id == '3')
-                action="{{ url('data_produsen/update', $data->id) }}"
+                action="{{ url('data_produsen/update', encrypt($data->id)) }}"
                 @endif
                 method="POST">
                 @csrf

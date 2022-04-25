@@ -78,9 +78,32 @@
                   <td>{{ $dt->sumber_data }}</td>
                   <td>{{ $dt->status }}</td>
                   <td>
-                    {{-- <div class="progress mt-0">
-                      <div class="progress-bar" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">75%</div>
+                    {{-- <div class="btnConfirm" style="margin-bottom: 0;">
+                      <a href="/data_superadmin/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i>Edit</a>
+                      <form onsubmit="return confirm('Apakah anda Menyetujui data : {{ $dt->nama_data }} ?');" action="">
+                        @csrf   
+                        <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-plus-square"></i>Input</button>
+                      </form>
+                      <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_superadmin/destroy/'.$dt->id) }}">
+                                
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i>HAPUS</button>
+                      </form>
+                      
                     </div> --}}
+                    <div class="btnConfirm" style="margin-bottom: 0;">
+                      <a href="/data_superadmin/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                      <form onsubmit="return confirm('Apakah anda Menyetujui data : {{ $dt->nama_data }} ?');" action="">
+                        @csrf   
+                        <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-plus-square"></i></button>
+                      </form>
+                      <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_superadmin/destroy/'.$dt->id) }}">
+                                
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                      </form>
+                      
+                    </div>
                   </td>
                   {{-- <td>
                     @if(Auth::user()->role_id == '1')
@@ -103,7 +126,7 @@
                     </div>
                     @elseif(Auth::user()->role_id == '3')
                     <div class="btnConfirm" style="margin-bottom: 0;">
-                      <a href="/data_produsen/edit/{{ $dt->id }}" class="btn btn-sm btn-primary">Edit</a>
+                      <a href="/data_superadmin/edit/{{ $dt->id }}" class="btn btn-sm btn-primary">Edit</a>
                       <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_produsen/destroy/'.$dt->id) }}">
                                 
                         @csrf
