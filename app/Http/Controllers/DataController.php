@@ -6,6 +6,7 @@ use App\Models\Opd;
 use App\Models\Role;
 use App\Models\Data;
 use App\Models\Status;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
 use Illuminate\Support\Facades\Auth;
@@ -239,9 +240,9 @@ class DataController extends Controller
         if (Auth::user()->role_id == '1') {
             return redirect('/data_superadmin');
         } elseif (Auth::user()->role_id == '2') {
-            return redirect('/data_walidata');
+            return redirect('/data_walidata/draft');
         } elseif (Auth::user()->role_id == '3') {
-            return redirect('/data_produsen');
+            return redirect('/data_produsen/draft');
         } else {
             return redirect('/home');
         }
@@ -271,9 +272,9 @@ class DataController extends Controller
         if (Auth::user()->role_id == '1') {
             return redirect('/data_superadmin');
         } elseif (Auth::user()->role_id == '2') {
-            return redirect('/data_walidata');
+            return redirect('/data_walidata/draft');
         } elseif (Auth::user()->role_id == '3') {
-            return redirect('/data_produsen');
+            return redirect('/data_produsen/draft');
         } else {
             return redirect('/home');
         }
@@ -289,9 +290,9 @@ class DataController extends Controller
         if (Auth::user()->role_id == '1') {
             return redirect('/data_superadmin');
         } elseif (Auth::user()->role_id == '2') {
-            return redirect('/data_walidata');
+            return redirect('/data_walidata/draft');
         } elseif (Auth::user()->role_id == '3') {
-            return redirect('/data_produsen');
+            return redirect('/data_produsen/draft');
         } else {
             return redirect('/home');
         }
@@ -313,9 +314,9 @@ class DataController extends Controller
         if (Auth::user()->role_id == '1') {
             return redirect('/data_superadmin');
         } elseif (Auth::user()->role_id == '2') {
-            return redirect('/data_walidata');
+            return redirect('/data_walidata/draft');
         } elseif (Auth::user()->role_id == '3') {
-            return redirect('/data_produsen');
+            return redirect('/data_produsen/draft');
         } else {
             return redirect('/home');
         }
@@ -324,14 +325,31 @@ class DataController extends Controller
     public function pdf()
     {
         $data = Data::data_produsen_setuju();
-        $pdf = PDF::loadView('pages.contents.pdf', compact('data'));
+        $dt = Carbon::now();
+        // set some things
+        $tahun = $dt->year;
+        $bln = $dt->month;
+        $tgl = $dt->day;
+        $hari = date('D');
+        $bulan = date('M');
+
+        // dd($bulan);
+
+        $pdf = PDF::loadView('pages.contents.pdf', compact('data', 'hari', 'bulan', 'tgl', 'bln', 'tahun'));
         return $pdf->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'serif'])->stream();
     }
 
     public function pdf2(Request $request)
     {
         $data = Data::with('opd')->setuju()->OPD($request->opd_id)->get();
-        $pdf = PDF::loadView('pages.contents.pdf', compact('data'));
+        $dt = Carbon::now();
+        // set some things
+        $tahun = $dt->year;
+        $bln = $dt->month;
+        $tgl = $dt->day;
+        $hari = date('D');
+        $bulan = date('M');
+        $pdf = PDF::loadView('pages.contents.pdf', compact('data', 'hari', 'bulan', 'tgl', 'bln', 'tahun'));
 
 
         return $pdf->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'serif'])->stream();
