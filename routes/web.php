@@ -102,6 +102,7 @@ Route::middleware(['role:walidata'])->group(function () {
     Route::get('/get_all_opdall', [DataController::class, 'get_all_opdall'])->name('data_walidata');
     Route::get('/get_all_opdall/cari/{id}', [DataController::class, 'cari_opd'])->name('data_walidata');
 
+    Route::post('/data_walidata/export-pdf2', [DataController::class, 'pdf2'])->name('data_walidata');
     Route::get('/data_walidata/export-pdf2', [DataController::class, 'pdf2'])->name('data_walidata');
     Route::get('/data_walidata/verifikasi_data', [DataController::class, 'verifikasi_data'])->name('data_walidata');
     Route::get('/data_walidata/tolak_konfirmasi_walidata', [DataController::class, 'tolak_konfirmasi_walidata'])->name('tolak_konfirmasi_walidata');

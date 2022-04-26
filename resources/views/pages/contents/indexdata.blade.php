@@ -153,20 +153,20 @@
                       <button class="dropbtn">Opsi</button>
                       <div class="dropdown-content"> --}}
                         <div class="btnConfirm" style="margin-bottom: 0;">
-                        <form  action="{{ url('/data_produsen/edit/'.encrypt($dt->id)) }}">
+                        <form  action="{{ url('/data_produsen/edit/'.($dt->id)) }}">
                           
                           <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></button>
                         </form>
-                        <form onsubmit="return confirm('Apakah anda Menghapus data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/destroy/'. encrypt($dt->id) ) }}">
+                        <form onsubmit="return confirm('Apakah anda Menghapus data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/destroy/'. ($dt->id) ) }}">
                           
                           <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
                         </form>
                         @if($dt->user_id != Auth::user()->id)
-                        <form onsubmit="return confirm('Apakah anda Menyetujui data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/setuju/'. encrypt($dt->id)) }}">
+                        <form onsubmit="return confirm('Apakah anda Menyetujui data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/setuju/'. ($dt->id)) }}">
                              
                           <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-check-circle"></i></button>
                         </form>
-                        <form onsubmit="return confirm('Apakah anda Menolak data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/tolak/'. encrypt($dt->id)) }}">
+                        <form onsubmit="return confirm('Apakah anda Menolak data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/tolak/'. ($dt->id)) }}">
                           
                           <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-circle"></i></button>
                         </form>

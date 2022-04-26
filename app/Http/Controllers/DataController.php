@@ -205,7 +205,7 @@ class DataController extends Controller
      */
     public function edit($id)
     {
-        $id = decrypt($id);
+
         $data = Data::findOrFail($id);
         // dd($data->opd->nama_opd);
         // dd($data->sumber_data);
@@ -224,7 +224,7 @@ class DataController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $id = decrypt($id);
+
         // dd($request);
         $data = Data::findOrFail($id);
         $get_statusdata = Data::findOrFail($id)->status_id;
@@ -250,7 +250,7 @@ class DataController extends Controller
 
     public function setuju(Request $request, $id)
     {
-        $id = decrypt($id);
+
         // dd($request);
         $data = Data::findOrFail($id);
         // dd($data);
@@ -281,7 +281,7 @@ class DataController extends Controller
     }
     public function tolak(Request $request, $id)
     {
-        $id = decrypt($id);
+
         $data = Data::findOrFail($id);
         $tolak = 2;
         $data->update([
@@ -306,7 +306,7 @@ class DataController extends Controller
      */
     public function destroy($id)
     {
-        $id = decrypt($id);
+
         $user = Data::findOrFail($id);
         // dd($user);
         $user->delete();
