@@ -139,7 +139,7 @@
                   {{-- </div> --}}
                   @elseif(Auth::user()->role_id == '2')
                   <div class="btnConfirm" style="margin-bottom: 0;">
-                    <a href="/data_walidata/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                    {{-- <a href="/data_walidata/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a> --}}
                     <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_walidata/destroy/'.$dt->id) }}">
                               
                       

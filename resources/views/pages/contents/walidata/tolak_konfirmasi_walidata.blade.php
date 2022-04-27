@@ -90,6 +90,7 @@
                   <th scope="col">Sumber</th>
                   <th scope="col">Dibuat</th>
                   <th scope="col">Status</th>
+                  <th scope="col">Alasan</th>
                   <th scope="col">Opsi</th>
                 </tr>
               </thead>
@@ -112,6 +113,7 @@
                     <span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i>{{ $dt->status }}</span>
                     @endif
                   </td>
+                  <td>{{ $dt->alasan }}</td>
                   <td>
                     @if(Auth::user()->role_id == '1')
                     {{-- <div class="btnConfirm" style="margin-bottom: 0;"> --}}
@@ -139,7 +141,7 @@
                   {{-- </div> --}}
                   @elseif(Auth::user()->role_id == '2')
                   <div class="btnConfirm" style="margin-bottom: 0;">
-                    <a href="/data_walidata/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                    {{-- <a href="/data_walidata/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a> --}}
                     <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_walidata/destroy/'.$dt->id) }}">
                               
                       

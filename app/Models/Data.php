@@ -24,6 +24,7 @@ class Data extends Model
         'sumber_data',
         'status_id',
         'user_id',
+        'alasan',
     ];
     // protected $primaryKey = 'id';
     protected $guarded = [];
@@ -101,7 +102,7 @@ class Data extends Model
             ->join("users", function ($join) {
                 $join->on("data.user_id", "=", "users.id");
             })
-            ->select("nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id", "data.id")
+            ->select("nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "alasan", "name", "user_id", "opds.id", "data.id")
             // ->where('opds.id', '=', Auth::user()->opd_id)
             ->where('status_id', '=', '2')
             ->get();
@@ -183,7 +184,7 @@ class Data extends Model
             ->join("users", function ($join) {
                 $join->on("data.user_id", "=", "users.id");
             })
-            ->select("nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id", "data.id")
+            ->select("nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "alasan", "user_id", "opds.id", "data.id")
             ->where('status_id', '=', '2')
             ->where('opds.id', '=', Auth::user()->opd_id)
             ->get();

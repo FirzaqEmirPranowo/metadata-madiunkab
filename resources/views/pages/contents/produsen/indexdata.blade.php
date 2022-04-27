@@ -122,6 +122,27 @@
                           
                           <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-circle"></i></button>
                         </form>
+                        <a href="" class="btn btn-md btn-warning mb-3 float-right" data-bs-toggle="modal" data-bs-target="#alasan">Import Excel</a>
+                <!-- Table with stripped rows -->
+                  <div class="modal fade" id="alasan" tabindex="-1">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Alasan Penolakan</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ url('data_produsen/alasan', $dt->id) }}" method="post" enctype="multipart/form-data">
+                                @csrf
+                                <div class="input-group mb-3">
+                                    <input type="text" name="alasan" id="alasan" class="form-control" placeholder="Berikan Alasan" aria-label="Berikan Alasan" aria-describedby="button-addon2">
+                                    <button class="btn btn-primary" type="submit" id="button-addon2">Kirim</button>
+                                </div>
+                            </form>                    
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                         @endif
                       </div>
                     </td>

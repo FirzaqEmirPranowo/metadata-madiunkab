@@ -23,7 +23,7 @@ class UserController extends Controller
         $data = User::with('opd')->with('role')->get();
         // dd($data);
         // dd($data);
-        return view('pages.contents.indexusers', compact('data'));
+        return view('pages.contents.superadmin.indexusers', compact('data'));
     }
 
     /**
@@ -37,7 +37,7 @@ class UserController extends Controller
         $role = Role::all();
         $data = User::with('opd')->with('role')->get();
         // dd($data);
-        return view('pages.contents.createuser', (compact('data', 'opd', 'role')));
+        return view('pages.contents.superadmin.createuser', (compact('data', 'opd', 'role')));
     }
 
     /**
@@ -104,7 +104,7 @@ class UserController extends Controller
         $byid = User::findOrFail($id);
         $opd = Opd::all();
         // dd($byid);
-        return view('pages.contents.edituser', compact('byid', 'opd'));
+        return view('pages.contents.superadmin.edituser', compact('byid', 'opd'));
     }
 
     /**

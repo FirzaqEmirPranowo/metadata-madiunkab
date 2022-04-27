@@ -128,6 +128,8 @@ class DataController extends Controller
         }
     }
 
+
+
     public function destroy($id)
     {
         $user = Data::findOrFail($id);
@@ -204,7 +206,7 @@ class DataController extends Controller
 
     public function setuju(Request $request, $id)
     {
-
+        $id = decrypt($request->id);
         $data = Data::findOrFail($id);
 
         $setuju = 1;
@@ -223,12 +225,14 @@ class DataController extends Controller
         }
     }
 
-    public function tolak(Request $request, $id)
+    public function alasan(Request $request, $id)
     {
         // $id = decrypt($request->post('id'));
         $data = Data::findOrFail($id);
+        $alasan = $request->alasan;
         $tolak = 2;
         $data->update([
+            'alasan' => $alasan,
             'status_id' => $tolak,
         ]);
         if (Auth::user()->role_id == '1') {
@@ -241,6 +245,8 @@ class DataController extends Controller
             return redirect('/home');
         }
     }
+
+
 
     public function verifikasi_data()
     {
