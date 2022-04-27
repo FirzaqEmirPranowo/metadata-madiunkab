@@ -59,14 +59,15 @@
                   @if(Auth::user()->role_id == '3')
                   @endif --}}
                   <div class="mb-4">
-                    <form action="{{ url('/data_walidata/export-pdf2') }}" method="POST">
-                      @csrf
+                    <form action="{{ url('/data_walidata/export-pdf2') }}" >
+                    
                       <div class="row">
                         <div class="col-8">
                           <select id="opd_id" name="opd_id" class="form-select" aria-label="Default select example">
                             <option  selected value="">Pilih OPD</option>
+                            <option   value="{{ encrypt('all') }}">Semua OPD</option>
                             @foreach($opd as $id => $nama)
-                            <option value="{{ $id }}">{{ $nama }}</option>
+                            <option value="{{ encrypt($id) }}">{{ $nama }}</option>
                             @endforeach
                           </select>
                         </div>
@@ -108,12 +109,14 @@
 <script>
   function getData() {
     var value = $('#opd_id').val();
-    load(value);
+    if (value != ''){
+      load(value);
+    } 
   }
   
-  $(document).ready(function() {
-    load('all');
-  });
+  // $(document).ready(function() {
+  //   load('all');
+  // });
   
   function load(id) {
     $('#datatable').dataTable({

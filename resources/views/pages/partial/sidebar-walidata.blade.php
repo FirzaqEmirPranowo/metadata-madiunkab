@@ -36,8 +36,8 @@
         </li>
       </ul>
     </li>
-    <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+    {{-- <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="/get_all_opdall">
         <i class="bi bi-menu-button-wide"></i><span>Berita Acara</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
@@ -52,6 +52,12 @@
           </a>
         </li>
       </ul>
+    </li> --}}
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="/get_all_opdall">
+        <i class="bi bi-arrow-down-circle-fill"></i>
+        <span>Berita Acara</span>
+      </a>
     </li>
 
     <li class="nav-heading">Pengumpulan Data</li>

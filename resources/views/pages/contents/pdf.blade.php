@@ -31,7 +31,7 @@
 <body>
   <table>
     <tr>
-      <td><img src="{{ ('../../../../public/assets/img/logo.png') }}" width="120px" height="150px"alt=""></td>
+      <td><img src="{{ url('../../../../public/assets/img/logo.png') }}" width="120px" height="150px"alt=""></td>
       <td class="kop">
         <font size="5"><b>PEMERINTAH KABUPATEN MADIUN</b></font>
         <font size="7"><b>SEKERTARIAT DAERAH</b></font><br>

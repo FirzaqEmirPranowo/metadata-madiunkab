@@ -33,16 +33,16 @@ class HomeController extends Controller
     {
         // $role = Auth::user()->role;
         // dd($role);
-        return view('pages.contents.dashboard');
+        return view('pages.contents.walidata.dashboard');
     }
 
     public function index2()
     {
-        return view('pages.contents.dashboard');
+        return view('pages.contents.walidata.dashboard');
     }
 
     public function index3()
     {
-        return view('pages.contents.dashboard');
+        return view('pages.contents.walidata.dashboard');
     }
 }

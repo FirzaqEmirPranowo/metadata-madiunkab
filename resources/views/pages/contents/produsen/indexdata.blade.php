@@ -19,7 +19,7 @@
           <div class="card-body">
             <h5 class="card-title">Daftar Data</h5>
             
-            <a 
+            {{-- <a 
             @if(Auth::user()->role_id == '1')
             href="/data_superadmin/create"
             @elseif(Auth::user()->role_id == '2')
@@ -28,9 +28,9 @@
             href="/data_produsen/create"
             @endif
             class="btn btn-md btn-primary mb-3 float-right">Tambah
-                Data</a>
+                Data</a> --}}
 
-                <a href="" class="btn btn-md btn-warning mb-3 float-right" data-bs-toggle="modal" data-bs-target="#basicModal">Import Excel</a>
+                {{-- <a href="" class="btn btn-md btn-warning mb-3 float-right" data-bs-toggle="modal" data-bs-target="#basicModal">Import Excel</a> --}}
                 <!-- Table with stripped rows -->
                   <div class="modal fade" id="basicModal" tabindex="-1">
                     <div class="modal-dialog">
@@ -103,85 +103,28 @@
                   <td>{{ $dt->jenis_data }}</td>
                   <td>{{ $dt->sumber_data }}</td>
                   <td>{{ $dt->name }}</td>
-                  <td>{{ $dt->status }}</td>
                   <td>
-                    @if(Auth::user()->role_id == '1')
-                    {{-- <div class="btnConfirm" style="margin-bottom: 0;"> --}}
-                      {{-- <a href="/data_superadmin/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i>Edit</a>
-                      <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_superadmin/destroy/'.$dt->id) }}">
-                                
-                        @csrf
-                        <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i>HAPUS</button>
-                      </form>
-                    </div>
-                    @elseif(Auth::user()->role_id == '2')
-                    <div class="btnConfirm" style="margin-bottom: 0;">
-                      <a href="/data_walidata/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i>Edit</a>
-                      <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_walidata/destroy/'.$dt->id) }}">
-                                
-                        @csrf
-                        <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i>HAPUS</button>
-                    </form> --}}
-                    <a href="/data_superadmin/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
-                    <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_superadmin/destroy/'.$dt->id) }}">
-                              
-                      
-                      <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i></button>
-                    </form>
-                  {{-- </div> --}}
-                  @elseif(Auth::user()->role_id == '2')
-                  <div class="btnConfirm" style="margin-bottom: 0;">
-                    <a href="/data_walidata/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
-                    <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_walidata/destroy/'.$dt->id) }}">
-                              
-                      
-                      <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i></button>
-                  </form>
-                    </div>
-                    @elseif(Auth::user()->role_id == '3')
-                    {{-- <div class="btnConfirm" style="margin-bottom: 0;">
-                      <a href="/data_produsen/edit/{{ $dt->id }}" class="btn btn-sm btn-primary">Edit</a>
-                      <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_produsen/destroy/'.$dt->id) }}">
-                                
-                        @csrf
-                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                      </form>
-                    <a href="/data_produsen/setuju/{{ $dt->id }}" class="btn btn-sm btn-success">Setujui</a>
-                    <a href="/data_produsen/tolak/{{ $dt->id }}" class="btn btn-sm btn-warning">Tolak</a>
-                    </div> --}}
-                    {{-- <div class="dropdown">
-                      <button class="dropbtn">Opsi</button>
-                      <div class="dropdown-content"> --}}
-                        <div class="btnConfirm" style="margin-bottom: 0;">
-                        <form  action="{{ url('/data_walidata/edit/'.($dt->id)) }}">
-                          
-                          <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></button>
-                        </form>
-                        <form onsubmit="return confirm('Apakah anda Menghapus data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/destroy/'. ($dt->id) ) }}">
-                          
-                          <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
-                        </form>
+                    @if($dt->status_id == 3)
+                    <span class="badge bg-secondary"><i class="bi bi-collection me-1"></i>{{ $dt->status }}</span>
+                    @elseif($dt->status_id == 1)
+                    <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>{{ $dt->status }}</span>
+                    @elseif($dt->status_id == 2)
+                    <span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i>{{ $dt->status }}</span>
+                    @endif
+                  </td>
+                  <td>
                         @if($dt->user_id != Auth::user()->id)
-                        <form onsubmit="return confirm('Apakah anda Menyetujui data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/setuju/'. ($dt->id)) }}">
+                        <form onsubmit="return confirm('Apakah anda Menyetujui data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/setuju/'.encrypt($dt->id)) }}">
                              
                           <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-check-circle"></i></button>
                         </form>
-                        <form onsubmit="return confirm('Apakah anda Menolak data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/tolak/'. ($dt->id)) }}">
+                        <form onsubmit="return confirm('Apakah anda Menolak data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/tolak/'. encrypt($dt->id)) }}">
                           
                           <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-circle"></i></button>
                         </form>
                         @endif
                       </div>
-                      {{-- </div>               --}}
-                    {{-- </div>               --}}
-                    
-                        
-                               
-                    @endif
-                    
-                  
                     </td>
-                    
                 </tr>
                   @endforeach
               </tbody>

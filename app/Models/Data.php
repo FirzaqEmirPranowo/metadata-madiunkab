@@ -48,6 +48,7 @@ class Data extends Model
     {
         return $this->belongsTo(Status::class);
     }
+
     public function data_nonprodusen()
     {
         // return Data::where('opd_id', '=', Auth::user()->opd_id)->get();
@@ -61,10 +62,12 @@ class Data extends Model
             ->join("users", function ($join) {
                 $join->on("data.user_id", "=", "users.id");
             })
-            ->select("data.id", "nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id")
+            ->select("nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id", "data.id")
             // ->where('opds.id', '=', Auth::user()->opd_id)
             ->get();
     }
+
+
     public function data_draft_walidata()
     {
         // return Data::where('opd_id', '=', Auth::user()->opd_id)->get();
@@ -78,11 +81,13 @@ class Data extends Model
             ->join("users", function ($join) {
                 $join->on("data.user_id", "=", "users.id");
             })
-            ->select("data.id", "nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id")
+            ->select("nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id", "data.id",)
             // ->where('opds.id', '=', Auth::user()->opd_id)
             ->where('status_id', '=', '3')
             ->get();
     }
+
+
     public function data_tolak_walidata()
     {
         // return Data::where('opd_id', '=', Auth::user()->opd_id)->get();
@@ -96,11 +101,13 @@ class Data extends Model
             ->join("users", function ($join) {
                 $join->on("data.user_id", "=", "users.id");
             })
-            ->select("data.id", "nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id")
+            ->select("nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id", "data.id")
             // ->where('opds.id', '=', Auth::user()->opd_id)
             ->where('status_id', '=', '2')
             ->get();
     }
+
+
     public function selesai_konfirmasi_walidata()
     {
         // return Data::where('opd_id', '=', Auth::user()->opd_id)->get();
@@ -114,11 +121,13 @@ class Data extends Model
             ->join("users", function ($join) {
                 $join->on("data.user_id", "=", "users.id");
             })
-            ->select("data.id", "nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id")
+            ->select("nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id", "data.id",)
             // ->where('opds.id', '=', Auth::user()->opd_id)
             ->where('status_id', '=', '1')
             ->get();
     }
+
+
     public function data_produsen()
     {
         // return Data::where('opd_id', '=', Auth::user()->opd_id)->get();
@@ -137,6 +146,8 @@ class Data extends Model
             ->where('opds.id', '=', Auth::user()->opd_id)
             ->get();
     }
+
+
 
     public function selesai_konfirmasi()
     {
@@ -157,6 +168,8 @@ class Data extends Model
             ->get();
     }
 
+
+
     public function tolak_konfirmasi()
     {
         // return Data::where('opd_id', '=', Auth::user()->opd_id)->get();
@@ -176,6 +189,8 @@ class Data extends Model
             ->get();
     }
 
+
+
     public function verifikasi_data()
     {
         return DB::table("data")
@@ -189,6 +204,8 @@ class Data extends Model
             ->where("status_id", "=", 1)
             ->get();
     }
+
+
 
     public function verifikasi_opd()
     {
@@ -205,13 +222,11 @@ class Data extends Model
             ->get();
     }
 
+
+
     public function get_draft()
     {
         return Data::where('opd_id', '=', Auth::user()->opd_id)->where('status_id', '=', 3)->get();
-        // return $get_draf = DB::table('data')
-        //     ->count('status_id')
-        //     ->where('status_id', '=', 1)
-        //     ->get();
     }
 
     public function data_produsen_setuju()

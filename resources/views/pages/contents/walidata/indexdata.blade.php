@@ -103,7 +103,15 @@
                   <td>{{ $dt->jenis_data }}</td>
                   <td>{{ $dt->sumber_data }}</td>
                   <td>{{ $dt->name }}</td>
-                  <td>{{ $dt->status }}</td>
+                  <td>
+                    @if($dt->status_id == 3)
+                    <span class="badge bg-secondary"><i class="bi bi-collection me-1"></i>{{ $dt->status }}</span>
+                    @elseif($dt->status_id == 1)
+                    <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>{{ $dt->status }}</span>
+                    @elseif($dt->status_id == 2)
+                    <span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i>{{ $dt->status }}</span>
+                    @endif
+                  </td>
                   <td>
                     @if(Auth::user()->role_id == '1')
                     {{-- <div class="btnConfirm" style="margin-bottom: 0;"> --}}
@@ -131,7 +139,7 @@
                   {{-- </div> --}}
                   @elseif(Auth::user()->role_id == '2')
                   <div class="btnConfirm" style="margin-bottom: 0;">
-                    <a href="/data_walidata/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                    <a href="{{ route('edit_walidata',['id'=>$dt->id])  }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
                     <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_walidata/destroy/'.$dt->id) }}">
                               
                       
@@ -161,7 +169,7 @@
                           
                           <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
                         </form>
-                        {{-- @if($dt->user_id != Auth::user()->id)
+                        @if($dt->user_id != Auth::user()->id)
                         <form onsubmit="return confirm('Apakah anda Menyetujui data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/setuju/'. ($dt->id)) }}">
                              
                           <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-check-circle"></i></button>
@@ -170,7 +178,7 @@
                           
                           <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-circle"></i></button>
                         </form>
-                        @endif --}}
+                        @endif
                       </div>
                       {{-- </div>               --}}
                     {{-- </div>               --}}

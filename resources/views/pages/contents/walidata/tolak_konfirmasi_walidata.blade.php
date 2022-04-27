@@ -103,7 +103,15 @@
                   <td>{{ $dt->jenis_data }}</td>
                   <td>{{ $dt->sumber_data }}</td>
                   <td>{{ $dt->name }}</td>
-                  <td>{{ $dt->status }}</td>
+                  <td>
+                    @if($dt->status_id == 3)
+                    <span class="badge bg-secondary"><i class="bi bi-collection me-1"></i>{{ $dt->status }}</span>
+                    @elseif($dt->status_id == 1)
+                    <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>{{ $dt->status }}</span>
+                    @elseif($dt->status_id == 2)
+                    <span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i>{{ $dt->status }}</span>
+                    @endif
+                  </td>
                   <td>
                     @if(Auth::user()->role_id == '1')
                     {{-- <div class="btnConfirm" style="margin-bottom: 0;"> --}}
