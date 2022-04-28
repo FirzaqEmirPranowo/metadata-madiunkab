@@ -1,5 +1,8 @@
 <?php
 
+use RealRashid\SweetAlert\Facades\Alert;
+use RealRashid\SweetAlert\SweetAlertServiceProvider;
+
 return [
 
     /*
@@ -163,6 +166,8 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        UxWeb\SweetAlert\SweetAlertServiceProvider::class,
+
 
 
         /*
@@ -234,6 +239,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Alert' => UxWeb\SweetAlert\SweetAlert::class,
+
 
     ],
 
