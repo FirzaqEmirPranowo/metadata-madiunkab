@@ -25,15 +25,16 @@
           </a>
         </li>
         <li>
-          <a class="nav-link {{ Request::segment(2) === 'tolak_konfirmasi_walidata' ? 'active' : null }}" href="/data_walidata/tolak_konfirmasi_walidata">
-            <i class="bi bi-circle"></i><span>Ditolak</span>
-          </a>
-        </li>
-        <li>
           <a class="nav-link {{ Request::segment(2) === 'selesai_konfirmasi_walidata' ? 'active' : null }}" href="/data_walidata/selesai_konfirmasi_walidata">
             <i class="bi bi-circle"></i><span>Disetujui</span>
           </a>
         </li>
+        <li>
+          <a class="nav-link {{ Request::segment(2) === 'tolak_konfirmasi_walidata' ? 'active' : null }}" href="/data_walidata/tolak_konfirmasi_walidata">
+            <i class="bi bi-circle"></i><span>Ditolak</span>
+          </a>
+        </li>
+        
       </ul>
     </li>
     {{-- <li class="nav-item">

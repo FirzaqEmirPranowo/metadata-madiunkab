@@ -31,16 +31,17 @@
             <i class="bi bi-circle"></i><span>Draft</span>
           </a>
         </li>
-        <li >
-          <a class="nav-item {{ Request::segment(2) === 'tolak_konfirmasi' ? 'active' : null }}" href="/data_produsen/tolak_konfirmasi">
-            <i class="bi bi-circle"></i><span>Ditolak</span>
-          </a>
-        </li>
         <li>
           <a class="nav-item {{ Request::segment(2) === 'selesai_konfirmasi' ? 'active' : null }}" href="/data_produsen/selesai_konfirmasi">
             <i class="bi bi-circle"></i><span>Disetujui</span>
           </a>
         </li>
+        <li >
+          <a class="nav-item {{ Request::segment(2) === 'tolak_konfirmasi' ? 'active' : null }}" href="/data_produsen/tolak_konfirmasi">
+            <i class="bi bi-circle"></i><span>Ditolak</span>
+          </a>
+        </li>
+        
       </ul>
     </li>
 

@@ -2,6 +2,7 @@
 @section('content')
 
 <div class="pagetitle">
+  @include('sweetalert::alert')
     <h1>Daftar Data</h1>
     <nav>
       <ol class="breadcrumb">
@@ -55,11 +56,18 @@
                   <!-- Table with stripped rows -->
                   
                   @if($draft == "0")
-                  <a href="{{ url('/data_produsen/export-pdf') }}" class="btn btn-md btn-danger mb-3 float-right" target="_blank">Unduh Berita Acara</a>
-
+                  {{-- <a href="{{ url('/data_produsen/export-pdf') }}" class="btn btn-md btn-danger mb-3 float-right" target="_blank">Unduh Berita Acara</a> --}}
+                  <form id="berita-acara" action="{{ url('/data_produsen/export-pdf') }}" >
+                      
+                    <button type="button" class="btn btn-sm btn-success" onclick="confirmBeritacara('berita-acara')"><i class="bi bi-download"></i> Unduh Berita Acara</button>
+                  </form>
                   @elseif($draft >= "0")
                   
-                  <a href="" class="btn btn-md btn-danger mb-3 float-right" data-bs-toggle="modal" data-bs-target="#beritaacara">Unduh Berita Acara</a>
+                  <form id="berita-acara" >
+                      
+                    <button type="button" class="btn btn-sm btn-danger" onclick="confirmDraft('berita-acara')"><i class="bi bi-download"></i> Unduh Berita Acara</button>
+                  </form>
+                  {{-- <a href="" class="btn btn-md btn-danger mb-3 float-right" data-bs-toggle="modal" data-bs-target="#beritaacara"><i class="bi bi-download"></i> Unduh Berita Acara</a> --}}
                   <div class="modal fade" id="beritaacara" tabindex="-1">
                     <div class="modal-dialog">
                       <div class="modal-content">
@@ -114,22 +122,31 @@
                   </td>
                   <td>
                         @if($dt->user_id != Auth::user()->id)
-                        <form onsubmit="return confirm('Apakah anda Menyetujui data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/setuju/'.encrypt($dt->id)) }}">
+                        {{-- <form onsubmit="return confirm('Apakah anda Menyetujui data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/setuju/'.encrypt($dt->id)) }}">
                              
                           <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-check-circle"></i></button>
+                        </form> --}}
+                        <form id="setuju-data" action="{{ url('/data_produsen/setuju/'.encrypt($dt->id)) }}" >
+                      
+                          <button type="button" class="btn btn-sm btn-success" onclick="confirmSetuju('setuju-data')"><i class="bi bi-check-circle"></i></button>
                         </form>
-                        <form onsubmit="return confirm('Apakah anda Menolak data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/tolak/'. encrypt($dt->id)) }}">
+                        {{-- <form onsubmit="return confirm('Apakah anda Menolak data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/tolak/'. encrypt($dt->id)) }}">
                           
                           <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-circle"></i></button>
-                        </form>
-                        <a href="" class="btn btn-md btn-warning mb-3 float-right" data-bs-toggle="modal" data-bs-target="#alasan">Import Excel</a>
+                        </form> --}}
+                        <a href="" class="btn btn-sm btn-danger mb-3 float-right" data-bs-toggle="modal" data-bs-target="#alasan"><i class="bi bi-x-circle"></i></a>
                 <!-- Table with stripped rows -->
                   <div class="modal fade" id="alasan" tabindex="-1">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title">Alasan Penolakan</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          <div class="row">
+                            <h5 class="modal-title">Alasan Penolakan</h5>
+                            <br>
+                            <h7 class="modal-title">Pastikan bahwa data yang anda TOLAK bukan merupakan DATA anda!</h7>
+                            <h7 class="modal-title">Apakah anda sudah yakin untuk menolak? Jika sudah yakin, Silahkan isikan Alasan untuk MENOLAK DATA!</h7>
+                          </div>
+                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form action="{{ url('data_produsen/alasan', $dt->id) }}" method="post" enctype="multipart/form-data">
@@ -182,5 +199,90 @@ function filterFunction() {
   }
 }
     </script>
+
+<script type="text/javascript">
+  function confirmSetuju(item_id) {
+   swal({
+              title: 'Apakah Anda Yakin Menyetujui Data?',
+               text: "Anda Akan Menyetujui Data!",
+               type: 'warning',
+               showCancelButton: true,
+               confirmButtonColor: '#3085d6',
+               cancelButtonColor: '#d33',
+               confirmButtonText: 'Yes, delete it!'
+         })
+             .then((willDelete) => {
+                 if (willDelete) {
+                     $('#'+item_id).submit();
+                 } else {
+                     swal("Cancelled Successfully");
+                 }
+             });
+   };
+
+</script>
+<script type="text/javascript">
+  function confirmTolak(item_id) {
+   swal({
+              title: 'Apakah Anda Yakin Menghapus Data?',
+               text: "Anda Tidak Akan Dapat Mengembalikannya!",
+               type: 'warning',
+               showCancelButton: true,
+               confirmButtonColor: '#3085d6',
+               cancelButtonColor: '#d33',
+               confirmButtonText: 'Yes, delete it!'
+         })
+             .then((willDelete) => {
+                 if (willDelete) {
+                     $('#'+item_id).submit();
+                 } else {
+                     swal("Cancelled Successfully");
+                 }
+             });
+   };
+
+</script>
+<script type="text/javascript">
+  function confirmBeritacara(item_id) {
+   swal({
+              title: 'Apakah Anda Yakin Mengunduh Berita Acara?',
+               text: "Anda Akan Mengunduh Berita Acara!",
+               type: 'warning',
+               showCancelButton: true,
+               confirmButtonColor: '#3085d6',
+               cancelButtonColor: '#d33',
+               confirmButtonText: 'Yes, delete it!'
+         })
+             .then((willDelete) => {
+                 if (willDelete) {
+                     $('#'+item_id).submit();
+                 } else {
+                     swal("Cancelled Successfully");
+                 }
+             });
+   };
+
+</script>
+<script type="text/javascript">
+  function confirmDraft(item_id) {
+   swal({
+              title: 'Anda belum bisa mengunduh berita acara dikarenakan masih ada DATA yang berstatus DRAFT!',
+               text: "Silakahan selesaikan Konfirmasi terlebih dahulu!",
+               type: 'warning',
+               showCancelButton: true,
+               confirmButtonColor: '#d33',
+               cancelButtonColor: '#d33',
+               confirmButtonText: 'Yes, delete it!'
+         })
+             .then((willDelete) => {
+                 if (willDelete) {
+                     $('#'+item_id).submit();
+                 } else {
+                     swal("Cancelled Successfully");
+                 }
+             });
+   };
+
+</script>
 
 @endsection

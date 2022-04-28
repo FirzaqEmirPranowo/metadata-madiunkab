@@ -59,7 +59,7 @@
                   @if(Auth::user()->role_id == '3')
                   @endif --}}
                   <div class="mb-4">
-                    <form action="{{ url('/data_walidata/export-pdf2') }}" >
+                    <form id="berita-acara" action="{{ url('/data_walidata/export-pdf2') }}" >
                     
                       <div class="row">
                         <div class="col-8">
@@ -73,7 +73,7 @@
                         </div>
                         <div class="col-4 d-flex">
                           <button class="btn btn-primary mx-2" type="button" onclick="getData()"> Cari </button>
-                          <button class="btn btn-danger" type="submit"> Unduh Data </button>
+                          <button class="btn btn-success" onclick="confirmBeritacara('berita-acara')" type="submit"><i class="bi bi-download"></i> Unduh Data </button>
                         </div>
                       </div>
                     </form>
@@ -158,6 +158,27 @@
       ],
     });
   }
+</script>
+<script type="text/javascript">
+  function confirmBeritacara(item_id) {
+   swal({
+              title: 'Apakah Anda Yakin Mengunduh Berita Acara?',
+               text: "Anda Akan Mengunduh Berita Acara!",
+               type: 'warning',
+               showCancelButton: true,
+               confirmButtonColor: '#3085d6',
+               cancelButtonColor: '#d33',
+               confirmButtonText: 'Yes, delete it!'
+         })
+             .then((willDelete) => {
+                 if (willDelete) {
+                     $('#'+item_id).submit();
+                 } else {
+                     swal("Cancelled Successfully");
+                 }
+             });
+   };
+
 </script>
 
 @endpush
