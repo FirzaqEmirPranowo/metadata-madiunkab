@@ -105,7 +105,7 @@
                     </div>
                     <div class="body">
                         <h5 class="text-secondary">Covid 19</h5>
-                        <a href="/data" class="btn btn-ungu">Lihat</a>
+                        <a href="/datas" class="btn btn-ungu">Lihat</a>
                     </div>
                 </div>
             </div>
@@ -116,7 +116,7 @@
                     </div>
                     <div class="body">
                         <h5 class="text-secondary">Kependudukan</h5>
-                        <a href="/data" class="btn btn-ungu">Lihat</a>
+                        <a href="/datas" class="btn btn-ungu">Lihat</a>
                     </div>
                 </div>
             </div>
@@ -127,7 +127,7 @@
                     </div>
                     <div class="body">
                         <h5 class="text-secondary">Kesehatan</h5>
-                        <a href="/data" class="btn btn-ungu">Lihat</a>
+                        <a href="/datas" class="btn btn-ungu">Lihat</a>
                     </div>
                 </div>
             </div>
@@ -139,7 +139,7 @@
                     </div>
                     <div class="body">
                         <h5 class="text-secondary">Keuangan</h5>
-                        <a href="/data" class="btn btn-ungu">Lihat</a>
+                        <a href="/datas" class="btn btn-ungu">Lihat</a>
                     </div>
                 </div>
             </div>
@@ -150,7 +150,7 @@
                     </div>
                     <div class="body">
                         <h5 class="text-secondary">Lingkungan Hidup</h5>
-                        <a href="/data" class="btn btn-ungu">Lihat</a>
+                        <a href="/datas" class="btn btn-ungu">Lihat</a>
                     </div>
                 </div>
             </div>
@@ -161,7 +161,7 @@
                     </div>
                     <div class="body">
                         <h5 class="text-secondary">Pariwisata&Kebudayaan</h5>
-                        <a href="/data" class="btn btn-ungu">Lihat</a>
+                        <a href="/datas" class="btn btn-ungu">Lihat</a>
                     </div>
                 </div>
             </div>
@@ -172,7 +172,7 @@
                     </div>
                     <div class="body">
                         <h5 class="text-secondary">Pekerjaan Umum</h5>
-                        <a href="/data" class="btn btn-ungu">Lihat</a>
+                        <a href="/datas" class="btn btn-ungu">Lihat</a>
                     </div>
                 </div>
             </div>
@@ -183,7 +183,7 @@
                     </div>
                     <div class="body">
                         <h5 class="text-secondary">Pendidikan</h5>
-                        <a href="/data" class="btn btn-ungu">Lihat</a>
+                        <a href="/datas" class="btn btn-ungu">Lihat</a>
                     </div>
                 </div>
             </div>
@@ -194,7 +194,7 @@
                     </div>
                     <div class="body">
                         <h6 class="text-secondary">Penanggulangan Bencana</h6>
-                        <a href="/data" class="btn btn-ungu">Lihat</a>
+                        <a href="/datas" class="btn btn-ungu">Lihat</a>
                     </div>
                 </div>
             </div>
@@ -205,7 +205,7 @@
                     </div>
                     <div class="body">
                         <h5 class="text-secondary">Perhubungan</h5>
-                        <a href="/data" class="btn btn-ungu">Lihat</a>
+                        <a href="/datas" class="btn btn-ungu">Lihat</a>
                     </div>
                 </div>
             </div>
@@ -216,7 +216,7 @@
                     </div>
                     <div class="body">
                         <h5 class="text-secondary">Sosial</h5>
-                        <a href="/data" class="btn btn-ungu">Lihat</a>
+                        <a href="/datas" class="btn btn-ungu">Lihat</a>
                     </div>
                 </div>
             </div>
@@ -227,7 +227,7 @@
                     </div>
                     <div class="body">
                         <h5 class="text-secondary">Teknologi</h5>
-                        <a href="/data" class="btn btn-ungu">Lihat</a>
+                        <a href="/datas" class="btn btn-ungu">Lihat</a>
                     </div>
                 </div>
             </div>
