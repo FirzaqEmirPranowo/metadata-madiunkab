@@ -126,42 +126,50 @@
                              
                           <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-check-circle"></i></button>
                         </form> --}}
-                        <form id="setuju-data" action="{{ url('/data_produsen/setuju/'.encrypt($dt->id)) }}" >
-                      
-                          <button type="button" class="btn btn-sm btn-success" onclick="confirmSetuju('setuju-data')"><i class="bi bi-check-circle"></i></button>
-                        </form>
+                        <table>
+                          <tr>
+                            <td>
+                              <form id="setuju-data" action="{{ url('/data_produsen/setuju/'.encrypt($dt->id)) }}" >
+                                <button type="button" class="btn btn-sm btn-success" onclick="confirmSetuju('setuju-data')"><i class="bi bi-check-circle"></i></button>
+                              </form>
+                            </td>
+                            <td>
+                              <a href="" class="btn btn-sm btn-danger  float-right" data-bs-toggle="modal" data-bs-target="#alasan"><i class="bi bi-x-circle"></i></a>
+                                <div class="modal fade" id="alasan" tabindex="-1">
+                                  <div class="modal-dialog">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <div class="row">
+                                              <h5 class="modal-title">Alasan Penolakan</h5>
+                                              <br>
+                                              <h7 class="modal-title">Pastikan bahwa data yang anda TOLAK bukan merupakan DATA anda!</h7>
+                                              <h7 class="modal-title">Apakah anda sudah yakin untuk menolak? Jika sudah yakin, Silahkan isikan Alasan untuk MENOLAK DATA!</h7>
+                                            </div>
+                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body">
+                                              <form action="{{ url('data_produsen/alasan', $dt->id) }}" method="post" enctype="multipart/form-data">
+                                                  @csrf
+                                                  <div class="input-group mb-3">
+                                                      <input type="text" name="alasan" id="alasan" class="form-control" placeholder="Berikan Alasan" aria-label="Berikan Alasan" aria-describedby="button-addon2">
+                                                      <button class="btn btn-primary" type="submit" id="button-addon2">Kirim</button>
+                                                  </div>
+                                              </form>                    
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                            </td>
+                          </tr>
+                        </table>
+                        
                         {{-- <form onsubmit="return confirm('Apakah anda Menolak data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/tolak/'. encrypt($dt->id)) }}">
                           
                           <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-circle"></i></button>
                         </form> --}}
-                        <a href="" class="btn btn-sm btn-danger mb-3 float-right" data-bs-toggle="modal" data-bs-target="#alasan"><i class="bi bi-x-circle"></i></a>
-                <!-- Table with stripped rows -->
-                  <div class="modal fade" id="alasan" tabindex="-1">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <div class="row">
-                            <h5 class="modal-title">Alasan Penolakan</h5>
-                            <br>
-                            <h7 class="modal-title">Pastikan bahwa data yang anda TOLAK bukan merupakan DATA anda!</h7>
-                            <h7 class="modal-title">Apakah anda sudah yakin untuk menolak? Jika sudah yakin, Silahkan isikan Alasan untuk MENOLAK DATA!</h7>
-                          </div>
-                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="{{ url('data_produsen/alasan', $dt->id) }}" method="post" enctype="multipart/form-data">
-                                @csrf
-                                <div class="input-group mb-3">
-                                    <input type="text" name="alasan" id="alasan" class="form-control" placeholder="Berikan Alasan" aria-label="Berikan Alasan" aria-describedby="button-addon2">
-                                    <button class="btn btn-primary" type="submit" id="button-addon2">Kirim</button>
-                                </div>
-                            </form>                    
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                        
+                        
                         @endif
-                      </div>
                     </td>
                 </tr>
                   @endforeach
@@ -209,6 +217,10 @@ function filterFunction() {
                showCancelButton: true,
                confirmButtonColor: '#3085d6',
                cancelButtonColor: '#d33',
+              //  dangerMode: true,
+              // cancel: true,
+              buttons: true,
+  // dangerMode: true,
                confirmButtonText: 'Yes, delete it!'
          })
              .then((willDelete) => {
@@ -230,6 +242,7 @@ function filterFunction() {
                showCancelButton: true,
                confirmButtonColor: '#3085d6',
                cancelButtonColor: '#d33',
+               buttons: true,
                confirmButtonText: 'Yes, delete it!'
          })
              .then((willDelete) => {
@@ -251,6 +264,7 @@ function filterFunction() {
                showCancelButton: true,
                confirmButtonColor: '#3085d6',
                cancelButtonColor: '#d33',
+               buttons: true,
                confirmButtonText: 'Yes, delete it!'
          })
              .then((willDelete) => {
@@ -272,6 +286,8 @@ function filterFunction() {
                showCancelButton: true,
                confirmButtonColor: '#d33',
                cancelButtonColor: '#d33',
+              //  dangerMode: true,
+               buttons: true,
                confirmButtonText: 'Yes, delete it!'
          })
              .then((willDelete) => {

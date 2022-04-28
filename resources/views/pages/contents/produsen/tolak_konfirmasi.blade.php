@@ -241,6 +241,7 @@ function filterFunction() {
                    showCancelButton: true,
                    confirmButtonColor: '#3085d6',
                    cancelButtonColor: '#d33',
+                   buttons: true,
                    confirmButtonText: 'Yes, delete it!'
              })
                  .then((willDelete) => {

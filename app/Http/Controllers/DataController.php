@@ -13,11 +13,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
 use Yajra\DataTables\Facades\DataTables;
-use Alert;
+// use Alert;
 use App\Http\Controllers\Director;
 use PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf;
 use App\Providers\SweetAlertServiceProvider;
 use SweetAlert;
+use RealRashid\SweetAlert\Facades\Alert;
+// or
+// use Alert;ss
 
 
 class DataController extends Controller
