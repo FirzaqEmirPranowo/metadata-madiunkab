@@ -107,7 +107,7 @@ Route::middleware(['role:walidata'])->group(function () {
     Route::get('/data_walidata/verifikasi_data', [DataController::class, 'verifikasi_data'])->name('data_walidata');
     Route::get('/data_walidata/tolak_konfirmasi_walidata', [DataController::class, 'tolak_konfirmasi_walidata'])->name('tolak_konfirmasi_walidata');
     Route::get('/data_walidata/selesai_konfirmasi_walidata', [DataController::class, 'selesai_konfirmasi_walidata'])->name('selesai_konfirmasi_walidata');
-
+    Route::get('/data_walidata/restore/{id}', [DataController::class, 'restore'])->name('data_walidata');
     Route::get('getData', [DataController::class, 'getData'])->name('getData');
 
 

@@ -90,7 +90,7 @@
                   <th scope="col">Sumber</th>
                   <th scope="col">Dibuat</th>
                   <th scope="col">Status</th>
-                  <th scope="col">Opsi</th>
+                  {{-- <th scope="col">Opsi</th> --}}
                 </tr>
               </thead>
               <tbody>
@@ -140,11 +140,15 @@
                   @elseif(Auth::user()->role_id == '2')
                   <div class="btnConfirm" style="margin-bottom: 0;">
                     {{-- <a href="/data_walidata/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a> --}}
-                    <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_walidata/destroy/'.$dt->id) }}">
+                    {{-- <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_walidata/destroy/'.$dt->id) }}">
                               
                       
                       <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i></button>
                   </form>
+                  <form onsubmit="return confirm('Apakah anda yakin merestore data : {{ $dt->nama_data }} ?');" action="{{ url('/data_walidata/restore/'.$dt->id) }}">
+                             
+                    <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-arrow-repeat"></i></button>
+                  </form> --}}
                     </div>
                     @elseif(Auth::user()->role_id == '3')
                     {{-- <div class="btnConfirm" style="margin-bottom: 0;">

@@ -2,6 +2,7 @@
 @section('content')
 
 <div class="pagetitle">
+  @include('sweetalert::alert')
     <h1>Daftar Data</h1>
     <nav>
       <ol class="breadcrumb">
@@ -55,8 +56,11 @@
                   <!-- Table with stripped rows -->
                   
                   @if($draft == "0")
-                  <a href="{{ url('/data_produsen/export-pdf') }}" class="btn btn-md btn-danger mb-3 float-right" target="_blank">Unduh Berita Acara</a>
-
+                  {{-- <a href="{{ url('/data_produsen/export-pdf') }}" class="btn btn-md btn-danger mb-3 float-right" target="_blank">Unduh Berita Acara</a> --}}
+                  <form id="berita-acara" action="{{ url('/data_produsen/export-pdf') }}" >
+                      
+                    <button type="button" class="btn btn-sm btn-success" onclick="confirmBeritacara('berita-acara')"><i class="bi bi-download"></i> Unduh Berita Acara</button>
+                  </form>
                   @elseif($draft >= "0")
                   
                   <a href="" class="btn btn-md btn-danger mb-3 float-right" data-bs-toggle="modal" data-bs-target="#beritaacara">Unduh Berita Acara</a>
@@ -91,7 +95,7 @@
                   <th scope="col">Dibuat</th>
                   <th scope="col">Status</th>
                   <th scope="col">Alasan</th>
-                  <th scope="col">Opsi</th>
+                  {{-- <th scope="col">Opsi</th> --}}
                 </tr>
               </thead>
               <tbody>
@@ -167,10 +171,10 @@
                           
                           <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></button>
                         </form> --}}
-                        <form onsubmit="return confirm('Apakah anda Menghapus data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/destroy/'. ($dt->id) ) }}">
+                        {{-- <form onsubmit="return confirm('Apakah anda Menghapus data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/destroy/'. ($dt->id) ) }}">
                           
                           <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
-                        </form>
+                        </form> --}}
                         {{-- @if($dt->user_id != Auth::user()->id)
                         <form onsubmit="return confirm('Apakah anda Menyetujui data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/setuju/'. ($dt->id)) }}">
                              
@@ -228,5 +232,27 @@ function filterFunction() {
   }
 }
     </script>
+    <script type="text/javascript">
+      function confirmBeritacara(item_id) {
+       swal({
+                  title: 'Apakah Anda Yakin Mengunduh Berita Acara?',
+                   text: "Anda Akan Mengunduh Berita Acara!",
+                   type: 'warning',
+                   showCancelButton: true,
+                   confirmButtonColor: '#3085d6',
+                   cancelButtonColor: '#d33',
+                   confirmButtonText: 'Yes, delete it!'
+             })
+                 .then((willDelete) => {
+                     if (willDelete) {
+                         $('#'+item_id).submit();
+                     } else {
+                         swal("Cancelled Successfully");
+                     }
+                 });
+       };
+    
+    </script>
+    
 
 @endsection

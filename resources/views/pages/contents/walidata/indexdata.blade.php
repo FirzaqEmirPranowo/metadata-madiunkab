@@ -1,7 +1,10 @@
 @extends('pages.main.layout')
 @section('content')
 
+
+
 <div class="pagetitle">
+                @include('sweetalert::alert')
     <h1>Daftar Data</h1>
     <nav>
       <ol class="breadcrumb">
@@ -140,11 +143,16 @@
                   @elseif(Auth::user()->role_id == '2')
                   <div class="btnConfirm" style="margin-bottom: 0;">
                     <a href="{{ route('edit_walidata',['id'=>$dt->id])  }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
-                    <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_walidata/destroy/'.$dt->id) }}">
+                    {{-- <form  action="{{ url('/data_walidata/destroy/'.$dt->id) }}">
                               
                       
-                      <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i></button>
+                      <button type="submit" class="btn btn-sm btn-danger delete"><i class="bi bi-x-square"></i></button>
+                    </form> --}}
+                    <form id="delete-pegawai" action=" {{ url('/data_walidata/destroy/'.$dt->id) }}" >
+                      
+                      <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('delete-pegawai')"><i class="bi bi-x-square"></i></button>
                   </form>
+                    
                     </div>
                     @elseif(Auth::user()->role_id == '3')
                     {{-- <div class="btnConfirm" style="margin-bottom: 0;">
@@ -225,6 +233,28 @@ function filterFunction() {
     }
   }
 }
-    </script>
+</script>
+
+<script type="text/javascript">
+     function confirmDelete(item_id) {
+      swal({
+                 title: 'Apakah Anda Yakin Menghapus Data?',
+                  text: "Anda Tidak Akan Dapat Mengembalikannya!",
+                  type: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes, delete it!'
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $('#'+item_id).submit();
+                    } else {
+                        swal("Cancelled Successfully");
+                    }
+                });
+      };
+  
+</script>
 
 @endsection
