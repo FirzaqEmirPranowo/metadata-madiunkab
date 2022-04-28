@@ -168,7 +168,10 @@
                           
                           <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-circle"></i></button>
                         </form> --}}
-                        
+                        <form  action="{{ url('/data_walidata/edit/'.($dt->id)) }}">
+                          
+                          <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></button>
+                        </form>
                         
                         @endif
                     </td>
