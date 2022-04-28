@@ -25,11 +25,16 @@
     .ttd{
       padding-left: 300px;
     }
+    .tbl{
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
     
   </style>
+  
 </head>
 <body>
-  <table>
+  <table >
     <tr>
       <td><img src="require(http://metadata-dev.pttati.co.id/assets/img/logo.png)" width="120px" height="150px" alt=""></td>
       <td class="kop">
@@ -74,6 +79,9 @@
       <td><font width="100px"> Daftar Data dan Data Prioritas Perangkat Daerah Tahun X sebagaimana 
         <br>
         tercantum dalam LAMPIRAN berita acara ini.</font></td>
+    </tr> 
+    <tr>
+      <td></td>
     </tr>
     <br>
     <tr>
@@ -166,10 +174,10 @@
 
 <div class="page-break"></div>
 <h1>LAMPIRAN</h1>
-<table align="center" class="table datatable">
+<table  class="tbl" cellpadding="10" border="1 solid">
     <thead>
       <tr>
-        <th width="100px" scope="col">#</th>
+        <th width="100px" scope="col">Nomor</th>
         <th width="100px" scope="col">Nama Data</th>
         <th width="100px" scope="col">Produsen (PIC)</th>
         <th width="100px" scope="col">Jenis</th>

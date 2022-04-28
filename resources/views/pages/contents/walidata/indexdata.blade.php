@@ -142,16 +142,26 @@
                   {{-- </div> --}}
                   @elseif(Auth::user()->role_id == '2')
                   <div class="btnConfirm" style="margin-bottom: 0;">
-                    <a href="{{ route('edit_walidata',['id'=>$dt->id])  }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                    <table>
+                      <tr>
+                        <td>
+                          <a href="{{ route('edit_walidata',['id'=>$dt->id])  }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                        </td>
+                        <td>
+                          <form id="delete-pegawai" action=" {{ url('/data_walidata/destroy/'.$dt->id) }}" >
+                      
+                            <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('delete-pegawai')"><i class="bi bi-x-square"></i></button>
+                        </form>
+                        </td>
+                      </tr>
+                    </table>
+                    
                     {{-- <form  action="{{ url('/data_walidata/destroy/'.$dt->id) }}">
                               
                       
                       <button type="submit" class="btn btn-sm btn-danger delete"><i class="bi bi-x-square"></i></button>
                     </form> --}}
-                    <form id="delete-pegawai" action=" {{ url('/data_walidata/destroy/'.$dt->id) }}" >
-                      
-                      <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('delete-pegawai')"><i class="bi bi-x-square"></i></button>
-                  </form>
+                   
                     
                     </div>
                     @elseif(Auth::user()->role_id == '3')
@@ -244,6 +254,7 @@ function filterFunction() {
                   showCancelButton: true,
                   confirmButtonColor: '#3085d6',
                   cancelButtonColor: '#d33',
+                  buttons: true,
                   confirmButtonText: 'Yes, delete it!'
             })
                 .then((willDelete) => {
