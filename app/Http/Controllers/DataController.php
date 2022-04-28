@@ -16,6 +16,8 @@ use Yajra\DataTables\Facades\DataTables;
 use Alert;
 use App\Http\Controllers\Director;
 use PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf;
+use App\Providers\SweetAlertServiceProvider;
+use SweetAlert;
 
 
 class DataController extends Controller
