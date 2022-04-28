@@ -90,7 +90,7 @@
                   <th scope="col">Sumber</th>
                   <th scope="col">Dibuat</th>
                   <th scope="col">Status</th>
-                  {{-- <th scope="col">Opsi</th> --}}
+                  <th scope="col">Opsi</th>
                 </tr>
               </thead>
               <tbody>
@@ -149,6 +149,10 @@
                              
                     <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-arrow-repeat"></i></button>
                   </form> --}}
+                  <form id="restore-data" action="{{ url('/data_walidata/restore/'.$dt->id) }}" >
+                      
+                    <button type="button" class="btn btn-sm btn-success" onclick="confirmRestore('restore-data')"><i class="bi bi-arrow-repeat"></i></button>
+                </form>
                     </div>
                     @elseif(Auth::user()->role_id == '3')
                     {{-- <div class="btnConfirm" style="margin-bottom: 0;">
@@ -229,6 +233,28 @@ function filterFunction() {
     }
   }
 }
+    </script>
+    <script type="text/javascript">
+      function confirmRestore(item_id) {
+       swal({
+                  title: 'Apakah Anda Yakin Mengembalikan Data Menjadi DRAFT?',
+                   text: "Anda akan mengembalikan data menjadi status Draft!",
+                   type: 'warning',
+                   showCancelButton: true,
+                   confirmButtonColor: '#3085d6',
+                   cancelButtonColor: '#d33',
+                   buttons: true,
+                   confirmButtonText: 'Yes, delete it!'
+             })
+                 .then((willDelete) => {
+                     if (willDelete) {
+                         $('#'+item_id).submit();
+                     } else {
+                         swal("Cancelled Successfully");
+                     }
+                 });
+       };
+    
     </script>
 
 @endsection
