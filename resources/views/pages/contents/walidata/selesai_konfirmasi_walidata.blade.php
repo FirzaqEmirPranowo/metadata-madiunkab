@@ -19,7 +19,7 @@
           <div class="card-body">
             <h5 class="card-title">Daftar Data</h5>
             
-            <a 
+            {{-- <a 
             @if(Auth::user()->role_id == '1')
             href="/data_superadmin/create"
             @elseif(Auth::user()->role_id == '2')
@@ -28,9 +28,9 @@
             href="/data_produsen/create"
             @endif
             class="btn btn-md btn-primary mb-3 float-right">Tambah
-                Data</a>
+                Data</a> --}}
 
-                <a href="" class="btn btn-md btn-warning mb-3 float-right" data-bs-toggle="modal" data-bs-target="#basicModal">Import Excel</a>
+                {{-- <a href="" class="btn btn-md btn-warning mb-3 float-right" data-bs-toggle="modal" data-bs-target="#basicModal">Import Excel</a> --}}
                 <!-- Table with stripped rows -->
                   <div class="modal fade" id="basicModal" tabindex="-1">
                     <div class="modal-dialog">
