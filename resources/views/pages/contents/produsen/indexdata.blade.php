@@ -1,9 +1,9 @@
 @extends('pages.main.layout')
-@include('sweetalert::alert')
+
 @section('content')
 
 <div class="pagetitle">
-  
+  @include('sweetalert::alert')
     <h1>Daftar Data</h1>
     <nav>
       <ol class="breadcrumb">
