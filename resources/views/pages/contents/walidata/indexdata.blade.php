@@ -148,9 +148,9 @@
                           <a href="{{ route('edit_walidata',['id'=>$dt->id])  }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
                         </td>
                         <td>
-                          <form id="delete-pegawai" action=" {{ url('/data_walidata/destroy/'.$dt->id) }}" >
+                          <form id="delete-pegawai-{{ $dt->id }}" action=" {{ url('/data_walidata/destroy/'.$dt->id) }}" >
                       
-                            <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('delete-pegawai')"><i class="bi bi-x-square"></i></button>
+                            <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('delete-pegawai-{{ $dt->id }}')"><i class="bi bi-trash"></i></button>
                         </form>
                         </td>
                       </tr>
@@ -261,7 +261,7 @@ function filterFunction() {
                     if (willDelete) {
                         $('#'+item_id).submit();
                     } else {
-                        swal("Cancelled Successfully");
+                        // swal("Cancelled Successfully");
                     }
                 });
       };

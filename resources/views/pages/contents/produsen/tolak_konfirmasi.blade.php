@@ -1,4 +1,15 @@
 @extends('pages.main.layout')
+<style>
+  #myScrollTable tbody{
+  clear:both;
+  border:0px solid 3FF6600;
+  /* height:300px; */
+  overflow:auto;
+  float:center;
+  width:400px;
+  /* background:#E2E6E7; */
+  }
+  </style>
 @section('content')
 
 <div class="pagetitle">
@@ -59,11 +70,11 @@
                   {{-- <a href="{{ url('/data_produsen/export-pdf') }}" class="btn btn-md btn-danger mb-3 float-right" target="_blank">Unduh Berita Acara</a> --}}
                   <form id="berita-acara" action="{{ url('/data_produsen/export-pdf') }}" >
                       
-                    <button type="button" class="btn btn-sm btn-success" onclick="confirmBeritacara('berita-acara')"><i class="bi bi-download"></i> Unduh Berita Acara</button>
+                    {{-- <button type="button" class="btn btn-sm btn-success" onclick="confirmBeritacara('berita-acara')"><i class="bi bi-download"></i> Unduh Berita Acara</button> --}}
                   </form>
                   @elseif($draft >= "0")
                   
-                  <a href="" class="btn btn-md btn-danger mb-3 float-right" data-bs-toggle="modal" data-bs-target="#beritaacara">Unduh Berita Acara</a>
+                  {{-- <a href="" class="btn btn-md btn-danger mb-3 float-right" data-bs-toggle="modal" data-bs-target="#beritaacara">Unduh Berita Acara</a> --}}
                   <div class="modal fade" id="beritaacara" tabindex="-1">
                     <div class="modal-dialog">
                       <div class="modal-content">
@@ -84,7 +95,8 @@
                   @endif 
                   @endif
             <!-- Table with stripped rows -->
-            <table class="table datatable">
+            <div class="dataTable-container">
+            <table id="myScrollTable" class="table datatable">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -117,7 +129,18 @@
                     <span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i>{{ $dt->status }}</span>
                     @endif
                   </td>
-                  <td>{{ $dt->alasan }}</td>
+               
+                  <td>
+                  {{-- <a id="alasan" class="btn btn-primary" data-toggle="modal" data-target="#alasandetail" data-alasan="{{ $dt->alasan }}"><i class="bi bi-download"></i></a>
+              {{ $dt->alasan }} --}}
+              {{-- <a href="#" value="/data_superadmin/edit/{{ $dt->id }}" class="btn btn-xs btn-info modalMd" title="Show Data" data-toggle="modal" data-target="#modalMd"><i class="bi bi-download"></i></a> --}}
+              <form id="detail-alasan">
+
+                <button type="button" class="btn btn-sm btn-primary btn-detail" data-alasan="{{ $dt->alasan }}"><i class="bi bi-eye-fill"></i></button>
+              </form>
+              
+              {{-- confirmHTML --}}
+            </td>
                   <td>
                     @if(Auth::user()->role_id == '1')
                     {{-- <div class="btnConfirm" style="margin-bottom: 0;"> --}}
@@ -200,7 +223,8 @@
                   @endforeach
               </tbody>
             </table>
-            <!-- End Table with stripped rows -->
+          </div>
+          
 
           </div>
         </div>
@@ -209,28 +233,48 @@
     </div>
   </section>
   
+  
+
+@endsection
+
+
+@push('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
   <script>
    /* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
-
-function filterFunction() {
-  var input, filter, ul, li, a, i;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  div = document.getElementById("myDropdown");
-  a = div.getElementsByTagName("a");
-  for (i = 0; i < a.length; i++) {
-    txtValue = a[i].textContent || a[i].innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      a[i].style.display = "";
-    } else {
-      a[i].style.display = "none";
+    toggle between hiding and showing the dropdown content */
+    function myFunction() {
+      document.getElementById("myDropdown").classList.toggle("show");
     }
-  }
-}
+
+    function filterFunction() {
+      var input, filter, ul, li, a, i;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      div = document.getElementById("myDropdown");
+      a = div.getElementsByTagName("a");
+      for (i = 0; i < a.length; i++) {
+        txtValue = a[i].textContent || a[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          a[i].style.display = "";
+        } else {
+          a[i].style.display = "none";
+        }
+      }
+    }
+    </script>
+
+    <script>
+      $(document).ready(function() {
+        var table = $('#tabel-data').DataTable( {
+        scrollY: "300px",
+        scrollX: true,
+        scrollCollapse: true
+
+        } );
+      } );
     </script>
     <script type="text/javascript">
       function confirmBeritacara(item_id) {
@@ -244,16 +288,25 @@ function filterFunction() {
                    buttons: true,
                    confirmButtonText: 'Yes, delete it!'
              })
-                 .then((willDelete) => {
-                     if (willDelete) {
-                         $('#'+item_id).submit();
-                     } else {
-                         swal("Cancelled Successfully");
-                     }
-                 });
+                
        };
     
     </script>
+    <script type="text/javascript">
+       $('.btn-detail').click(function(){
+         let alasan=$(this).data('alasan')
+         swal({
+                  title: 'Alasan',
+                   text: alasan,
+                   type: 'warning',
+                   showCancelButton: true,
+                   confirmButtonColor: '#3085d6',
+                   cancelButtonColor: '#d33',
+                  //  buttons: true,
+                   confirmButtonText: 'Yes, delete it!'
+             })
+       })
+    </script>
     
-
-@endsection
+    
+@endpush  

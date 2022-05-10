@@ -36,6 +36,8 @@ class UserController extends Controller
         $opd = Opd::all();
         $role = Role::all();
         $data = User::with('opd')->with('role')->get();
+
+
         // dd($data);
         return view('pages.contents.superadmin.createuser', (compact('data', 'opd', 'role')));
     }
@@ -52,32 +54,38 @@ class UserController extends Controller
         if ($request->role_id == '1') {
             $superadmin = User::create([
                 'name' => $request->nama,
+                'username' => $request->username,
                 'email' => $request->email,
                 'password' => Hash::make('12345678'),
                 'role_id' => $request->role_id,
                 'opd_id' => $request->opd_id,
             ]);
             $superadmin->assignRole('superadmin');
+            activity()->log('Membuat User');
             return redirect('/user');
         } elseif ($request->role_id == '2') {
             $walidata = User::create([
                 'name' => $request->nama,
+                'username' => $request->username,
                 'email' => $request->email,
                 'password' => Hash::make('12345678'),
                 'role_id' => $request->role_id,
                 'opd_id' => $request->opd_id,
             ]);
             $walidata->assignRole('walidata');
+            activity()->log('Membuat User');
             return redirect('/user');
         } elseif ($request->role_id == '3') {
             $produsen = User::create([
                 'name' => $request->nama,
+                'username' => $request->username,
                 'email' => $request->email,
                 'password' => Hash::make('12345678'),
                 'role_id' => $request->role_id,
                 'opd_id' => $request->opd_id,
             ]);
             $produsen->assignRole('produsen');
+            activity()->log('Membuat User');
             return redirect('/user');
         }
     }
@@ -123,31 +131,37 @@ class UserController extends Controller
             $user->update([
                 'name' => $request->nama,
                 'email' => $request->email,
+                'username' => $request->username,
                 'password' => Hash::make('12345678'),
                 'role_id' => $request->role_id,
                 'opd_id' => $request->opd_id,
             ]);
             $user->assignRole('superadmin');
+            activity()->log('Update User');
             return redirect('/user');
         } elseif ($request->role_id == '2') {
             $user->update([
                 'name' => $request->nama,
                 'email' => $request->email,
+                'username' => $request->username,
                 'password' => Hash::make('12345678'),
                 'role_id' => $request->role_id,
                 'opd_id' => $request->opd_id,
             ]);
             $user->assignRole('walidata');
+            activity()->log('Update User');
             return redirect('/user');
         } elseif ($request->role_id == '3') {
             $user->update([
                 'name' => $request->nama,
+                'username' => $request->username,
                 'email' => $request->email,
                 'password' => Hash::make('12345678'),
                 'role_id' => $request->role_id,
                 'opd_id' => $request->opd_id,
             ]);
             $user->assignRole('produsen');
+            activity()->log('Update User');
             return redirect('/user');
         };
     }
@@ -163,7 +177,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         // dd($user);
         $user->delete();
-
+        activity()->log('Mengapus User');
         return redirect('/user');
     }
 }

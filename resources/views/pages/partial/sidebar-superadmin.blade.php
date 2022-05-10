@@ -39,6 +39,12 @@
         </a>
       </li><!-- End Blank Page Nav -->
       <li class="nav-item">
+        <a class="nav-link collapsed" href="/upload-download">
+          <i class="bi bi-person-lines-fill"></i>
+          <span>uploda/download</span>
+        </a>
+      </li><!-- End Blank Page Nav -->
+      <li class="nav-item">
         <a class="nav-link collapsed" href="/user">
           <i class="bi bi-people-fill"></i>
           <span>Kelola User</span>

@@ -28,6 +28,12 @@
     .tbl{
       border: 1px solid black;
       border-collapse: collapse;
+      Posisi : Relative,
+      Border : Collapse,
+      Widht   : Max-width,
+      Margin : auto (otomatis),
+      Padding : 10px,
+      Text-Align : center,
     }
     
   </style>
@@ -36,7 +42,7 @@
 <body>
   <table >
     <tr>
-      <td><img src="require(http://metadata-dev.pttati.co.id/assets/img/logo.png)" width="120px" height="150px" alt=""></td>
+      <td><img src="<?php echo $pict ?>" width="120px" height="150px" alt=""></td>
       <td class="kop">
         <font size="5"><b>PEMERINTAH KABUPATEN MADIUN</b></font>
         <font size="7"><b>SEKERTARIAT DAERAH</b></font><br>
@@ -56,7 +62,7 @@
         <font size="3"><b>BERITA ACARA</b></font> <br>
         <font size="3"><b>HASIL KESEPAKATAN</b></font><br>
         <font size="3"><b>PENYUSUNAN DAFTAR DATA DAN DATA PRIORITAS</b></font><br>
-        <font size="3"><b>PERANGKAT DAERAH TAHUN 2022</b></font><br>
+        <font size="3"><b>PERANGKAT DAERAH TAHUN {{ $tahun }}</b></font><br>
       </td>
     </tr>
   </table>  
@@ -65,7 +71,7 @@
     <tr>
     <td class="">
         <font size="3">Pada hari {{ $hari }} tanggal {{ $tgl }} bulan {{ $bln }} Tahun {{ $tahun }} bertempat di Madiun telah diselenggarakan penyepakatan Daftar
-        Data dan Data Prioritas dengan Perwakilan Perangkat Daerah.</font> <br>
+        Data dan Data Prioritas dengan @foreach($opd as $nama) {{ $nama -> nama_opd }}@endforeach.</font> <br>
         <br>
         <font size="3">MENYEPAKATI</font>
       </td>
@@ -76,8 +82,7 @@
     <tr>
       <td><font size="3">KESATU</font></td>
       <td><font width="100px"> :</font></td>
-      <td><font width="100px"> Daftar Data dan Data Prioritas Perangkat Daerah Tahun X sebagaimana 
-        <br>
+      <td style="padding-top:20px"><font width="100px"> Daftar Data dan Data Prioritas @foreach($opd as $nama) {{ $nama -> nama_opd }}@endforeach sebagaimana 
         tercantum dalam LAMPIRAN berita acara ini.</font></td>
     </tr> 
     <tr>
@@ -87,16 +92,14 @@
     <tr>
       <td><font size="3">KEDUA</font></td>
       <td><font width="100px"> :</font></td>
-      <td><font width="100px"> Perangkat Daerah wajib menyediakan data sesuai LAMPIRAN berita acara
-        <br> 
+      <td style="padding-top:20px"><font width="100px"> @foreach($opd as $nama) {{ $nama -> nama_opd }}@endforeach wajib menyediakan data sesuai LAMPIRAN berita acara
         ini sesuai waktu yang telah ditetapkan.</font></td>
     </tr>
     <br>
     <tr>
       <td><font size="3">KETIGA</font></td>
       <td><font width="100px"> :</font></td>
-      <td><font width="100px"> Dalam hal pengumpulan data dilaksanakan melaui portal Satu Data 
-        <br>
+      <td style="padding-top:20px"><font width="100px"> Dalam hal pengumpulan data dilaksanakan melaui portal Satu Data 
         Kabupuaten Madiun di laman www.data.madiunkab.go.id</font></td>
     </tr>
   </table>
@@ -113,7 +116,7 @@
   <table align="center" >
     <tr>
     <td >
-      <center><font size="3">Madiun, {{ $tgl }}-{{ $bln }}-{{ $tahun }}</font> <br>
+      <center><font size="3">Madiun, {{ $tgl }} {{ $bln }} {{ $tahun }}</font> <br>
       </center>
          </td>
     </tr>
@@ -127,9 +130,9 @@
         <tr>
         <td >
           <center>
-            <font size="3">Perwakilan Perangkat Daerah
+            <font size="3">@foreach($opd as $nama) {{ $nama -> nama_opd }}@endforeach
             <br>
-            Produsen Data
+            
             <br>
             <br>
             <br>
@@ -148,7 +151,7 @@
         <tr>
         <td >
           <center>
-            <font size="3">Perwakilan Walidata
+            <font size="3">Dinas Komunikasi dan Informatika
             <br>
             <br>
             <br>
@@ -174,14 +177,14 @@
 
 <div class="page-break"></div>
 <h1>LAMPIRAN</h1>
-<table  class="tbl" cellpadding="10" border="1 solid">
+<table  class="tbl" style="margin-left:auto;margin-right:auto" cellpadding="10" border="1 solid" posisi="Relative">
     <thead>
       <tr>
-        <th width="100px" scope="col">Nomor</th>
-        <th width="100px" scope="col">Nama Data</th>
-        <th width="100px" scope="col">Produsen (PIC)</th>
-        <th width="100px" scope="col">Jenis</th>
-        <th width="100px" scope="col">Sumber</th>
+        <th scope="col">No</th>
+        <th scope="col">Nama Data</th>
+        <th scope="col">Produsen (PIC)</th>
+        <th scope="col">Jenis</th>
+        <th scope="col">Sumber</th>
         {{-- <th scope="col">Status</th> --}}
       </tr>
     </thead>
@@ -189,11 +192,11 @@
       <?php $no = 1; ?>
         @foreach($data as $dt)
       <tr>
-        <td width="100px">{{ $no++ }}</td>
-        <td width="100px">{{ $dt->nama_data }}</td>
-        <td width="100px">{{ $dt->opd->nama_opd }}</td>
-        <td width="100px">{{ $dt->jenis_data }}</td>
-        <td width="100px">{{ $dt->sumber_data }}</td>
+        <td>{{ $no++ }}</td>
+        <td>{{ $dt->nama_data }}</td>
+        <td>{{ $dt->opd->nama_opd }}</td>
+        <td>{{ $dt->jenis_data }}</td>
+        <td>{{ $dt->sumber_data }}</td>
         {{-- <td>{{ $dt->status->status }}</td> --}}
       </tr>
         @endforeach

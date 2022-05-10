@@ -46,6 +46,7 @@
               <thead>
                 <tr>
                   <th scope="col">#</th>
+                  <th scope="col">Nama</th>
                   <th scope="col">Username</th>
                   <th scope="col">OPD</th>
                   <th scope="col">Role</th>
@@ -59,6 +60,7 @@
                 <tr>
                   <td>{{ $no++ }}</td>
                   <td>{{ $dt->name }}</td>
+                  <td>{{ $dt->username }}</td>
                   <td>{{ $dt->opd->nama_opd }}</td>
                   <td>{{ $dt->role->name }}</td>
                   <td>{{ $dt->email }}</td>

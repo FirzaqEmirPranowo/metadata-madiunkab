@@ -33,6 +33,12 @@
                 </div>
               </div>
               <div class="row mb-3">
+                <label for="inputText" class="col-sm-2 col-form-label"> Username</label>
+                <div class="col-sm-10">
+                  <input id="username" name="username" type="text" class="form-control" value="{{$byid->username}}">
+                </div>
+              </div>
+              <div class="row mb-3">
                 <label for="inputText" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-10">
                   <input id="email" name="email" type="text" class="form-control"  value="{{ $byid->email }}">

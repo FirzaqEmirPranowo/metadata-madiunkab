@@ -149,9 +149,9 @@
                              
                     <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-arrow-repeat"></i></button>
                   </form> --}}
-                  <form id="restore-data" action="{{ url('/data_walidata/restore/'.$dt->id) }}" >
+                  <form id="restore-data-{{ $dt->id }}" action="{{ url('/data_walidata/restore/'.$dt->id) }}" >
                       
-                    <button type="button" class="btn btn-sm btn-success" onclick="confirmRestore('restore-data')"><i class="bi bi-arrow-repeat"></i></button>
+                    <button type="button" class="btn btn-sm btn-success" onclick="confirmRestore('restore-data-{{ $dt->id }}')"><i class="bi bi-arrow-repeat"></i></button>
                 </form>
                     </div>
                     @elseif(Auth::user()->role_id == '3')
@@ -250,7 +250,7 @@ function filterFunction() {
                      if (willDelete) {
                          $('#'+item_id).submit();
                      } else {
-                         swal("Cancelled Successfully");
+                        //  swal("Cancelled Successfully");
                      }
                  });
        };

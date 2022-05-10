@@ -60,13 +60,13 @@
                   {{-- <a href="{{ url('/data_produsen/export-pdf') }}" class="btn btn-md btn-danger mb-3 float-right" target="_blank">Unduh Berita Acara</a> --}}
                   <form id="berita-acara" action="{{ url('/data_produsen/export-pdf') }}" >
                       
-                    <button type="button" class="btn btn-sm btn-success" onclick="confirmBeritacara('berita-acara')"><i class="bi bi-download"></i> Unduh Berita Acara</button>
+                    {{-- <button type="button" class="btn btn-sm btn-success" onclick="confirmBeritacara('berita-acara')"><i class="bi bi-download"></i> Unduh Berita Acara</button> --}}
                   </form>
                   @elseif($draft >= "0")
                   
                   <form id="berita-acara" >
                       
-                    <button type="button" class="btn btn-sm btn-danger" onclick="confirmDraft('berita-acara')"><i class="bi bi-download"></i> Unduh Berita Acara</button>
+                    {{-- <button type="button" class="btn btn-sm btn-danger" onclick="confirmDraft('berita-acara')"><i class="bi bi-download"></i> Unduh Berita Acara</button> --}}
                   </form>
                   {{-- <a href="" class="btn btn-md btn-danger mb-3 float-right" data-bs-toggle="modal" data-bs-target="#beritaacara"><i class="bi bi-download"></i> Unduh Berita Acara</a> --}}
                   <div class="modal fade" id="beritaacara" tabindex="-1">
@@ -130,36 +130,60 @@
                         <table>
                           <tr>
                             <td>
-                              <form id="setuju-data" action="{{ url('/data_produsen/setuju/'.encrypt($dt->id)) }}" >
-                                <button type="button" class="btn btn-sm btn-success" onclick="confirmSetuju('setuju-data')"><i class="bi bi-check-circle"></i></button>
+                              <form id="setuju-data-{{ $dt->id }}" action="{{ url('/data_produsen/setuju/'.encrypt($dt->id)) }}" >
+                                <button type="button" class="btn btn-sm btn-success" onclick="confirmSetuju('setuju-data-{{ $dt->id }}')"><i class="bi bi-check-circle"></i></button>
                               </form>
                             </td>
                             <td>
-                              <a href="" class="btn btn-sm btn-danger  float-right" data-bs-toggle="modal" data-bs-target="#alasan"><i class="bi bi-x-circle"></i></a>
-                                <div class="modal fade" id="alasan" tabindex="-1">
-                                  <div class="modal-dialog">
-                                        <div class="modal-content">
-                                          <div class="modal-header">
-                                            <div class="row">
-                                              <h5 class="modal-title">Alasan Penolakan</h5>
-                                              <br>
-                                              <h7 class="modal-title">Pastikan bahwa data yang anda TOLAK bukan merupakan DATA anda!</h7>
-                                              <h7 class="modal-title">Apakah anda sudah yakin untuk menolak? Jika sudah yakin, Silahkan isikan Alasan untuk MENOLAK DATA!</h7>
-                                            </div>
-                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                          </div>
-                                          <div class="modal-body">
-                                              <form action="{{ url('data_produsen/alasan', $dt->id) }}" method="post" enctype="multipart/form-data">
-                                                  @csrf
-                                                  <div class="input-group mb-3">
-                                                      <input type="text" name="alasan" id="alasan" class="form-control" placeholder="Berikan Alasan" aria-label="Berikan Alasan" aria-describedby="button-addon2">
-                                                      <button class="btn btn-primary" type="submit" id="button-addon2">Kirim</button>
-                                                  </div>
-                                              </form>                    
-                                          </div>
-                                        </div>
-                                      </div>
+                              {{-- <form id="detail-alasan">
+                                <button type="button" class="btn btn-sm btn-danger btn-als" data-id="{{ $dt->id }}"><i class="bi bi-x-circle"></i></button>
+                              </form> --}}
+                              
+                              <a href="" class="btn btn-sm btn-danger  float-right" data-bs-toggle="modal" data-bs-target="#verticalycentered-{{ $dt->id }}"><i class="bi bi-x-circle"></i></a>
+                              <!-- Vertically centered Modal -->
+                               {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
+                                 Vertically centered
+                               </button> --}}
+                               <div class="modal fade" id="verticalycentered-{{ $dt->id }}" tabindex="-1">
+                                 <div class="modal-dialog modal-dialog-centered">
+                                   <div class="modal-content">
+                                     <div class="modal-header">
+                                       <h5 class="modal-title" style="font-weight: bold; color:red">TOLAK DATA !</h5>
+                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                     </div>
+                                     <div class="modal-body">
+                                      <h7 class="modal-title"><i class="bi bi-caret-right-fill"></i>Pastikan bahwa data yang anda TOLAK bukan atau tidak sesuai dengan DATA anda!</h7>
+                                      <br>
+                                      <h7 class="modal-title"><i class="bi bi-caret-right-fill"></i>Apakah anda sudah yakin untuk menolak? Jika sudah yakin, Silahkan isikan Alasan untuk MENOLAK DATA!</h7>
+                                     </div>
+                                     <div class="modal-footer">
+                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#alasan">Ok</button>
+                                     </div>
+                                   </div>
+                                 </div>
+                               </div><!-- End Vertically centered Modal-->
+                              {{-- modal input --}}
+                              <div class="modal fade" id="alasan" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title">Alasan Penolakan</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
+                                    <div class="modal-body">
+                                      <form action="{{ url('data_produsen/alasan', $dt->id) }}" method="post" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="input-group mb-3">
+                                            <input type="text" name="alasan" id="alasan" class="form-control" placeholder="Berikan Alasan" aria-label="Berikan Alasan" aria-describedby="button-addon2">
+                                            <button class="btn btn-primary" type="submit" id="button-addon2">Kirim</button>
+                                        </div>
+                                    </form> 
+                                    </div>
+                                   
+                                  </div>
+                                </div>
+                              </div>
                             </td>
                             <td>
                               <form  action="{{ url('/data_produsen/edit/'.($dt->id)) }}">
@@ -191,6 +215,12 @@
     </div>
   </section>
   
+
+  @push('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+ 
   <script>
    /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
@@ -230,38 +260,17 @@ function filterFunction() {
   // dangerMode: true,
                confirmButtonText: 'Yes, delete it!'
          })
-             .then((willDelete) => {
-                 if (willDelete) {
-                     $('#'+item_id).submit();
-                 } else {
-                     swal("Cancelled Successfully");
-                 }
-             });
+              .then((willDelete) => {
+                  if (willDelete) {
+                      $('#'+item_id).submit();
+                  } else {  
+                      // swal("Cancelled Successfully");
+                  }
+              });
    };
 
 </script>
-<script type="text/javascript">
-  function confirmTolak(item_id) {
-   swal({
-              title: 'Apakah Anda Yakin Menghapus Data?',
-               text: "Anda Tidak Akan Dapat Mengembalikannya!",
-               type: 'warning',
-               showCancelButton: true,
-               confirmButtonColor: '#3085d6',
-               cancelButtonColor: '#d33',
-               buttons: true,
-               confirmButtonText: 'Yes, delete it!'
-         })
-             .then((willDelete) => {
-                 if (willDelete) {
-                     $('#'+item_id).submit();
-                 } else {
-                     swal("Cancelled Successfully");
-                 }
-             });
-   };
 
-</script>
 <script type="text/javascript">
   function confirmBeritacara(item_id) {
    swal({
@@ -278,7 +287,7 @@ function filterFunction() {
                  if (willDelete) {
                      $('#'+item_id).submit();
                  } else {
-                     swal("Cancelled Successfully");
+                    //  swal("Cancelled Successfully");
                  }
              });
    };
@@ -301,11 +310,12 @@ function filterFunction() {
                  if (willDelete) {
                      $('#'+item_id).submit();
                  } else {
-                     swal("Cancelled Successfully");
+                    //  swal("Cancelled Successfully");
                  }
              });
    };
 
 </script>
+@endpush 
 
 @endsection
