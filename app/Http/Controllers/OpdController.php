@@ -39,6 +39,7 @@ class OpdController extends Controller
         Opd::create([
             'nama_opd' => $request->nama_opd,
         ]);
+        activity()->log('Menambahkan OPD');
         return redirect('/opd');
     }
 
@@ -79,6 +80,8 @@ class OpdController extends Controller
         $user->update([
             'nama_opd' => $request->nama_opd,
         ]);
+        activity()->log('Mengedit OPD');
+
         return redirect('/opd');
     }
 
@@ -93,7 +96,7 @@ class OpdController extends Controller
         $user = Opd::findOrFail($id);
         // dd($user);
         $user->delete();
-
+        activity()->log('Menghapus OPD');
         return redirect('/opd');
     }
 }

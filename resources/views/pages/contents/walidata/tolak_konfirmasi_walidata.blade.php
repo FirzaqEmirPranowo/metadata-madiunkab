@@ -113,7 +113,12 @@
                     <span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i>{{ $dt->status }}</span>
                     @endif
                   </td>
-                  <td>{{ $dt->alasan }}</td>
+                  <td>
+                    <form id="detail-alasan">
+
+                    <button type="button" class="btn btn-sm btn-primary btn-detail" data-alasan="{{ $dt->alasan }}"><i class="bi bi-eye-fill"></i></button>
+                  </form>
+                </td>
                   <td>
                     @if(Auth::user()->role_id == '1')
                     {{-- <div class="btnConfirm" style="margin-bottom: 0;"> --}}
@@ -151,9 +156,9 @@
                              
                     <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-arrow-repeat"></i></button>
                   </form> --}}
-                  <form id="restore-data" action="{{ url('/data_walidata/restore/'.$dt->id) }}" >
+                  <form id="restore-data-{{ $dt->id }}" action="{{ url('/data_walidata/restore/'.$dt->id) }}" >
                       
-                    <button type="button" class="btn btn-sm btn-success" onclick="confirmRestore('restore-data')"><i class="bi bi-arrow-repeat"></i></button>
+                    <button type="button" class="btn btn-sm btn-success" onclick="confirmRestore('restore-data-{{ $dt->id }}')"><i class="bi bi-arrow-repeat"></i></button>
                 </form>
                     </div>
                     @elseif(Auth::user()->role_id == '3')
@@ -212,7 +217,11 @@
       </div>
     </div>
   </section>
-  
+  @endsection
+  @push('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
   <script>
    /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
@@ -237,7 +246,7 @@ function filterFunction() {
 }
     </script>
 <script type="text/javascript">
-  function confirmRestore(item_id) {
+  function confirmRestore(form_id) {
    swal({
               title: 'Apakah Anda Yakin Mengembalikan Data Menjadi DRAFT?',
                text: "Anda akan mengembalikan data menjadi status Draft!",
@@ -250,12 +259,27 @@ function filterFunction() {
          })
              .then((willDelete) => {
                  if (willDelete) {
-                     $('#'+item_id).submit();
+                     $('#'+form_id).submit();
                  } else {
-                     swal("Cancelled Successfully");
+                     
                  }
              });
    };
 
 </script>
-@endsection
+<script type="text/javascript">
+  $('.btn-detail').click(function(){
+    let alasan=$(this).data('alasan')
+    swal({
+             title: 'Alasan',
+              text: alasan,
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+             //  buttons: true,
+              confirmButtonText: 'Yes, delete it!'
+        })
+  })
+</script>
+@endpush  

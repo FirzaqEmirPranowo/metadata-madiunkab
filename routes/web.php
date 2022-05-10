@@ -5,6 +5,7 @@ use App\Http\Controllers\DataController;
 use App\Http\Controllers\OpdController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PortalController;
+use App\Http\Controllers\UpdownloadController;
 use App\Imports\OpdImport;
 use App\Imports\DataImport;
 use App\Imports\UserImport;
@@ -86,6 +87,9 @@ Route::middleware(['role:superadmin'])->group(function () {
         Excel::import(new UserImport, request()->file('file'));
         return back();
     });
+
+
+    Route::get('/upload-download', [UpdownloadController::class, 'index'])->name('user');
 });
 
 Route::middleware(['role:walidata'])->group(function () {
@@ -129,6 +133,7 @@ Route::middleware('role:produsen')->group(function () {
     Route::get('/data_produsen/destroy/{id}', [DataController::class, 'destroy'])->name('data_produsen');
     Route::get('/data_produsen/setuju/{id}', [DataController::class, 'setuju'])->name('data_produsen');
     Route::get('/data_produsen/tolak/{id}', [DataController::class, 'tolak'])->name('data_produsen');
+    Route::get('/data_produsen/show/{id}', [DataController::class, 'show'])->name('data_produsen');
     Route::get('/data_produsen/export-pdf', [DataController::class, 'pdf'])->name('data_produsen');
     Route::get('/data_produsen/selesai_konfirmasi', [DataController::class, 'selesai_konfirmasi'])->name('setuju');
     Route::get('/data_produsen/tolak_konfirmasi', [DataController::class, 'tolak_konfirmasi'])->name('tolak');

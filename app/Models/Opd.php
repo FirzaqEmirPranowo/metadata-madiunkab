@@ -37,4 +37,9 @@ class Opd extends Model
     {
         return Opd::where('id', '=', Auth::user()->opd_id)->get();
     }
+
+    public function get_namaopd()
+    {
+        return Opd::where('id', '=', Auth::user()->opd_id)->select('nama_opd')->get();
+    }
 }
