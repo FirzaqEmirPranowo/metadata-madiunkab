@@ -7,7 +7,7 @@
     <h1>Daftar Data</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
         <li class="breadcrumb-item">Daftar Data</li>
       </ol>
     </nav>
@@ -23,7 +23,7 @@
             
             {{-- <a 
             @if(Auth::user()->role_id == '1')
-            href="/data_superadmin/create"
+            href="/data_administrator/create"
             @elseif(Auth::user()->role_id == '2')
             href="/data_walidata/create"
             @elseif(Auth::user()->role_id == '3')

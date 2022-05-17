@@ -16,4 +16,9 @@ class ActivityLog extends Model
     {
         return $this->belongsTo(User::class, 'causer_id');
     }
+
+    public function data()
+    {
+        return $this->hasMany(Data::class);
+    }
 }

@@ -10,7 +10,7 @@
   <h1>Daftar Data</h1>
   <nav>
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+      <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
       <li class="breadcrumb-item">Daftar Data</li>
     </ol>
   </nav>
@@ -26,7 +26,7 @@
 
           {{-- <a 
             @if(Auth::user()->role_id == '1')
-            href="/data_superadmin/create"
+            href="/data_administrator/create"
             @elseif(Auth::user()->role_id == '2')
             href="/data_walidata/create"
             @elseif(Auth::user()->role_id == '3')
@@ -71,9 +71,31 @@
                             @endforeach
                           </select>
                         </div>
-                        <div class="col-4 d-flex">
-                          <button class="btn btn-primary mx-2" type="button" onclick="getData()"> Cari </button>
-                          <button class="btn btn-success" onclick="confirmBeritacara('berita-acara')" type="submit"><i class="bi bi-download"></i> Unduh Data </button>
+                        <div class="col-4 d-flex" id="action-buttons">
+                          <button class="btn btn-primary mx-2" type="button" href="/draft" onclick="getData()"> Cari </button>
+                          
+                          <button class="btn btn-success" id="btnijo" onclick="confirmBeritacara('berita-acara')" type="submit"><i class="bi bi-download"></i> Unduh Data </button>
+                         
+                          <a href="" class="btn btn-md btn-danger mb-3 float-right" id="btnred" data-bs-toggle="modal" data-bs-target="#beritaacara">Unduh Berita Acara</a>
+                         
+                          <div class="modal fade" id="beritaacara" tabindex="-1">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title">Unduh Berita Acara</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      Anda belum bisa mengunduh berita acara dikarenakan masih ada DATA yang berstatus DRAFT
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                    
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                         
                         </div>
                       </div>
                     </form>
@@ -83,7 +105,7 @@
           <table class="table" id="datatable">
             <thead>
               <tr>
-                <th scope="col">#</th>
+                <th scope="col">No</th>
                 <th scope="col">Nama Data</th>
                 <th scope="col">Produsen (PIC)</th>
                 <th scope="col">Jenis</th>
@@ -117,22 +139,52 @@
   // $(document).ready(function() {
   //   load('all');
   // });
-  
+  $( document ).ready(function() {
+      $('#btnijo').hide();
+      $('#btnred').hide();
+    });
+
   function load(id) {
+    if (id == 'all') {
+      $url= `{{ route('getData') }}`
+    }else{
+      $url= `{{ route('getData') }}?id=${id}`
+    }
+    
+
     $('#datatable').dataTable({
       "ordering": false,
       bDestroy: true,
       ajax: {
-        url: "{{ route('getData') }}",
-        data: {id:id}
+
+        url: $url,
+        data: {id:id},
+        "dataSrc" : function (json){
+          console.log(json.extra);
+          if(json.draft_counter == 0){
+            $('#btnijo').show();
+            $('#btnred').hide();
+          }
+          else{
+            $('#btnred').show();
+            $('#btnijo').hide();
+          }
+          return json.data;
+        }
+        
       },
+      
       columns: [
       {
         data: null,
         searchable: false,
         orderable: false,
-        render: function (data, type, row, meta) {
+        render: function (data, type, row, meta, draft_counter  ) {
+       
+         
           return meta.row + meta.settings._iDisplayStart + 1;
+          
+
         }  
       },
       {
@@ -168,7 +220,7 @@
                showCancelButton: true,
                confirmButtonColor: '#3085d6',
                cancelButtonColor: '#d33',
-               buttons: true,
+              //  buttons: true, 
                confirmButtonText: 'Yes, delete it!'
          })
              .then((willDelete) => {

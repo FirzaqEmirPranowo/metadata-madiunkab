@@ -128,7 +128,8 @@
     <td >
       <table>
         <tr>
-        <td >
+        <td align="center">
+          <font size="3">Produsen Data</font>
           <center>
             <font size="3">@foreach($opd as $nama) {{ $nama -> nama_opd }}@endforeach
             <br>
@@ -149,7 +150,8 @@
     <td class="ttd">
       <table>
         <tr>
-        <td >
+        <td align="center">
+          <font size="3">Walidata</font>
           <center>
             <font size="3">Dinas Komunikasi dan Informatika
             <br>
@@ -176,7 +178,7 @@
 
 
 <div class="page-break"></div>
-<h1>LAMPIRAN</h1>
+<h1 style="text-align: center">LAMPIRAN</h1>
 <table  class="tbl" style="margin-left:auto;margin-right:auto" cellpadding="10" border="1 solid" posisi="Relative">
     <thead>
       <tr>

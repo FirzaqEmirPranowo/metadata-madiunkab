@@ -5,7 +5,7 @@
     <h1>Daftar Data</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
         <li class="breadcrumb-item">Daftar Data</li>
       </ol>
     </nav>
@@ -21,7 +21,7 @@
             
             {{-- <a 
             @if(Auth::user()->role_id == '1')
-            href="/data_superadmin/create"
+            href="/data_administrator/create"
             @elseif(Auth::user()->role_id == '2')
             href="/data_walidata/create"
             @elseif(Auth::user()->role_id == '3')
@@ -79,12 +79,12 @@
                   <td>{{ $dt->status }}</td>
                   <td>
                     {{-- <div class="btnConfirm" style="margin-bottom: 0;">
-                      <a href="/data_superadmin/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i>Edit</a>
+                      <a href="/data_administrator/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i>Edit</a>
                       <form onsubmit="return confirm('Apakah anda Menyetujui data : {{ $dt->nama_data }} ?');" action="">
                         @csrf   
                         <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-plus-square"></i>Input</button>
                       </form>
-                      <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_superadmin/destroy/'.$dt->id) }}">
+                      <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_administrator/destroy/'.$dt->id) }}">
                                 
                         @csrf
                         <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i>HAPUS</button>
@@ -92,12 +92,12 @@
                       
                     </div> --}}
                     <div class="btnConfirm" style="margin-bottom: 0;">
-                      <a href="/data_superadmin/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                      <a href="/data_administrator/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
                       <form onsubmit="return confirm('Apakah anda Menyetujui data : {{ $dt->nama_data }} ?');" action="">
                         @csrf   
                         <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-plus-square"></i></button>
                       </form>
-                      <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_superadmin/destroy/'.$dt->id) }}">
+                      <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_administrator/destroy/'.$dt->id) }}">
                                 
                         @csrf
                         <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
@@ -108,8 +108,8 @@
                   {{-- <td>
                     @if(Auth::user()->role_id == '1')
                     <div class="form-group" style="margin-bottom: 0;">
-                      <a href="/data_superadmin/edit/{{ $dt->id }}" class="btn btn-primary">Edit</a>
-                      <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_superadmin/destroy/'.$dt->id) }}">
+                      <a href="/data_administrator/edit/{{ $dt->id }}" class="btn btn-primary">Edit</a>
+                      <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_administrator/destroy/'.$dt->id) }}">
                                 
                         @csrf
                         <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
@@ -126,7 +126,7 @@
                     </div>
                     @elseif(Auth::user()->role_id == '3')
                     <div class="btnConfirm" style="margin-bottom: 0;">
-                      <a href="/data_superadmin/edit/{{ $dt->id }}" class="btn btn-sm btn-primary">Edit</a>
+                      <a href="/data_administrator/edit/{{ $dt->id }}" class="btn btn-sm btn-primary">Edit</a>
                       <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_produsen/destroy/'.$dt->id) }}">
                                 
                         @csrf

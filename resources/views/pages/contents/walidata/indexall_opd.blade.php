@@ -5,7 +5,7 @@
     <h1>Daftar Data</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
         <li class="breadcrumb-item">Daftar Data</li>
       </ol>
     </nav>
@@ -21,7 +21,7 @@
             
             {{-- <a 
             @if(Auth::user()->role_id == '1')
-            href="/data_superadmin/create"
+            href="/data_administrator/create"
             @elseif(Auth::user()->role_id == '2')
             href="/data_walidata/create"
             @elseif(Auth::user()->role_id == '3')
@@ -58,7 +58,7 @@
             <table class="table datatable">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
+                  <th scope="col">No</th>
                   <th scope="col">Nama Data</th>
                   <th scope="col">Produsen (PIC)</th>
                   <th scope="col">Jenis</th>
@@ -84,8 +84,8 @@
                   {{-- <td>
                     @if(Auth::user()->role_id == '1')
                     <div class="form-group" style="margin-bottom: 0;">
-                      <a href="/data_superadmin/edit/{{ $dt->id }}" class="btn btn-primary">Edit</a>
-                      <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_superadmin/destroy/'.$dt->id) }}">
+                      <a href="/data_administrator/edit/{{ $dt->id }}" class="btn btn-primary">Edit</a>
+                      <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_administrator/destroy/'.$dt->id) }}">
                                 
                         @csrf
                         <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>

@@ -5,7 +5,7 @@
     <h1>Daftar Data</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
         <li class="breadcrumb-item">Daftar Data</li>
         <li class="breadcrumb-item active">Edit Data</li>
       </ol>
@@ -22,7 +22,7 @@
 
             <!-- General Form Elements -->
             <form @if(Auth::user()->role_id == '1')
-                action="{{ url('data_superadmin/update', $data->id) }}"
+                action="{{ url('data_administrator/update', $data->id) }}"
                 @elseif(Auth::user()->role_id == '2')
                 action="{{ url('data_walidata/update', $data->id) }}"
                 @elseif(Auth::user()->role_id == '3')

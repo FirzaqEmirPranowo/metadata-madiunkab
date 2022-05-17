@@ -6,7 +6,7 @@
     <h1>Daftar Data</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
         <li class="breadcrumb-item">Daftar Data</li>
       </ol>
     </nav>
@@ -22,7 +22,7 @@
             
             {{-- <a 
             @if(Auth::user()->role_id == '1')
-            href="/data_superadmin/create"
+            href="/data_administrator/create"
             @elseif(Auth::user()->role_id == '2')
             href="/data_walidata/create"
             @elseif(Auth::user()->role_id == '3')
@@ -62,8 +62,12 @@
                     <button type="button" class="btn btn-sm btn-success" onclick="confirmBeritacara('berita-acara')"><i class="bi bi-download"></i> Unduh Berita Acara</button>
                   </form>
                   @elseif($draft >= "0")
-                  
-                  <a href="" class="btn btn-md btn-danger mb-3 float-right" data-bs-toggle="modal" data-bs-target="#beritaacara">Unduh Berita Acara</a>
+                  <form id="berita-acara">
+                      
+                    <button type="button" class="btn btn-sm btn-danger" onclick="confirmDraft('berita-acara')"><i class="bi bi-download"></i> Unduh Berita Acara</button>
+                  </form>
+
+                  {{-- <a href="" class="btn btn-md btn-danger mb-3 float-right" data-bs-toggle="modal" data-bs-target="#beritaacara">Unduh Berita Acara</a> --}}
                   <div class="modal fade" id="beritaacara" tabindex="-1">
                     <div class="modal-dialog">
                       <div class="modal-content">
@@ -119,8 +123,8 @@
                   <td>
                     @if(Auth::user()->role_id == '1')
                     {{-- <div class="btnConfirm" style="margin-bottom: 0;"> --}}
-                      {{-- <a href="/data_superadmin/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i>Edit</a>
-                      <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_superadmin/destroy/'.$dt->id) }}">
+                      {{-- <a href="/data_administrator/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i>Edit</a>
+                      <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_administrator/destroy/'.$dt->id) }}">
                                 
                         @csrf
                         <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i>HAPUS</button>
@@ -134,8 +138,8 @@
                         @csrf
                         <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i>HAPUS</button>
                     </form> --}}
-                    <a href="/data_superadmin/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
-                    <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_superadmin/destroy/'.$dt->id) }}">
+                    <a href="/data_administrator/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                    <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_administrator/destroy/'.$dt->id) }}">
                               
                       
                       <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i></button>
@@ -235,6 +239,28 @@ function filterFunction() {
        swal({
                   title: 'Apakah Anda Yakin Mengunduh Berita Acara?',
                    text: "Anda Akan Mengunduh Berita Acara!",
+                   type: 'warning',
+                   showCancelButton: true,
+                   confirmButtonColor: '#3085d6',
+                   cancelButtonColor: '#d33',
+                   buttons: true,
+                   confirmButtonText: 'Yes, delete it!'
+             })
+                 .then((willDelete) => {
+                     if (willDelete) {
+                         $('#'+item_id).submit();
+                     } else {
+                         swal("Cancelled Successfully");
+                     }
+                 });
+       };
+    
+    </script>
+    <script type="text/javascript">
+      function confirmDraft(item_id) {
+       swal({
+                  title: 'Anda Belum Bisa Mengunduh Berita Acara',
+                   text: "Anda belum bisa mengunduh berita acara dikarenakan masih ada DATA yang berstatus DRAFT",
                    type: 'warning',
                    showCancelButton: true,
                    confirmButtonColor: '#3085d6',

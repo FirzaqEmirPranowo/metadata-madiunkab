@@ -6,6 +6,9 @@ use App\Models\Opd;
 use App\Models\Role;
 use App\Models\Data;
 use App\Models\Status;
+use App\Models\ActivityLog;
+use Spatie\Activitylog\Models\Activity;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
@@ -13,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
 use Yajra\DataTables\Facades\DataTables;
-use Spatie\Activitylog\Traits\LogsActivity;
+// use Spatie\Activitylog\Traits\LogsActivity;
 
 // use Alert;
 use App\Http\Controllers\Director;
@@ -43,10 +46,12 @@ class DataController extends Controller
         if (Auth::user()->role_id == '1') {
             $data = Data::data_nonprodusen();
             $opd = Opd::all();
+            // $notif = Data::causer_id();
             // dd($data);s
-            return view('pages.contents.superadmin.indexdata', compact('data', 'opd',));
+            return view('pages.contents.administrator.indexdata', compact('data', 'opd'));
         } elseif (Auth::user()->role_id == '2') {
             $data = Data::data_draft_walidata();
+            // $notif = Data::causer_id();
             // dd($data);
             return view('pages.contents.walidata.indexdata', compact('data'));
         } elseif (Auth::user()->role_id == '3') {
@@ -66,7 +71,7 @@ class DataController extends Controller
             $data = Data::data_nonprodusen();
             $opd = Opd::all();
             // dd($data);s
-            return view('pages.contents.superadmin.indexdata', compact('data', 'opd',));
+            return view('pages.contents.administrator.indexdata', compact('data', 'opd',));
         } elseif (Auth::user()->role_id == '2') {
             $data = Data::data_draft_walidata();
             // dd($data);
@@ -83,7 +88,7 @@ class DataController extends Controller
         }
     }
 
-    //superadmin
+    //administrator
 
 
     //walidata
@@ -117,14 +122,21 @@ class DataController extends Controller
 
         if ($create) {
             if (Auth::user()->role_id == '1') {
-                activity()->log('Menambahkan Daftar Data');
-                return redirect('/data_superadmin')
+                activity()
+                    ->performedOn($create)
+                    ->log('Menambahkan Daftar Data');
+                // ->log('Menambahkan Daftar Data');
+                return redirect('/data_administrator')
                     ->with([
                         Alert::success('Berhasil', 'Berhasil menambahkan Data!')
                     ]);
-                // return redirect('/data_superadmin');
+                // return redirect('/data_administrator');
             } elseif (Auth::user()->role_id == '2') {
-                activity()->log('Menambahkan Daftar Data');
+                activity()
+                    // ->subject_type('1')
+                    ->performedOn($create)
+                    ->log('Menambahkan Daftar Data');
+
                 return redirect('/data_walidata/draft')
                     ->with([
                         Alert::success('Berhasil', 'Berhasil menambahkan Data!')
@@ -132,7 +144,7 @@ class DataController extends Controller
 
                 // return redirect('/data_walidata/draft');
             } elseif (Auth::user()->role_id == '3') {
-                activity()->log('Menambahkan Daftar Data');
+                activity()->performedOn($create)->log('Menambahkan Daftar Data');
                 return redirect('/data_produsen/draft')
                     ->with([
                         Alert::success('Berhasil', 'Berhasil menambahkan Data!')
@@ -151,7 +163,7 @@ class DataController extends Controller
         }
 
         // if (Auth::user()->role_id == '1') {
-        //     return redirect('/data_superadmin');
+        //     return redirect('/data_administrator');
         // } elseif (Auth::user()->role_id == '2') {
         //     return redirect('/data_walidata/draft');
         // } elseif (Auth::user()->role_id == '3') {
@@ -174,21 +186,22 @@ class DataController extends Controller
 
         if ($data) {
             if (Auth::user()->role_id == '1') {
-                activity()->log('Merestore Daftar Data');
-                return redirect('/data_superadmin')
+                activity()
+                    ->performedOn($data)->log('Merestore Daftar Data');
+                return redirect('/data_administrator')
                     ->with([
                         Alert::success('Berhasil', 'Data Berhasil Direstore!')
                     ]);
-                // return redirect('/data_superadmin');
+                // return redirect('/data_administrator');
             } elseif (Auth::user()->role_id == '2') {
-                activity()->log('Merestore Daftar Data');
+                activity()->performedOn($data)->log('Merestore Daftar Data');
                 return redirect('/data_walidata/draft')
                     ->with([
                         Alert::success('Berhasil', 'Data Berhasil Direstore!')
                     ]);
                 // return redirect('/data_walidata/draft');
             } elseif (Auth::user()->role_id == '3') {
-                activity()->log('Merestore Daftar Data');
+                activity()->performedOn($data)->log('Merestore Daftar Data');
                 return redirect('/data_produsen/draft')
                     ->with([
                         Alert::success('Berhasil', 'Data Berhasil Direstore!')
@@ -207,7 +220,7 @@ class DataController extends Controller
         }
 
         // if (Auth::user()->role_id == '1') {
-        //     return redirect('/data_superadmin');
+        //     return redirect('/data_administrator');
         // } elseif (Auth::user()->role_id == '2') {
         //     return redirect('/data_walidata/draft');
         // } elseif (Auth::user()->role_id == '3') {
@@ -215,6 +228,15 @@ class DataController extends Controller
         // } else {
         //     return redirect('/home');
         // }
+    }
+
+    public function detail($id)
+    {
+        $data = Data::find($id);
+        $detail = Data::causer_id()->where("subject_id", "=", $id);
+        // dd($detail);
+        $opd = Opd::all();
+        return view('pages.contents.walidata.detaildata', compact('data', 'opd', 'detail'));
     }
 
     public function edit($id)
@@ -242,21 +264,23 @@ class DataController extends Controller
 
         if ($data) {
             if (Auth::user()->role_id == '1') {
-                activity()->log('Mengedit Daftar Data');
-                return redirect('/data_superadmin')
+                activity()->performedOn($data)->log('Mengedit Daftar Data');
+                return redirect('/data_administrator')
                     ->with([
                         Alert::info('Berhasil', 'Berhasil memperbarui Data!')
                     ]);
-                // return redirect('/data_superadmin');
+                // return redirect('/data_administrator');
             } elseif (Auth::user()->role_id == '2') {
-                activity()->log('Mengedit Daftar Data');
+                activity()
+                    ->performedOn($data)
+                    ->log('Mengedit Daftar Data');
                 return redirect('/data_walidata/draft')
                     ->with([
                         Alert::info('Berhasil', 'Berhasil memperbarui Data!')
                     ]);
                 // return redirect('/data_walidata/draft');
             } elseif (Auth::user()->role_id == '3') {
-                activity()->log('Mengedit Daftar Data');
+                activity()->performedOn($data)->log('Mengedit Daftar Data');
                 return redirect('/data_produsen/draft')
                     ->with([
                         Alert::info('Berhasil', 'Berhasil memperbarui Data!')
@@ -275,7 +299,7 @@ class DataController extends Controller
         }
 
         // if (Auth::user()->role_id == '1') {
-        //     return redirect('/data_superadmin');
+        //     return redirect('/data_administrator');
         // } elseif (Auth::user()->role_id == '2') {
         //     return redirect('/data_walidata/draft');
         // } elseif (Auth::user()->role_id == '3') {
@@ -290,10 +314,10 @@ class DataController extends Controller
     public function destroy($id)
     {
         $user = Data::findOrFail($id);
-        // dd($user);
-        $user->delete();
+        $nama_data = $user->nama_data;
+
         // if (Auth::user()->role_id == '1') {
-        //     return redirect('/data_superadmin');
+        //     return redirect('/data_administrator');
         // } elseif (Auth::user()->role_id == '2') {
         //     return redirect('/data_walidata/draft');
         // } elseif (Auth::user()->role_id == '3') {
@@ -304,21 +328,25 @@ class DataController extends Controller
 
         if ($user) {
             if (Auth::user()->role_id == '1') {
-                activity()->log('Menghapus Daftar Data');
-                return redirect('/data_superadmin')
+                activity()->log('Menghapus Daftar Data ' . $nama_data);
+                $user->delete();
+                return redirect('/data_administrator')
                     ->with([
                         Alert::error('Berhasil', 'Berhasil Menghapus Data!')
                     ]);
-                // return redirect('/data_superadmin');
+                // return redirect('/data_administrator');
             } elseif (Auth::user()->role_id == '2') {
-                activity()->log('Menghapus Daftar Data');
+
+                activity()->performedOn($user)->log('Menghapus Daftar Data ' . $nama_data);
+                $user->delete();
                 return redirect('/data_walidata/draft')
                     ->with([
                         Alert::error('Berhasil', 'Berhasil Menghapus Data!')
                     ]);
                 // return redirect('/data_walidata/draft');
             } elseif (Auth::user()->role_id == '3') {
-                activity()->log('Menghapus Daftar Data');
+                activity()->log('Menghapus Daftar Data' . $nama_data);
+                $user->delete();
                 return redirect('/data_produsen/draft')
                     ->with([
                         Alert::error('Berhasil', 'Berhasil Menghapus Data!')
@@ -365,9 +393,14 @@ class DataController extends Controller
         // ->when($request->filled('opd_id'), fn ($q) => $q->where('opd_id', $request->get('opd_id')))
         // ->get();
         $opd = Opd::pluck('nama_opd', 'id');
-        // $verifikasi = Data::verifikasi_data();
+        // $data = Data::data_produsen();
         // dd($data);
-        return view('pages.contents.walidata.index_get_opd', compact('data', 'opd'));
+        $draft = Data::where('opd_id', '=', $request->id)->where('status_id', '=', 3)->count();
+        // $data2 = collect(Data::get_draft());
+        // $draft = $datax->count();
+        // $verifikasi = Data::verifikasi_data();
+        // dd($request->id, $draft);
+        return view('pages.contents.walidata.index_get_opd', compact('data', 'opd', 'draft'));
     }
 
     public function getData(Request $request)
@@ -375,19 +408,32 @@ class DataController extends Controller
         $id = decrypt($request->id);
         if ($id == 'all') {
             $data = Data::with('opd')->setuju();
+            $datatables = DataTables::eloquent($data)
+                ->editColumn('opd_id', function ($data) {
+                    return $data->opd->nama_opd;
+                })
+                ->editColumn('status_id', function ($data) {
+                    return $data->status->status;
+                })
+                ->addIndexColumn()
+                ->toArray();
+            $datatables['draft_counter'] = Data::where('status_id', '=', 3)->count();
         } else {
             $data = Data::with('opd')->setuju()->OPD($id);
+            $datatables = DataTables::eloquent($data)
+                ->editColumn('opd_id', function ($data) {
+                    return $data->opd->nama_opd;
+                })
+                ->editColumn('status_id', function ($data) {
+                    return $data->status->status;
+                })
+                ->addIndexColumn()
+                ->toArray();
+            $datatables['draft_counter'] = Data::where('opd_id', '=', $id)->where('status_id', '=', 3)->count();
         }
+        // dd($datatables);
 
-        return DataTables::of($data)
-            ->editColumn('opd_id', function ($data) {
-                return $data->opd->nama_opd;
-            })
-            ->editColumn('status_id', function ($data) {
-                return $data->status->status;
-            })
-            ->addIndexColumn()
-            ->make(true);
+        return $datatables;
     }
 
 
@@ -405,21 +451,21 @@ class DataController extends Controller
         ]);
         if ($data) {
             if (Auth::user()->role_id == '1') {
-                activity()->log('Menyetujui Daftar Data');
-                return redirect('/data_superadmin')
+                activity()->performedOn($data)->log('Menyetujui Daftar Data');
+                return redirect('/data_administrator')
                     ->with([
                         Alert::success('Berhasil', 'Data Berhasil Disetujui!')
                     ]);
-                // return redirect('/data_superadmin');
+                // return redirect('/data_administrator');
             } elseif (Auth::user()->role_id == '2') {
-                activity()->log('Menyetujui Daftar Data');
+                activity()->performedOn($data)->log('Menyetujui Daftar Data');
                 return redirect('/data_walidata/draft')
                     ->with([
                         Alert::success('Berhasil', 'Data Berhasil Disetujui!')
                     ]);
                 // return redirect('/data_walidata/draft');
             } elseif (Auth::user()->role_id == '3') {
-                activity()->log('Menyetujui Daftar Data');
+                activity()->performedOn($data)->log('Menyetujui Daftar Data');
                 return redirect('/data_produsen/draft')
                     ->with([
                         Alert::success('Berhasil', 'Data Berhasil Disetujui!')
@@ -438,7 +484,7 @@ class DataController extends Controller
         }
 
         // if (Auth::user()->role_id == '1') {
-        //     return redirect('/data_superadmin');
+        //     return redirect('/data_administrator');
         // } elseif (Auth::user()->role_id == '2') {
         //     return redirect('/data_walidata/draft');
         // } elseif (Auth::user()->role_id == '3') {
@@ -461,21 +507,21 @@ class DataController extends Controller
 
         if ($data) {
             if (Auth::user()->role_id == '1') {
-                activity()->log('Menolak Daftar Data');
-                return redirect('/data_superadmin')
+                activity()->performedOn($data)->log('Menolak Daftar Data');
+                return redirect('/data_administrator')
                     ->with([
                         Alert::success('Berhasil', 'Berhasil Menolak Data dan Memberi Alasan!')
                     ]);
-                // return redirect('/data_superadmin');
+                // return redirect('/data_administrator');
             } elseif (Auth::user()->role_id == '2') {
-                activity()->log('Menolak Daftar Data');
+                activity()->performedOn($data)->log('Menolak Daftar Data');
                 return redirect('/data_walidata/draft')
                     ->with([
                         Alert::success('Berhasil', 'Berhasil Menolak Data dan Memberi Alasan!')
                     ]);
                 // return redirect('/data_walidata/draft');
             } elseif (Auth::user()->role_id == '3') {
-                activity()->log('Menolak Daftar Data');
+                activity()->performedOn($data)->log('Menolak Daftar Data');
                 return redirect('/data_produsen/draft')
                     ->with([
                         Alert::success('Berhasil', 'Berhasil Menolak Data dan Memberi Alasan!')
@@ -493,7 +539,7 @@ class DataController extends Controller
                 ]);
         }
         // if (Auth::user()->role_id == '1') {
-        //     return redirect('/data_superadmin');
+        //     return redirect('/data_administrator');
         // } elseif (Auth::user()->role_id == '2') {
         //     return redirect('/data_walidata/draft');
         // } elseif (Auth::user()->role_id == '3') {
@@ -516,9 +562,9 @@ class DataController extends Controller
     public function selesai_konfirmasi()
     {
         $data = Data::selesai_konfirmasi();
-        $data2 = collect(Data::get_draft());
+        $data2 = Data::get_draft();
         $draft = $data2->count();
-        // dd($data);
+        // dd($data2);  
 
         return view('pages.contents.produsen.selesai_konfirmasi', compact('data', 'draft'));
     }
@@ -618,5 +664,24 @@ class DataController extends Controller
 
             return $pdf->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'serif'])->stream();
         }
+    }
+
+    public function notif()
+    {
+        $notif = Data::causer_id();
+        // dd($notif);
+        return view('pages.contents.walidata.notif', compact('notif'));
+    }
+
+    public function draft(Request $request)
+    {
+        $id = decrypt($request->id);
+        if ($id == 'all') {
+            $data = Data::where('status_id', '=', 3)->count();
+        } else {
+            $draft = Data::where('opd_id', '=', $id)->where('status_id', '=', 3)->count();
+        }
+        // dd($draft);
+        return view('pages.contents.walidata.index_get_opd', compact('draft'));
     }
 }

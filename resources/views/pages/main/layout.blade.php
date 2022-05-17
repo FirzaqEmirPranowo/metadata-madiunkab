@@ -2,7 +2,7 @@
 @include('pages.partial.navbar')
 
 @if(Auth::user()->role_id == 1)
-@include('pages.partial.sidebar-superadmin')
+@include('pages.partial.sidebar-administrator')
 @elseif(Auth::user()->role_id == '2')
 @include('pages.partial.sidebar-walidata')
 @elseif(Auth::user()->role_id == '3')

@@ -5,7 +5,7 @@
       {{-- <li class="nav-heading">Dashboard</li> --}}
 
       <li class="nav-item">
-        <a class="nav-link collapsed " href="/d_superadmin">
+        <a class="nav-link collapsed " href="/d_administrator">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -14,7 +14,7 @@
       {{-- <li class="nav-heading">Dashboard</li> --}}
 
       <li class="nav-item">
-        <a class="nav-link collapsed " href="/data_superadmin">
+        <a class="nav-link collapsed " href="/data_administrator">
           <i class="bi bi-file-earmark-bar-graph"></i>
           <span>Konfirmasi Data</span>
         </a>
@@ -23,7 +23,7 @@
       {{-- <li class="nav-heading">Perencanaan Data</li> --}}
 
       <li class="nav-item">
-        <a class="nav-link collapsed " href="/data_superadmin/verifikasi_data">
+        <a class="nav-link collapsed " href="/data_administrator/verifikasi_data">
           <i class="bi bi-file-earmark-check"></i>
           <span>Daftar Data</span>
         </a>
@@ -41,7 +41,7 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="/upload-download">
           <i class="bi bi-person-lines-fill"></i>
-          <span>uploda/download</span>
+          <span>Kelola File</span>
         </a>
       </li><!-- End Blank Page Nav -->
       <li class="nav-item">

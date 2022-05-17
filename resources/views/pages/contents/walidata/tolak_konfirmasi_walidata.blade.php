@@ -5,7 +5,7 @@
     <h1>Daftar Data</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
         <li class="breadcrumb-item">Daftar Data</li>
       </ol>
     </nav>
@@ -21,7 +21,7 @@
             
             {{-- <a 
             @if(Auth::user()->role_id == '1')
-            href="/data_superadmin/create"
+            href="/data_administrator/create"
             @elseif(Auth::user()->role_id == '2')
             href="/data_walidata/create"
             @elseif(Auth::user()->role_id == '3')
@@ -83,7 +83,7 @@
             <table class="table datatable">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
+                  <th scope="col">No</th>
                   <th scope="col">Nama Data</th>
                   <th scope="col">Produsen (PIC)</th>
                   <th scope="col">Jenis</th>
@@ -122,8 +122,8 @@
                   <td>
                     @if(Auth::user()->role_id == '1')
                     {{-- <div class="btnConfirm" style="margin-bottom: 0;"> --}}
-                      {{-- <a href="/data_superadmin/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i>Edit</a>
-                      <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_superadmin/destroy/'.$dt->id) }}">
+                      {{-- <a href="/data_administrator/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i>Edit</a>
+                      <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_administrator/destroy/'.$dt->id) }}">
                                 
                         @csrf
                         <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i>HAPUS</button>
@@ -137,8 +137,8 @@
                         @csrf
                         <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i>HAPUS</button>
                     </form> --}}
-                    <a href="/data_superadmin/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
-                    <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_superadmin/destroy/'.$dt->id) }}">
+                    <a href="/data_administrator/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                    <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_administrator/destroy/'.$dt->id) }}">
                               
                       
                       <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i></button>
@@ -156,10 +156,20 @@
                              
                     <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-arrow-repeat"></i></button>
                   </form> --}}
-                  <form id="restore-data-{{ $dt->id }}" action="{{ url('/data_walidata/restore/'.$dt->id) }}" >
+                  <table>
+                    <tr>
+                      <td>
+                        <a href="{{ route('detail_walidata',['id'=>$dt->id])  }}" class="btn btn-sm btn-warning" style="color: white" data-bs-placement="bottom" title="Detail Data"><i class="bi bi-info-circle"></i></a>
+                      </td>
+                      <td>
+                        <form id="restore-data-{{ $dt->id }}" action="{{ url('/data_walidata/restore/'.$dt->id) }}" >
                       
-                    <button type="button" class="btn btn-sm btn-success" onclick="confirmRestore('restore-data-{{ $dt->id }}')"><i class="bi bi-arrow-repeat"></i></button>
-                </form>
+                          <button type="button" class="btn btn-sm btn-success" onclick="confirmRestore('restore-data-{{ $dt->id }}')" data-bs-placement="bottom" title="Restore Data"><i class="bi bi-arrow-repeat"></i></button>
+                      </form>
+                      </td>
+                    </tr>
+                  </table>
+                  
                     </div>
                     @elseif(Auth::user()->role_id == '3')
                     {{-- <div class="btnConfirm" style="margin-bottom: 0;">

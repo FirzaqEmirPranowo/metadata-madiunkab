@@ -5,7 +5,7 @@
     <h1>Upload Download</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
         <li class="breadcrumb-item">Daftar User</li>
       </ol>
     </nav>
@@ -30,11 +30,15 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="/user/import" method="post" enctype="multipart/form-data">
+                        <form action="/upload-proses" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="input-group mb-3">
                                 <input type="file" name="document" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
                                 <button class="btn btn-primary" type="submit" id="button-addon2">Import</button>
+                            </div>
+                            <div class="form-group">
+                              <b>Keterangan</b>
+                              <textarea class="form-control" name="keterangan"></textarea>
                             </div>
                         </form>                    
                     </div>
@@ -45,14 +49,46 @@
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Nama</th>
-                  <th scope="col">Username</th>
-                  <th scope="col">OPD</th>
-                  <th scope="col">Role</th>
-                  <th scope="col">Email</th>
+                  <th scope="col">Document</th>
+                  <th scope="col">Keterangan</th>
                   <th scope="col">Opsi</th>
+                  
                 </tr>
               </thead>
+              <tbody>
+                <?php $no = 1; ?>
+                  @foreach($document as $dt)
+                <tr>
+                  <td>{{ $no++ }}</td>
+                  <td>{{ $dt->document }}</td>
+                  <td>{{ $dt->keterangan }}</td>
+                  <td>
+                    <table>
+                      <tr>
+                        <td>
+                          <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/upload-hapus', $dt->id) }}">      
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </td>
+                        <td>
+                          <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/up-download', $dt->id) }}">      
+ 
+                            <button type="submit" class="btn btn-sm btn-info"><i class="bi bi-download"></i></button>
+                            </form>
+                        </td>
+                      </tr>
+                    
+                    
+                    </table>
+                  </td>
+                
+            
+                </tr>
+                  @endforeach
+
+              </tbody>
               
             </table>
             <!-- End Table with stripped rows -->

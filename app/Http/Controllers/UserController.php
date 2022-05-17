@@ -23,7 +23,7 @@ class UserController extends Controller
         $data = User::with('opd')->with('role')->get();
         // dd($data);
         // dd($data);
-        return view('pages.contents.superadmin.indexusers', compact('data'));
+        return view('pages.contents.administrator.indexusers', compact('data'));
     }
 
     /**
@@ -39,7 +39,7 @@ class UserController extends Controller
 
 
         // dd($data);
-        return view('pages.contents.superadmin.createuser', (compact('data', 'opd', 'role')));
+        return view('pages.contents.administrator.createuser', (compact('data', 'opd', 'role')));
     }
 
     /**
@@ -52,7 +52,7 @@ class UserController extends Controller
     {
 
         if ($request->role_id == '1') {
-            $superadmin = User::create([
+            $administrator = User::create([
                 'name' => $request->nama,
                 'username' => $request->username,
                 'email' => $request->email,
@@ -60,7 +60,7 @@ class UserController extends Controller
                 'role_id' => $request->role_id,
                 'opd_id' => $request->opd_id,
             ]);
-            $superadmin->assignRole('superadmin');
+            $administrator->assignRole('administrator');
             activity()->log('Membuat User');
             return redirect('/user');
         } elseif ($request->role_id == '2') {
@@ -112,7 +112,7 @@ class UserController extends Controller
         $byid = User::findOrFail($id);
         $opd = Opd::all();
         // dd($byid);
-        return view('pages.contents.superadmin.edituser', compact('byid', 'opd'));
+        return view('pages.contents.administrator.edituser', compact('byid', 'opd'));
     }
 
     /**
@@ -136,7 +136,7 @@ class UserController extends Controller
                 'role_id' => $request->role_id,
                 'opd_id' => $request->opd_id,
             ]);
-            $user->assignRole('superadmin');
+            $user->assignRole('administrator');
             activity()->log('Update User');
             return redirect('/user');
         } elseif ($request->role_id == '2') {

@@ -8,7 +8,7 @@
     <h1>Daftar Data</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
         <li class="breadcrumb-item">Daftar Data</li>
       </ol>
     </nav>
@@ -24,36 +24,66 @@
             
             <a 
             @if(Auth::user()->role_id == '1')
-            href="/data_superadmin/create"
+            href="/data_administrator/create"
             @elseif(Auth::user()->role_id == '2')
             href="/data_walidata/create"
             @elseif(Auth::user()->role_id == '3')
             href="/data_produsen/create"
             @endif
-            class="btn btn-md btn-primary mb-3 float-right">Tambah
+            class="btn btn-md btn-primary mb-3 float-right"><i class="bi bi-plus-circle"></i> Tambah
                 Data</a>
 
-                <a href="" class="btn btn-md btn-warning mb-3 float-right" data-bs-toggle="modal" data-bs-target="#basicModal">Import Excel</a>
-                <!-- Table with stripped rows -->
-                  <div class="modal fade" id="basicModal" tabindex="-1">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title">Import Excel</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="/data_produsen/import" method="post" enctype="multipart/form-data">
-                                @csrf
-                                <div class="input-group mb-3">
-                                    <input type="file" name="file" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-                                    <button class="btn btn-primary" type="submit" id="button-addon2">Import</button>
-                                </div>
-                            </form>                    
+                
+                  {{-- inport --}}
+                    <a href="" class="btn btn-md btn-success mb-3 float-right" data-bs-toggle="modal" data-bs-target="#verticalycentered"><i class="bi bi-file-earmark-spreadsheet"></i> Import Data</a>
+                    
+                     <div class="modal fade" id="verticalycentered" tabindex="-1">
+                       <div class="modal-dialog modal-dialog-centered">
+                         <div class="modal-content">
+                           <div class="modal-header">
+                             <h5 class="modal-title" style="font-weight: bold; color:green">IMPORT DATA</h5>
+                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                           </div>
+                           <div class="modal-body">
+                            <h7 class="modal-title"><i class="bi bi-caret-right-fill"></i>Sebelum import data menggunakan file excel silahkan download Template nya disini!<form action="{{ url('/up-download', 17) }}">      
+                              <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-download"></i> Template Data</button>
+                            </form></h7>
+                            <br>
+                            <h7 class="modal-title"><i class="bi bi-caret-right-fill"></i>Untuk panduan pengisian data, cocokan terlebih dulu isi data disini!<form action="{{ url('/up-download', 20) }}">      
+                              <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-download"></i> Panduan Data</button>
+                            </form></h7>
+                           </div>
+                           <div class="modal-footer">
+                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#alasan">Ok</button>
+                           </div>
+                         </div>
+                       </div>
+                     </div><!-- End Vertically centered Modal-->
+                    {{-- modal input --}}
+                    <div class="modal fade" id="alasan" tabindex="-1">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" style="font-weight: bold; color:green" >IMPORT DATA</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <form action="/data_walidata/import" method="post" enctype="multipart/form-data">
+                              @csrf
+                              <div class="input-group mb-3">
+                                  <input type="file" name="file" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                  <button class="btn btn-primary" type="submit" id="button-addon2">Import</button>
+                              </div>
+                            </form>
+                          </div>
+                         
                         </div>
                       </div>
                     </div>
-                  </div>
+                
+            
+                  {{-- end --}}
                   @if(Auth::user()->role_id == '3')
                   <!-- Table with stripped rows -->
                   
@@ -86,7 +116,7 @@
             <table class="table datatable">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
+                  <th scope="col">No</th>
                   <th scope="col">Nama Data</th>
                   <th scope="col">Produsen (PIC)</th>
                   <th scope="col">Jenis</th>
@@ -118,8 +148,8 @@
                   <td>
                     @if(Auth::user()->role_id == '1')
                     {{-- <div class="btnConfirm" style="margin-bottom: 0;"> --}}
-                      {{-- <a href="/data_superadmin/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i>Edit</a>
-                      <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_superadmin/destroy/'.$dt->id) }}">
+                      {{-- <a href="/data_administrator/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i>Edit</a>
+                      <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_administrator/destroy/'.$dt->id) }}">
                                 
                         @csrf
                         <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i>HAPUS</button>
@@ -133,8 +163,8 @@
                         @csrf
                         <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i>HAPUS</button>
                     </form> --}}
-                    <a href="/data_superadmin/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
-                    <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_superadmin/destroy/'.$dt->id) }}">
+                    <a href="/data_administrator/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                    <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_administrator/destroy/'.$dt->id) }}">
                               
                       
                       <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i></button>
@@ -145,12 +175,15 @@
                     <table>
                       <tr>
                         <td>
-                          <a href="{{ route('edit_walidata',['id'=>$dt->id])  }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                          <a href="{{ route('detail_walidata',['id'=>$dt->id])  }}" class="btn btn-sm btn-warning" style="color: white" data-bs-placement="bottom" title="Detail Data"><i class="bi bi-info-circle"></i></a>
+                        </td>
+                        <td>
+                          <a href="{{ route('edit_walidata',['id'=>$dt->id])  }}" class="btn btn-sm btn-primary" data-bs-placement="bottom" title="Edit Data"><i class="bi bi-pencil-fill"></i></a>
                         </td>
                         <td>
                           <form id="delete-pegawai-{{ $dt->id }}" action=" {{ url('/data_walidata/destroy/'.$dt->id) }}" >
                       
-                            <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('delete-pegawai-{{ $dt->id }}')"><i class="bi bi-trash"></i></button>
+                            <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('delete-pegawai-{{ $dt->id }}')" data-bs-placement="bottom" title="Hapus Data"><i class="bi bi-trash"></i></button>
                         </form>
                         </td>
                       </tr>
