@@ -24,8 +24,8 @@ class UserImport implements ToModel, WithHeadingRow
         $getrole = Role::select('id')->where('name', '=', $row['Role'])->get();
         $role = $getrole[0]->id;
         $cek_opd = Opd::select('id')->where('nama_opd', '=', $row['OPD'])->get();
-        $hasil =  $cek_opd->id;
-        dd($hasil);
+        $hasil =  $cek_opd[0]->id;
+        // dd($hasil);
 
         if ($role == '1') {
             $administrator = User::create([
