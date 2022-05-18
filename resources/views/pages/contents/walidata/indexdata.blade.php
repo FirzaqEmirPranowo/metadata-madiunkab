@@ -45,11 +45,11 @@
                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                            </div>
                            <div class="modal-body">
-                            <h7 class="modal-title"><i class="bi bi-caret-right-fill"></i>Sebelum import data menggunakan file excel silahkan download Template nya disini!<form action="{{ url('/up-download', 17) }}">      
+                            <h7 class="modal-title"><i class="bi bi-caret-right-fill"></i>Sebelum import data menggunakan file excel silahkan download Template nya disini!<form action="{{ url('/up-download', 'DATA') }}">      
                               <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-download"></i> Template Data</button>
                             </form></h7>
                             <br>
-                            <h7 class="modal-title"><i class="bi bi-caret-right-fill"></i>Untuk panduan pengisian data, cocokan terlebih dulu isi data disini!<form action="{{ url('/up-download', 20) }}">      
+                            <h7 class="modal-title"><i class="bi bi-caret-right-fill"></i>Untuk panduan pengisian data, cocokan terlebih dulu isi data disini!<form action="{{ url('/up-download', 'PANDUAN') }}">      
                               <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-download"></i> Panduan Data</button>
                             </form></h7>
                            </div>

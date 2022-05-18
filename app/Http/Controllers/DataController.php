@@ -6,6 +6,7 @@ use App\Models\Opd;
 use App\Models\Role;
 use App\Models\Data;
 use App\Models\Status;
+use App\Models\Document;
 use App\Models\ActivityLog;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -51,9 +52,10 @@ class DataController extends Controller
             return view('pages.contents.administrator.indexdata', compact('data', 'opd'));
         } elseif (Auth::user()->role_id == '2') {
             $data = Data::data_draft_walidata();
+            $file = Document::all();
             // $notif = Data::causer_id();
             // dd($data);
-            return view('pages.contents.walidata.indexdata', compact('data'));
+            return view('pages.contents.walidata.indexdata', compact('data', 'file'));
         } elseif (Auth::user()->role_id == '3') {
             // $q = Auth::user()->id;
             $data = Data::data_produsen();
@@ -645,7 +647,7 @@ class DataController extends Controller
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data1 = file_get_contents($path);
         $pict = 'data:image/' . $type . ';base64,' . base64_encode($data1);
-        $opd = Opd::where('id', '=', $id)->get('nama_opd');
+
 
         // dd($opd);
 
@@ -656,11 +658,12 @@ class DataController extends Controller
 
         // return $pdf->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'serif'])->stream();
         if ($id == 'all') {
-            $pdf = PDF::loadView('pages.contents.pdf_all', compact('data', 'hari', 'dt', 'tgl', 'bln', 'tahun', 'pict', 'opd'));
+            $pdf = PDF::loadView('pages.contents.pdf_all', compact('data', 'hari', 'dt', 'tgl', 'bln', 'tahun', 'pict'));
 
 
             return $pdf->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'serif'])->stream();
         } else {
+            $opd = Opd::where('id', '=', $id)->get('nama_opd');
             $pdf = PDF::loadView('pages.contents.pdf', compact('data', 'hari', 'dt', 'tgl', 'bln', 'tahun', 'pict', 'opd'));
 
 

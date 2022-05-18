@@ -37,9 +37,20 @@
                                 <button class="btn btn-primary" type="submit" id="button-addon2">Import</button>
                             </div>
                             <div class="form-group">
+                              <b>Type</b>
+                              <select id="type" name="type" class="form-select" aria-label="Default select example">
+                                <option selected>Pilih</option>
+                                <option value="DATA">TEMPLATE DATA</option>
+                                <option value="OPD">TEMPLATE OPD</option>
+                                <option value="USER">TEMPLATE USER</option>
+                                <option value="PANDUAN">PANDUAN DATA</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
                               <b>Keterangan</b>
                               <textarea class="form-control" name="keterangan"></textarea>
                             </div>
+                            
                         </form>                    
                     </div>
                   </div>
@@ -73,7 +84,7 @@
                             </form>
                         </td>
                         <td>
-                          <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/up-download', $dt->id) }}">      
+                          <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/download', $dt->type) }}">      
  
                             <button type="submit" class="btn btn-sm btn-info"><i class="bi bi-download"></i></button>
                             </form>

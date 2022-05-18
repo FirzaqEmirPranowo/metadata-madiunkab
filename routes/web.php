@@ -93,7 +93,7 @@ Route::middleware(['role:administrator'])->group(function () {
     Route::get('/upload', [UpdownloadController::class, 'upload'])->name('user');
     Route::post('/upload-proses', [UpdownloadController::class, 'proses_upload'])->name('user');
     Route::get('/upload-hapus/{id}', [UpdownloadController::class, 'destroy'])->name('user');
-    Route::get('/up-download/{id}', [UpdownloadController::class, 'download'])->name('user');
+    Route::get('/download/{id}', [UpdownloadController::class, 'download'])->name('user');
 });
 
 Route::middleware(['role:walidata'])->group(function () {
@@ -138,6 +138,7 @@ Route::middleware('role:produsen')->group(function () {
     Route::post('/data_produsen/store', [DataController::class, 'store'])->name('data_produsen');
     Route::get('/data_produsen/edit/{id}', [DataController::class, 'edit'])->name('data_produsen');
     Route::post('/data_produsen/update/{id}', [DataController::class, 'update'])->name('data_produsen');
+    Route::get('/data_produsen/detail/{id}', [DataController::class, 'detail'])->name('detail_produsen');
     Route::post('/data_produsen/alasan/{id}', [DataController::class, 'alasan'])->name('data_produsen');
     Route::get('/data_produsen/destroy/{id}', [DataController::class, 'destroy'])->name('data_produsen');
     Route::get('/data_produsen/setuju/{id}', [DataController::class, 'setuju'])->name('data_produsen');

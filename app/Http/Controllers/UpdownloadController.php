@@ -19,6 +19,7 @@ class UpdownloadController extends Controller
         $this->validate($request, [
             'document' => 'required',
             'keterangan' => 'required',
+            'type' => 'required',
         ]);
 
         $upload = $request->file('document');
@@ -29,6 +30,7 @@ class UpdownloadController extends Controller
             'document' => $nama_file,
             'path' => $path,
             'keterangan' => $request->keterangan,
+            'type' => $request->type,
         ]);
 
         return redirect('/upload-download');
@@ -45,7 +47,10 @@ class UpdownloadController extends Controller
 
     public function download($id)
     {
-        $dl = Document::find($id);
-        return Storage::download($dl->path, $dl->document);
+        $dl = Document::where('type', '=', $id)->get();
+        // $ds = $dl[0]->path;      // dd($dl);
+        // dd($ds);
+        // $ag = $dl->path;
+        return Storage::download($dl[0]->path, $dl[0]->document);
     }
 }
