@@ -39,30 +39,30 @@ Route::get('/datas', [PortalController::class, 'data']);
 Route::get('/berita', [PortalController::class, 'berita']);
 Route::get('/ckan', [PortalController::class, 'ckan']);
 Auth::routes();
-// Route::get('/d_superadmin', [App\Http\Controllers\HomeController::class, 'index'])->name('d_superadmin');
+// Route::get('/d_administrator', [App\Http\Controllers\HomeController::class, 'index'])->name('d_administrator');
 // Route::get('/d_walidata', [App\Http\Controllers\HomeController::class, 'index'])->name('d_walidata');
 // Route::get('/d_produsen', [App\Http\Controllers\HomeController::class, 'index'])->name('d_produsen');
 
-// Route::middleware('role:superadmin')->get('/d_superadmin', function () {
+// Route::middleware('role:administrator')->get('/d_administrator', function () {
 //         return 'Dashboard';
-//     })->name('d_superadmin');
+//     })->name('d_administrator');
 
-Route::middleware(['role:superadmin'])->group(function () {
-    Route::get('/d_superadmin', [HomeController::class, 'index1'])->name('d_superadmin');
-    Route::get('/data_superadmin', [DataController::class, 'index'])->name('data_superadmin');
-    Route::get('/data_superadmin/create', [DataController::class, 'create'])->name('data_superadmin');
-    Route::post('/data_superadmin/store', [DataController::class, 'store'])->name('data_superadmin');
-    Route::get('/data_superadmin/edit/{id}', [DataController::class, 'edit'])->name('data_superadmin');
-    Route::post('/data_superadmin/update/{id}', [DataController::class, 'update'])->name('data_superadmin');
-    Route::get('/data_superadmin/destroy/{id}', [DataController::class, 'destroy'])->name('data_superadmin');
-    // Route::resource('data_superadmin', DataController::class);
-    Route::get('/data_superadmin/get_all_opdall', [DataController::class, 'get_all_opdall'])->name('data_superadmin');
+Route::middleware(['role:administrator'])->group(function () {
+    Route::get('/d_administrator', [HomeController::class, 'index1'])->name('d_administrator');
+    Route::get('/data_administrator', [DataController::class, 'index'])->name('data_administrator');
+    Route::get('/data_administrator/create', [DataController::class, 'create'])->name('data_administrator');
+    Route::post('/data_administrator/store', [DataController::class, 'store'])->name('data_administrator');
+    Route::get('/data_administrator/edit/{id}', [DataController::class, 'edit'])->name('data_administrator');
+    Route::post('/data_administrator/update/{id}', [DataController::class, 'update'])->name('data_administrator');
+    Route::get('/data_administrator/destroy/{id}', [DataController::class, 'destroy'])->name('data_administrator');
+    // Route::resource('data_administrator', DataController::class);
+    Route::get('/data_administrator/get_all_opdall', [DataController::class, 'get_all_opdall'])->name('data_administrator');
 
     Route::post('/data/import', function () {
         Excel::import(new DataImport, request()->file('file'));
         return back();
     });
-    Route::get('/data_superadmin/verifikasi_data', [DataController::class, 'verifikasi_data'])->name('data_superadmin');
+    Route::get('/data_administrator/verifikasi_data', [DataController::class, 'verifikasi_data'])->name('data_administrator');
 
 
     Route::get('/opd', [OpdController::class, 'index'])->name('opd');
@@ -90,14 +90,20 @@ Route::middleware(['role:superadmin'])->group(function () {
 
 
     Route::get('/upload-download', [UpdownloadController::class, 'index'])->name('user');
+    Route::get('/upload', [UpdownloadController::class, 'upload'])->name('user');
+    Route::post('/upload-proses', [UpdownloadController::class, 'proses_upload'])->name('user');
+    Route::get('/upload-hapus/{id}', [UpdownloadController::class, 'destroy'])->name('user');
+    Route::get('/up-download/{id}', [UpdownloadController::class, 'download'])->name('user');
 });
 
 Route::middleware(['role:walidata'])->group(function () {
     Route::get('/d_walidata', [HomeController::class, 'index2'])->name('d_walidata');
+
     Route::get('/data_walidata/draft', [DataController::class, 'index'])->name('draft');
     Route::get('/data_walidata/create', [DataController::class, 'create'])->name('data_walidata');
     Route::post('/data_walidata/store', [DataController::class, 'store'])->name('data_walidata');
     Route::get('/data_walidata/edit/{id}', [DataController::class, 'edit'])->name('edit_walidata');
+    Route::get('/data_walidata/detail/{id}', [DataController::class, 'detail'])->name('detail_walidata');
     Route::post('/data_walidata/update/{id}', [DataController::class, 'update'])->name('data_walidata');
     Route::get('/data_walidata/destroy/{id}', [DataController::class, 'destroy'])->name('data_walidata');
     Route::get('/data_walidata/get_all_opdall', [DataController::class, 'get_all_opdall'])->name('data_walidata');
@@ -120,6 +126,9 @@ Route::middleware(['role:walidata'])->group(function () {
         Excel::import(new DataImport, request()->file('file'));
         return back();
     });
+    Route::get('/up-download/{id}', [UpdownloadController::class, 'download'])->name('user1');
+    Route::get('/data_walidata/notif', [DataController::class, 'notif'])->name('notif');
+    Route::get('/draft', [DataController::class, 'draft'])->name('draft');
 });
 
 Route::middleware('role:produsen')->group(function () {

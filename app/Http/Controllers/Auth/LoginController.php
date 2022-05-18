@@ -42,8 +42,8 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        if ($user->HasRole('superadmin')) {
-            return redirect()->route('d_superadmin');
+        if ($user->HasRole('administrator')) {
+            return redirect()->route('d_administrator');
         } elseif ($user->HasRole('walidata')) {
             return redirect()->route('d_walidata');
         } elseif ($user->HasRole('produsen')) {

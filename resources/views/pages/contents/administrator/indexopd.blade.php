@@ -2,11 +2,11 @@
 @section('content')
 
 <div class="pagetitle">
-    <h1>Daftar User</h1>
+    <h1>Daftar OPD</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-        <li class="breadcrumb-item">Daftar User</li>
+        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        <li class="breadcrumb-item">Daftar OPD</li>
       </ol>
     </nav>
   </div><!-- End Page Title -->
@@ -17,9 +17,9 @@
 
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Daftar User</h5>
+            <h5 class="card-title">Daftar OPD</h5>
             
-            <a href="{{ url('/user/create') }}" class="btn btn-md btn-success mb-3 float-right">Tambah User</a>
+            <a href="/opd/create" class="btn btn-md btn-success mb-3 float-right">Tambah OPD</a>
                 
             <a href="" class="btn btn-md btn-warning mb-3 float-right" data-bs-toggle="modal" data-bs-target="#basicModal">Import Excel</a>
             <!-- Table with stripped rows -->
@@ -31,7 +31,7 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="/user/import" method="post" enctype="multipart/form-data">
+                        <form action="/opd/import" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="input-group mb-3">
                                 <input type="file" name="file" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
@@ -46,11 +46,7 @@
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Nama</th>
-                  <th scope="col">Username</th>
-                  <th scope="col">OPD</th>
-                  <th scope="col">Role</th>
-                  <th scope="col">Email</th>
+                  <th scope="col">Nama Data</th>
                   <th scope="col">Opsi</th>
                 </tr>
               </thead>
@@ -59,30 +55,22 @@
                   @foreach($data as $dt)
                 <tr>
                   <td>{{ $no++ }}</td>
-                  <td>{{ $dt->name }}</td>
-                  <td>{{ $dt->username }}</td>
-                  <td>{{ $dt->opd->nama_opd }}</td>
-                  <td>{{ $dt->role->name }}</td>
-                  <td>{{ $dt->email }}</td>
-                  <td><div class="form-group" style="margin-bottom: 0;">
-                    {{-- <a href="{{ url('/user/edit', $dt->id) }}" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a> --}}
-                    <form  action="{{ url('/user/edit', $dt->id) }}">
-                          
-                      <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></button>
-                    </form>
-                    <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('user/destroy', $dt->id) }}">
-                                
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                  <td>{{ $dt->nama_opd }}</td>
+                  <td>
+                <div class="form-group" style="margin-bottom: 0;">
+                  {{-- <a href="{{ url('/user/edit', $dt->id) }}" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a> --}}
+                  <form  action="{{ url('/opd/edit/'.$dt->id) }}">
+                        
+                    <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></button>
                   </form>
-                </div></td>
-                  {{-- <td><form onsubmit="return confirm('Apakah Anda Yakin ?');" action="" method="POST">
-                                
+                  <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/opd/destroy/'.$dt->id) }}" >
+                              
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-sm btn-info">Aksi</button>
-                </form></td> --}}
+                    <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                </form>
+              </div>
+              </td>
                 </tr>
                   @endforeach
               </tbody>
@@ -95,4 +83,5 @@
       </div>
     </div>
   </section>
+
 @endsection

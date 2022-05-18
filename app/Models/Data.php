@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Opd;
 use App\Models\User;
 use App\Models\Status;
+use App\Models\ActivityLog;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -50,6 +51,11 @@ class Data extends Model
     public function status()
     {
         return $this->belongsTo(Status::class);
+    }
+
+    public function ActivityLog()
+    {
+        return $this->belongsTo(ActivityLog::class);
     }
 
     public function data_nonprodusen()
@@ -208,6 +214,20 @@ class Data extends Model
             ->get();
     }
 
+    public function causer_id()
+    {
+        return DB::table("users")
+            ->join("activity_log", function ($join) {
+                $join->on("users.id", "=", "activity_log.causer_id");
+            })
+            ->join("data", function ($join) {
+                $join->on("data.id", "=", "activity_log.subject_id");
+            })
+            ->select("users.name", "activity_log.description", "activity_log.created_at", "subject_id", "data.nama_data")
+            ->orderby("activity_log.created_at", "DESC")
+            ->get();
+    }
+
 
 
     public function verifikasi_opd()
@@ -230,6 +250,7 @@ class Data extends Model
     public function get_draft()
     {
         return Data::where('opd_id', '=', Auth::user()->opd_id)->where('status_id', '=', 3)->get();
+        // return Data::select(opd_id)
     }
 
     public function data_produsen_setuju()

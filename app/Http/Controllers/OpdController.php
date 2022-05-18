@@ -15,7 +15,7 @@ class OpdController extends Controller
     public function index()
     {
         $data = Opd::data_opd();
-        return view('pages.contents.superadmin.indexopd', compact('data'));
+        return view('pages.contents.administrator.indexopd', compact('data'));
     }
 
     /**
@@ -25,7 +25,7 @@ class OpdController extends Controller
      */
     public function create()
     {
-        return view('pages.contents.superadmin.createopd');
+        return view('pages.contents.administrator.createopd');
     }
 
     /**
@@ -64,7 +64,7 @@ class OpdController extends Controller
     {
         $data = Opd::findOrFail($id);
         // dd($user);
-        return view('pages.contents.superadmin.editopd', compact('data'));
+        return view('pages.contents.administrator.editopd', compact('data'));
     }
 
     /**
