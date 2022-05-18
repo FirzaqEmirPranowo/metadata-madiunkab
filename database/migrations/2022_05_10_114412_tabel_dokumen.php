@@ -18,6 +18,7 @@ class TabelDokumen extends Migration
             $table->text('document');
             $table->string('keterangan', 255);
             $table->string('path', 255);
+            $table->string('type', 255);
             $table->timestamps();
         });
     }

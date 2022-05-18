@@ -130,6 +130,9 @@
                         <table>
                           <tr>
                             <td>
+                              <a href="{{ route('detail_produsen',['id'=>$dt->id])  }}" class="btn btn-sm btn-warning" style="color: white" data-bs-placement="bottom" title="Detail Data"><i class="bi bi-info-circle"></i></a>
+                            </td>
+                            <td>
                               <form id="setuju-data-{{ $dt->id }}" action="{{ url('/data_produsen/setuju/'.encrypt($dt->id)) }}" >
                                 <button type="button" class="btn btn-sm btn-success" onclick="confirmSetuju('setuju-data-{{ $dt->id }}')"><i class="bi bi-check-circle"></i></button>
                               </form>
@@ -185,6 +188,7 @@
                                 </div>
                               </div>
                             </td>
+                            
                             <td>
                               <form  action="{{ url('/data_produsen/edit/'.($dt->id)) }}">
                           

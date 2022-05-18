@@ -9,6 +9,6 @@ class Document extends Model
 {
     use HasFactory;
     protected $table = "document";
-    protected $primaryKey = "id";
-    protected $fillable = ['id', 'document', 'keterangan', 'path'];
+    // protected $primaryKey = "id";
+    protected $fillable = ['id', 'document', 'keterangan', 'path', 'type'];
 }
