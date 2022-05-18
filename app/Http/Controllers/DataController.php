@@ -403,6 +403,8 @@ class DataController extends Controller
         return view('pages.contents.walidata.index_get_opd', compact('data', 'opd', 'draft'));
     }
 
+
+
     public function getData(Request $request)
     {
         $id = decrypt($request->id);
