@@ -19,7 +19,9 @@ class Data extends Migration
             $table->text('nama_data');
             $table->string('jenis_data', 255);
             $table->string('sumber_data', 255);
-            $table->string('status', 255);
+            $table->string('status_id', 255);
+            $table->integer('user_id');
+            $table->string('alasan', 255);
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });

@@ -74,9 +74,9 @@
                         <div class="col-4 d-flex" id="action-buttons">
                           <button class="btn btn-primary mx-2" type="button" href="/draft" onclick="getData()"> Cari </button>
                           
-                          <button class="btn btn-success" id="btnijo" onclick="confirmBeritacara('berita-acara')" type="submit"><i class="bi bi-download"></i> Unduh Data </button>
+                          <button class="btn btn-success" id="btnijo" onclick="confirmBeritacara('berita-acara')" type="submit"><i class="bi bi-download"></i> Unduh Berita Acara </button>
                          
-                          <a href="" class="btn btn-md btn-danger mb-3 float-right" id="btnred" data-bs-toggle="modal" data-bs-target="#beritaacara">Unduh Berita Acara</a>
+                          <a href="" class="btn btn-danger" id="btnred" data-bs-toggle="modal" data-bs-target="#beritaacara"><i class="bi bi-download"></i> Unduh Berita Acara</a>
                          
                           <div class="modal fade" id="beritaacara" tabindex="-1">
                                 <div class="modal-dialog">
@@ -94,7 +94,7 @@
                                     </div>
                                   </div>
                                 </div>
-                              </div>
+                          </div>
                          
                         </div>
                       </div>
@@ -179,7 +179,7 @@
         data: null,
         searchable: false,
         orderable: false,
-        render: function (data, type, row, meta, draft_counter  ) {
+        render: function (data, type, row, meta, draft_counter) {
        
          
           return meta.row + meta.settings._iDisplayStart + 1;

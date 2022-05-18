@@ -16,6 +16,8 @@ class TabelDokumen extends Migration
         Schema::create('document', function (Blueprint $table) {
             $table->id();
             $table->text('document');
+            $table->string('keterangan', 255);
+            $table->string('path', 255);
             $table->timestamps();
         });
     }
