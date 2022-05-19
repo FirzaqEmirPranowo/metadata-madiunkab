@@ -21,45 +21,50 @@ class UserImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
 
-        $getrole = Role::select('id')->where('name', '=', $row['Role'])->get();
-        $role = $getrole[0]->id;
-        $cek_opd = Opd::select('id')->where('nama_opd', '=', $row['OPD'])->get();
-        $hasil =  $cek_opd[0]->id;
+        $getrole = Role::select('id')->where('name', '=', $row['Role'])->first();
+        if (!empty($getrole)) {
+            $role = $getrole->id;
+        }
+        $cek_opd = Opd::select('id')->where('nama_opd', '=', $row['OPD'])->first();
+        if (!empty($cek_opd)) {
+            $hasil =  $cek_opd->id;
+        }
         // dd($hasil);
-
-        if ($role == '1') {
-            $administrator = User::create([
-                'name' => $row['Nama'],
-                'username' => $row['Username'],
-                'email' => $row['Email'],
-                'password' => Hash::make($row['Password']),
-                'role_id' => $role,
-                'opd_id' => $hasil,
-            ]);
-            $administrator->assignRole('administrator');
-            // return redirect('/user');
-        } elseif ($role == '2') {
-            $walidata = User::create([
-                'name' => $row['Nama'],
-                'username' => $row['Username'],
-                'email' => $row['Email'],
-                'password' => Hash::make($row['Password']),
-                'role_id' => $role,
-                'opd_id' => $hasil,
-            ]);
-            $walidata->assignRole('walidata');
-            // return redirect('/user');
-        } elseif ($role == '3') {
-            $produsen = User::create([
-                'name' => $row['Nama'],
-                'username' => $row['Username'],
-                'email' => $row['Email'],
-                'password' => Hash::make($row['Password']),
-                'role_id' => $role,
-                'opd_id' => $hasil,
-            ]);
-            $produsen->assignRole('produsen');
-            // return redirect('/user');
+        if (!empty($getrole) && !empty($cek_opd)) {
+            if ($role == '1') {
+                $administrator = User::create([
+                    'name' => $row['Nama'],
+                    'username' => $row['Username'],
+                    'email' => $row['Email'],
+                    'password' => Hash::make($row['Password']),
+                    'role_id' => $role,
+                    'opd_id' => $hasil,
+                ]);
+                $administrator->assignRole('administrator');
+                // return redirect('/user');
+            } elseif ($role == '2') {
+                $walidata = User::create([
+                    'name' => $row['Nama'],
+                    'username' => $row['Username'],
+                    'email' => $row['Email'],
+                    'password' => Hash::make($row['Password']),
+                    'role_id' => $role,
+                    'opd_id' => $hasil,
+                ]);
+                $walidata->assignRole('walidata');
+                // return redirect('/user');
+            } elseif ($role == '3') {
+                $produsen = User::create([
+                    'name' => $row['Nama'],
+                    'username' => $row['Username'],
+                    'email' => $row['Email'],
+                    'password' => Hash::make($row['Password']),
+                    'role_id' => $role,
+                    'opd_id' => $hasil,
+                ]);
+                $produsen->assignRole('produsen');
+                // return redirect('/user');
+            }
         }
     }
 }
