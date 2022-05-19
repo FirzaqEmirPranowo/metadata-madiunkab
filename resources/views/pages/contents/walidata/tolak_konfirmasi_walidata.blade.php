@@ -220,7 +220,7 @@
               </tbody>
             </table>
             <!-- End Table with stripped rows -->
-s
+
           </div>
         </div>
 
