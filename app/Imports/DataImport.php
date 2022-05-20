@@ -34,6 +34,6 @@ class DataImport implements ToModel, WithHeadingRow
             'user_id'     => $user_id,
 
         ]);
-        activity()->performedOn($data)->log('Menambahkan Daftar Data');
+        activity()->performedOn($data)->log('Import Daftar Data');
     }
 }

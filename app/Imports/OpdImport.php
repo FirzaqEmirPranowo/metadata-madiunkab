@@ -23,6 +23,6 @@ class OpdImport implements ToModel, WithHeadingRow
         $opd = Opd::create([
             'nama_opd'     => $row['Nama OPD'],
         ]);
-        activity()->performedOn($opd)->log('Menambahkan OPD');
+        activity()->performedOn($opd)->log('Import OPD');
     }
 }
