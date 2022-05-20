@@ -25,13 +25,15 @@ class DataImport implements ToModel, WithHeadingRow
         $user_id =  Auth::user()->id;
         // dd($user_id);
         $status = 3;
-        return new Data([
+        $data = Data::create([
             'nama_data'     => $row['Nama Data'],
             'opd_id'     => $hasil,
             'jenis_data'     => $row['Jenis Data'],
             'sumber_data'     => $row['Sumber data'],
             'status_id'     => $status,
             'user_id'     => $user_id,
+
         ]);
+        activity()->performedOn($data)->log('Menambahkan Daftar Data');
     }
 }

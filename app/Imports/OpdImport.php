@@ -20,8 +20,9 @@ class OpdImport implements ToModel, WithHeadingRow
     // HeadingRowFormatter::default('none');
     public function model(array $row)
     {
-        return new Opd([
+        $opd = Opd::create([
             'nama_opd'     => $row['Nama OPD'],
         ]);
+        activity()->performedOn($opd)->log('Menambahkan OPD');
     }
 }
