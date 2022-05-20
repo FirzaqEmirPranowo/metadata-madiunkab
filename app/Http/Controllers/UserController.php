@@ -61,7 +61,7 @@ class UserController extends Controller
                 'opd_id' => $request->opd_id,
             ]);
             $administrator->assignRole('administrator');
-            activity()->log('Membuat User');
+            activity()->performedOn($administrator)->log('Membuat User');
             return redirect('/user');
         } elseif ($request->role_id == '2') {
             $walidata = User::create([
@@ -73,7 +73,7 @@ class UserController extends Controller
                 'opd_id' => $request->opd_id,
             ]);
             $walidata->assignRole('walidata');
-            activity()->log('Membuat User');
+            activity()->performedOn($walidata)->log('Membuat User');
             return redirect('/user');
         } elseif ($request->role_id == '3') {
             $produsen = User::create([
@@ -85,7 +85,7 @@ class UserController extends Controller
                 'opd_id' => $request->opd_id,
             ]);
             $produsen->assignRole('produsen');
-            activity()->log('Membuat User');
+            activity()->performedOn($produsen)->log('Membuat User');
             return redirect('/user');
         }
     }

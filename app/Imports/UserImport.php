@@ -41,6 +41,7 @@ class UserImport implements ToModel, WithHeadingRow
                     'opd_id' => $hasil,
                 ]);
                 $administrator->assignRole('administrator');
+                activity()->performedOn($administrator)->log('Menambahkan User');
                 // return redirect('/user');
             } elseif ($role == '2') {
                 $walidata = User::create([
@@ -52,6 +53,7 @@ class UserImport implements ToModel, WithHeadingRow
                     'opd_id' => $hasil,
                 ]);
                 $walidata->assignRole('walidata');
+                activity()->performedOn($walidata)->log('Menambahkan User');
                 // return redirect('/user');
             } elseif ($role == '3') {
                 $produsen = User::create([
@@ -63,6 +65,7 @@ class UserImport implements ToModel, WithHeadingRow
                     'opd_id' => $hasil,
                 ]);
                 $produsen->assignRole('produsen');
+                activity()->performedOn($produsen)->log('Menambahkan User');
                 // return redirect('/user');
             }
         }
