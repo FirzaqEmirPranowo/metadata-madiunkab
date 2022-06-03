@@ -14,7 +14,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 
-class Data extends Model implements HasMedia
+class Data extends Model
 {
     use HasFactory;
     use InteractsWithMedia;

@@ -21,7 +21,7 @@ class Data extends Migration
             $table->string('sumber_data', 255);
             $table->string('status_id', 255);
             $table->integer('user_id');
-            $table->string('alasan', 255);
+            $table->string('alasan', 255)->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });
@@ -34,6 +34,6 @@ class Data extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('data');
     }
 }
