@@ -156,3 +156,5 @@ Route::middleware('role:produsen')->group(function () {
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/pengumpulan/struktur', [\App\Http\Controllers\PengumpulanController::class, 'struktur']);
