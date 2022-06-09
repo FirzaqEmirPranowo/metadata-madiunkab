@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\OpdController;
+use App\Http\Controllers\PengumpulanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PortalController;
 use App\Http\Controllers\UpdownloadController;
@@ -147,7 +148,20 @@ Route::middleware('role:produsen')->group(function () {
     Route::get('/data_produsen/export-pdf', [DataController::class, 'pdf'])->name('data_produsen');
     Route::get('/data_produsen/selesai_konfirmasi', [DataController::class, 'selesai_konfirmasi'])->name('setuju');
     Route::get('/data_produsen/tolak_konfirmasi', [DataController::class, 'tolak_konfirmasi'])->name('tolak');
-    Route::get('/data_produsen/verifikasi_data', [DataController::class, 'input_produsen'])->name('data_produsen');
+
+    Route::get('/data_produsen/pengumpulan/{id}/data', [PengumpulanController::class, 'detailData']);
+    Route::patch('/data_produsen/pengumpulan/{id}/data', [PengumpulanController::class, 'simpanData'])->name('simpan-data');
+    Route::get('/data_produsen/pengumpulan/{id}/metadata', [PengumpulanController::class, 'metadata'])->name('metadata');
+    Route::get('/data_produsen/pengumpulan/{id}/tambah-indikator', [PengumpulanController::class, 'tambahIndikator'])->name('tambah-indikator');
+    Route::post('/data_produsen/pengumpulan/{id}/simpan-indikator', [PengumpulanController::class, 'simpanIndikator'])->name('simpan-indikator');
+    Route::view('/data_produsen/pengumpulan/{id}/kegiatan', 'pages.contents.produsen.pengumpulan.kegiatan');
+    Route::get('/data_produsen/pengumpulan', [PengumpulanController::class, 'pengumpulan'])->name('pengumpulan');
+    Route::get('/data_produsen/indikator', [PengumpulanController::class, 'metaIndikator'])->name('meta-indikator');
+    Route::view('/data_produsen/variabel/form', 'pages.contents.produsen.pengumpulan.form-variabel')->name('meta-indikator');
+    Route::get('/data_produsen/variabel', [PengumpulanController::class, 'metaVariabel'])->name('meta-variabel');
+    Route::match(['get', 'post'],'/data_produsen/pengumpulan/{id}/standar', [PengumpulanController::class, 'standarData'])->name('standar');
+    Route::post('/data_produsen/{id}/upload-berkas', [PengumpulanController::class, 'uploadBerkas'])->name('upload-berkas');
+    Route::delete('/data_produsen/{id}/delete-berkas/{berkasId}', [PengumpulanController::class, 'deleteBerkas'])->name('delete-berkas');
 
     Route::post('/data_produsen/import', function () {
         Excel::import(new DataImport, request()->file('file'));
@@ -156,5 +170,3 @@ Route::middleware('role:produsen')->group(function () {
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Route::get('/pengumpulan/struktur', [\App\Http\Controllers\PengumpulanController::class, 'struktur']);

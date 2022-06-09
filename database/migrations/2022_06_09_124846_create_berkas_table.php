@@ -5,7 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMetadataKegiatanTable extends Migration
+class CreateBerkasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,12 @@ class CreateMetadataKegiatanTable extends Migration
      */
     public function up()
     {
-        Schema::create('metadata_kegiatan', function (Blueprint $table) {
+        Schema::create('berkas', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Data::class, 'data_id')->constrained('data')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('name');
+            $table->integer('size');
+            $table->longText('path');
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ class CreateMetadataKegiatanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('metadata_kegiatans');
+        Schema::dropIfExists('berkas');
     }
 }

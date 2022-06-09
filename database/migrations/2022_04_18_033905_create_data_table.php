@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Data extends Migration
+class CreateDataTable extends Migration
 {
     /**
      * Run the migrations.
@@ -22,6 +22,7 @@ class Data extends Migration
             $table->string('status_id', 255);
             $table->integer('user_id');
             $table->string('alasan', 255)->nullable();
+            $table->integer('progress')->default(0);
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });

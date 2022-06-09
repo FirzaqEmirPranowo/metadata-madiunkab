@@ -8,6 +8,7 @@ use App\Models\Data;
 use App\Models\Status;
 use App\Models\Document;
 use App\Models\ActivityLog;
+use Illuminate\Auth\Events\Validated;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Carbon\Carbon;
@@ -568,7 +569,7 @@ class DataController extends Controller
         $data = Data::selesai_konfirmasi();
         $data2 = Data::get_draft();
         $draft = $data2->count();
-        // dd($data2);  
+        // dd($data2);
 
         return view('pages.contents.produsen.selesai_konfirmasi', compact('data', 'draft'));
     }
@@ -581,15 +582,6 @@ class DataController extends Controller
 
         return view('pages.contents.produsen.tolak_konfirmasi', compact('data', 'draft'));
     }
-
-    public function input_produsen()
-    {
-        $verifikasi = Data::verifikasi_opd();
-        // $verifikasi = Data::verifikasi_data();
-        // dd($verifikasi);
-        return view('pages.contents.produsen.indexverifikasi', compact('verifikasi'));
-    }
-
 
     public function pdf()
     {

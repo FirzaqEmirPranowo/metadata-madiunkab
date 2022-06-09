@@ -8,6 +8,8 @@ use App\Models\Opd;
 use App\Models\User;
 use App\Models\Status;
 use App\Models\ActivityLog;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\HasMedia;
@@ -29,6 +31,7 @@ class Data extends Model
         'status_id',
         'user_id',
         'alasan',
+        'progress',
     ];
     // protected $primaryKey = 'id';
     protected $guarded = [];
@@ -57,6 +60,53 @@ class Data extends Model
     public function ActivityLog()
     {
         return $this->belongsTo(ActivityLog::class);
+    }
+
+    public function standar(): HasOne
+    {
+        return $this->hasOne(StandarData::class);
+    }
+
+    public function meta()
+    {
+        return $this->hasMany(strtolower($this->jenis_data) == 'Indikator' ? MetadataIndikator::class : MetadataVariabel::class, 'data_id');
+    }
+
+    public function indikator()
+    {
+        return $this->hasMany(MetadataIndikator::class);
+    }
+
+    public function variabel()
+    {
+        return $this->belongsTo(MetadataVariabel::class);
+    }
+
+    public function berkas(): HasMany
+    {
+        return $this->hasMany(Berkas::class);
+    }
+
+    public function calculateProgress(): int
+    {
+        $progress = 0;
+        if (!empty($this->standar)) {
+            $progress += 25;
+        }
+
+        if (!blank($this->indikator) && blank($this->variabel)) {
+            $progress += 25;
+        }
+
+        if (blank($this->indikator) && !blank($this->variabel)) {
+            $progress += 25;
+        }
+
+        if ($this->berkas->isNotEmpty()) {
+            $progress += 25;
+        }
+
+        return $progress;
     }
 
     public function data_nonprodusen()
