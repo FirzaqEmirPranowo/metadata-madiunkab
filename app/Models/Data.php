@@ -79,7 +79,12 @@ class Data extends Model
 
     public function variabel()
     {
-        return $this->belongsTo(MetadataVariabel::class);
+        return $this->hasMany(MetadataVariabel::class);
+    }
+
+    public function kegiatan()
+    {
+        return $this->hasOne(MetadataKegiatan::class);
     }
 
     public function berkas(): HasMany

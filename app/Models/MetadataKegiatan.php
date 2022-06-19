@@ -12,6 +12,10 @@ class MetadataKegiatan extends Model
 
     protected $table = 'metadata_kegiatan';
     protected $guarded = ['id'];
+    protected $casts = [
+        'variabel_dikumpulkan' => 'array',
+        'rencana_publikasi' => 'array',
+    ];
 
     public function data(): BelongsTo
     {

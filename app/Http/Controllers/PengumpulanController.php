@@ -6,7 +6,9 @@ use App\Models\Berkas;
 use App\Models\Data;
 use App\Models\Opd;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
+use Laravolt\Indonesia\Models\Province;
 
 class PengumpulanController extends Controller
 {
@@ -21,11 +23,14 @@ class PengumpulanController extends Controller
     {
         $data = Data::with(['opd', 'berkas'])->findOrFail($id);
         $opds = Opd::get();
-        $existingBerkas = $data->berkas->transform(function($b) use ($data) { return [
-            'name' => $b->name,
-            'size' => $b->size,
-            'deleteUrl' => route('delete-berkas', [$data->id, $b->id]),
-        ];})->toArray();
+        $existingBerkas = $data->berkas->transform(function ($b) use ($data) {
+            return [
+                'name' => $b->name,
+                'size' => $b->size,
+                'previewUrl' => route('filepreview', ['payload' => Crypt::encryptString($b->path)]),
+                'deleteUrl' => route('delete-berkas', [$data->id, $b->id]),
+            ];
+        })->toArray();
 
         if ($data->status_id != 1) {
             return redirect()->back()->with('errors', 'Status Data belum selesai');
@@ -126,6 +131,10 @@ class PengumpulanController extends Controller
     {
         $data = Data::findOrFail($id);
 
+        if (in_array(strtolower($data->jenis_data), ['variabel', 'indikator'])) {
+            $data->with(strtolower($data->jenis_data));
+        }
+
         return view('pages.contents.produsen.pengumpulan.' . strtolower($data->jenis_data), compact('data'));
     }
 
@@ -142,5 +151,82 @@ class PengumpulanController extends Controller
         $data->indikator()->create($request->all());
 
         return redirect()->route('metadata', $id);
+    }
+
+    public function tambahVariabel($id)
+    {
+        $data = Data::findOrFail($id);
+        return view('pages.contents.produsen.pengumpulan.form-variabel', compact('data'));
+    }
+
+    public function simpanVariabel($id, Request $request)
+    {
+        $data = Data::findOrFail($id);
+
+        $data->variabel()->create($request->all());
+
+        return redirect()->route('metadata', $id);
+    }
+
+    public function kegiatan($id)
+    {
+        $data = Data::with(['kegiatan'])->findOrFail($id);
+        $provinces = Province::pluck('name', 'code');
+        return view('pages.contents.produsen.pengumpulan.kegiatan', compact('data', 'provinces'));
+    }
+
+    public function simpanKegiatan($id, Request $request)
+    {
+        $data = Data::with(['kegiatan'])->findOrFail($id);
+        $data->kegiatan()->updateOrCreate(
+            ['data_id' => $data->id],
+            array_merge($request->all(), ['data_id' => $data->id]),
+        );
+//        dd($request->all());
+        return redirect()->back()->withInput();
+    }
+
+    public function simpanVariabelDikumpulkan($id, Request $request)
+    {
+        $validated = $request->validate([
+            'nama' => 'required',
+            'definisi' => 'required|string',
+            'konsep' => 'required|string',
+            'referensi_waktu' => 'required|date',
+        ]);
+        $data = Data::with(['kegiatan'])->findOrFail($id);
+
+        if (empty($data->kegiatan)) {
+            $data->kegiatan()->create([
+                'variabel_dikumpulkan' => [$validated]
+            ]);
+        } else {
+            $variable = $data->kegiatan->variabel_dikumpulkan;
+            $variable[] = $validated;
+            $data->kegiatan->update(['variabel_dikumpulkan' => $variable]);
+        }
+
+        return response()->noContent();
+    }
+
+    public function simpanPublikasi($id, Request $request)
+    {
+        $validated = $request->validate([
+            'judul' => 'required',
+            'rencana_rilis' => 'required|date',
+        ]);
+        $data = Data::with(['kegiatan'])->findOrFail($id);
+
+        if (empty($data->kegiatan)) {
+            $data->kegiatan()->create([
+                'rencana_publikasi' => [$validated]
+            ]);
+        } else {
+            $daftarPublikasi = $data->kegiatan->rencana_rilis;
+            $daftarPublikasi[] = $validated;
+            $data->kegiatan->update(['rencana_rilis' => $daftarPublikasi]);
+        }
+
+        return response()->noContent();
     }
 }

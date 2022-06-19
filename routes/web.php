@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\OpdController;
@@ -151,10 +152,17 @@ Route::middleware('role:produsen')->group(function () {
 
     Route::get('/data_produsen/pengumpulan/{id}/data', [PengumpulanController::class, 'detailData']);
     Route::patch('/data_produsen/pengumpulan/{id}/data', [PengumpulanController::class, 'simpanData'])->name('simpan-data');
+
     Route::get('/data_produsen/pengumpulan/{id}/metadata', [PengumpulanController::class, 'metadata'])->name('metadata');
     Route::get('/data_produsen/pengumpulan/{id}/tambah-indikator', [PengumpulanController::class, 'tambahIndikator'])->name('tambah-indikator');
     Route::post('/data_produsen/pengumpulan/{id}/simpan-indikator', [PengumpulanController::class, 'simpanIndikator'])->name('simpan-indikator');
-    Route::view('/data_produsen/pengumpulan/{id}/kegiatan', 'pages.contents.produsen.pengumpulan.kegiatan');
+    Route::get('/data_produsen/pengumpulan/{id}/tambah-variabel', [PengumpulanController::class, 'tambahVariabel'])->name('tambah-variabel');
+    Route::post('/data_produsen/pengumpulan/{id}/simpan-variabel', [PengumpulanController::class, 'simpanVariabel'])->name('simpan-variabel');
+    Route::get('/data_produsen/pengumpulan/{id}/kegiatan', [PengumpulanController::class, 'kegiatan']);
+    Route::post('/data_produsen/pengumpulan/{id}/kegiatan', [PengumpulanController::class, 'simpanKegiatan'])->name('simpan-kegiatan');
+    Route::post('/data_produsen/pengumpulan/{id}/kegiatan/variabel-dikumpulkan', [PengumpulanController::class, 'simpanVariabelDikumpulkan'])->name('simpan-variabel-dikumpulkan');
+    Route::post('/data_produsen/pengumpulan/{id}/kegiatan/publikasi', [PengumpulanController::class, 'simpanPublikasi'])->name('simpan-publikasi');
+
     Route::get('/data_produsen/pengumpulan', [PengumpulanController::class, 'pengumpulan'])->name('pengumpulan');
     Route::get('/data_produsen/indikator', [PengumpulanController::class, 'metaIndikator'])->name('meta-indikator');
     Route::view('/data_produsen/variabel/form', 'pages.contents.produsen.pengumpulan.form-variabel')->name('meta-indikator');
@@ -168,5 +176,12 @@ Route::middleware('role:produsen')->group(function () {
         return back();
     });
 });
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/filepreview', [FileController::class, 'preview'])->name('filepreview');
+});
+
+Route::get('/ajax/provinces', [\App\Http\Controllers\WilayahController::class, 'province'])->name('ajax.provinces');
+Route::get('/ajax/cities/{provinceId?}', [\App\Http\Controllers\WilayahController::class, 'city'])->name('ajax.cities');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
