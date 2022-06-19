@@ -608,7 +608,7 @@
                                         <div class="row mb-3">
                                             <label for="fraksi_sampel_keseluruhan" class="col-sm-2 col-form-label">Fraksi Sampel Keseluruhan</label>
                                             <div class="col-sm-10">
-                                                <p>Latex editor goes here</p>
+                                                <span id="fraksi_sampel_keseluruhan" class="form-control"></span>
                                             </div>
                                         </div>
 
@@ -624,7 +624,10 @@
                                         <div class="row mb-3">
                                             <label for="unit_sampel" class="col-sm-2 col-form-label">Unit Sampel</label>
                                             <div class="col-sm-10">
-                                                <p>Latex editor goes here</p>
+                                                <span id="unit_sampel" class="form-control"></span>
+                                                <small class="help-block text-muted">
+                                                    Rumus menggunakan format LaTeX.
+                                                </small>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -987,9 +990,14 @@
 
 @endsection
 
+@section('css')
+    <link href="{{asset('assets/vendor/mathquill/mathquill.css')}}" rel="stylesheet">
+@endsection
 @push('js')
+    <script src="{{asset('assets/vendor/mathquill/mathquill.min.js')}}"></script>
     <script>
         $(function() {
+            var MQ = MathQuill.getInterface(2);
 
             $('#sectionSekali').hide();
             $('#sectionBerulang').hide();
@@ -1187,6 +1195,12 @@
                     $('#publikasi_rencana_rilis').val('01/01/1990');
                 });
             });
+
+            let fraksiEditor = document.getElementById('fraksi_sampel_keseluruhan');
+            MQ.MathField(fraksiEditor, {
+                spaceBehavesLikeTab: true
+            });
+            MQ.MathField(document.getElementById('unit_sampel'))
             // function myConfirmation() {
             //     return 'Are you sure you want to quit?';
             // }
