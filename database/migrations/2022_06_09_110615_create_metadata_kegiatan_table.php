@@ -59,6 +59,7 @@ class CreateMetadataKegiatanTable extends Migration
             $table->string('kerangka_sampel_tahap_akhir')->nullable();
             $table->string('nilai_perkiraan_sampling_error_variabel_utama')->nullable();
             $table->longText('unit_sampel')->nullable();
+            $table->longText('fraksi_sampel_keseluruhan')->nullable();
             $table->string('unit_observasi')->nullable();
             $table->string('pilot_survey')->nullable();
             $table->string('metode_pemeriksaan_kualitas_pengumpulan_data')->nullable();

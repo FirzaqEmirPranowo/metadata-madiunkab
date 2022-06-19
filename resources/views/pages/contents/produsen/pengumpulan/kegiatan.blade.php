@@ -608,7 +608,11 @@
                                         <div class="row mb-3">
                                             <label for="fraksi_sampel_keseluruhan" class="col-sm-2 col-form-label">Fraksi Sampel Keseluruhan</label>
                                             <div class="col-sm-10">
-                                                <span id="fraksi_sampel_keseluruhan" class="form-control"></span>
+                                                <span id="fraksi_sampel_keseluruhan_editor" class="form-control"></span>
+                                                <input class="d-none" id="fraksi_sampel_keseluruhan" name="fraksi_sampel_keseluruhan">
+                                                <small class="help-block text-muted">
+                                                    Rumus menggunakan format LaTeX.
+                                                </small>
                                             </div>
                                         </div>
 
@@ -624,7 +628,8 @@
                                         <div class="row mb-3">
                                             <label for="unit_sampel" class="col-sm-2 col-form-label">Unit Sampel</label>
                                             <div class="col-sm-10">
-                                                <span id="unit_sampel" class="form-control"></span>
+                                                <span id="unit_sampel_editor" class="form-control"></span>
+                                                <input class="d-none" id="unit_sampel" name="unit_sampel">
                                                 <small class="help-block text-muted">
                                                     Rumus menggunakan format LaTeX.
                                                 </small>
@@ -1196,11 +1201,32 @@
                 });
             });
 
-            let fraksiEditor = document.getElementById('fraksi_sampel_keseluruhan');
-            MQ.MathField(fraksiEditor, {
-                spaceBehavesLikeTab: true
+            let fraksiSampel = MQ.MathField(document.getElementById('fraksi_sampel_keseluruhan_editor'), {
+                spaceBehavesLikeTab: true,
+                handlers: {
+                    edit: function() {
+                        $('#fraksi_sampel_keseluruhan').val(encodeURIComponent(fraksiSampel.latex()));
+                    }
+                }
             });
-            MQ.MathField(document.getElementById('unit_sampel'))
+            let oldFraksi = decodeURIComponent('{{old('fraksi_sampel_keseluruhan', optional($data->kegiatan)->fraksi_sampel_keseluruhan)}}');
+            if (oldFraksi !== '') {
+                fraksiSampel.latex(oldFraksi);
+            }
+
+            let unitSampel = MQ.MathField(document.getElementById('unit_sampel_editor'), {
+                spaceBehavesLikeTab: true,
+                handlers: {
+                    edit: function() {
+                        $('#unit_sampel').val(encodeURIComponent(unitSampel.latex()));
+                    }
+                }
+            });
+            let oldUnit = decodeURIComponent('{{old('unit_sampel', optional($data->kegiatan)->unit_sampel)}}');
+            if (oldUnit !== '') {
+                unitSampel.latex(oldUnit);
+            }
+
             // function myConfirmation() {
             //     return 'Are you sure you want to quit?';
             // }
