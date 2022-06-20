@@ -118,14 +118,14 @@
                                 <label for="level_estimasi" class="col-sm-2 col-form-label">Apakah Kolom ini dapat diakses umum?</label>
                                 <div class="col-sm-10">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="umum" id="1"
-                                               value="option1" checked>
+                                        <input class="form-check-input" type="radio" name="umum" id="umum1"
+                                               value="1" checked>
                                         <label class="form-check-label" for="gridRadios1">
                                             Ya
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="umum" id="gridRadios1" value="0">
+                                        <input class="form-check-input" type="radio" name="umum" id="umum0" value="0">
                                         <label class="form-check-label" for="gridRadios1">
                                             Tidak
                                         </label>
