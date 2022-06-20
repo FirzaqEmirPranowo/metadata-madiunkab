@@ -44,6 +44,6 @@ class CreateMetadataIndikatorTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('metadata_indikators');
+        Schema::dropIfExists('metadata_indikator');
     }
 }
