@@ -17,7 +17,7 @@ class CreateMetadataIndikatorTable extends Migration
         Schema::create('metadata_indikator', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Data::class, 'data_id')->constrained('data')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('nama');
+            $table->string('nama')->nullable();
             $table->longText('konsep')->nullable();
             $table->longText('definisi')->nullable();
             $table->longText('interpretasi')->nullable();

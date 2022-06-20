@@ -55,7 +55,11 @@
                             <div class="row mb-3">
                                 <label for="metode" class="col-sm-2 col-form-label">Metode / Rumus Perhitungan</label>
                                 <div class="col-sm-10">
-                                    <textarea name="metode" class="form-control" style="height: 100px" spellcheck="false" placeholder="Metode / Rumus Perhitungan"></textarea>
+                                    <span id="metode_editor" class="form-control"></span>
+                                    <textarea name="metode" class="form-control d-none" style="height: 100px" spellcheck="false" placeholder="Metode / Rumus Perhitungan"></textarea>
+                                    <small class="help-block text-muted">
+                                        Rumus menggunakan format LaTeX.
+                                    </small>
                                 </div>
                             </div>
 
@@ -195,9 +199,16 @@
     </section>
 @endsection
 
+
+@section('css')
+    <link href="{{asset('assets/vendor/mathquill/mathquill.css')}}" rel="stylesheet">
+@endsection
 @push('js')
+    <script src="{{asset('assets/vendor/mathquill/mathquill.min.js')}}"></script>
     <script>
         $(function () {
+            const MQ = MathQuill.getInterface(2);
+
             $('section.komposit-section').hide();
             $('input[name="komposit"]').change(function () {
                 if ($(this).val() == 1) {
@@ -205,7 +216,20 @@
                 } else {
                     $('section.komposit-section').hide();
                 }
-            })
+            }).trigger('change');
+
+            let metode = MQ.MathField(document.getElementById('metode_editor'), {
+                spaceBehavesLikeTab: true,
+                handlers: {
+                    edit: function() {
+                        $('#metode').val(encodeURIComponent(metode.latex()));
+                    }
+                }
+            });
+            let oldMetode = decodeURIComponent('{{old('metode')}}');
+            if (oldMetode !== '') {
+                metode.latex(oldMetode);
+            }
         })
     </script>
 @endpush

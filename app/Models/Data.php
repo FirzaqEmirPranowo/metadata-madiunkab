@@ -104,10 +104,10 @@ class Data extends Model
         }
 
         if ($this->berkas->isNotEmpty()) {
-            $progress += 25;
+            $progress += 10;
         }
 
-        return $progress;
+        return min(100, $progress);
     }
 
     public function data_nonprodusen()
