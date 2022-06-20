@@ -243,6 +243,7 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'DataTables'  =>  Yajra\DataTables\Facades\DataTables::class,
+        'Indonesia' => Laravolt\Indonesia\Facade::class,
 
     ],
 

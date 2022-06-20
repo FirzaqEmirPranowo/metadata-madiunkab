@@ -33,6 +33,6 @@ class CreateTableDataProdusen extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_data_produsen');
+        Schema::dropIfExists('data_produsen');
     }
 }
