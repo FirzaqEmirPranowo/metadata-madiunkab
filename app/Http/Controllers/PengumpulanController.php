@@ -67,7 +67,8 @@ class PengumpulanController extends Controller
                 'konsep' => 'required|string',
                 'definisi' => 'required|string',
                 'klasifikasi' => 'required|string',
-                'ukuran' => 'required|string'
+                'ukuran' => 'required|string',
+                'satuan' => 'required|string'
             ]);
 
             $data->standar()->updateOrCreate(
