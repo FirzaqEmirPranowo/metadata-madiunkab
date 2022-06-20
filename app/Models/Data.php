@@ -4,15 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Opd;
-use App\Models\User;
-use App\Models\Status;
-use App\Models\ActivityLog;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Support\Facades\DB;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 
@@ -33,13 +28,13 @@ class Data extends Model
         'alasan',
         'progress',
     ];
-    // protected $primaryKey = 'id';
+
     protected $guarded = [];
     public $timestamps = true;
 
     public function data()
     {
-        return $users = Data::Select('*')
+        return Data::select('*')
             ->get();
     }
 
@@ -52,6 +47,7 @@ class Data extends Model
     {
         return $this->belongsTo(Opd::class);
     }
+
     public function status()
     {
         return $this->belongsTo(Status::class);
@@ -213,7 +209,6 @@ class Data extends Model
     }
 
 
-
     public function selesai_konfirmasi()
     {
         // return Data::where('opd_id', '=', Auth::user()->opd_id)->get();
@@ -234,7 +229,6 @@ class Data extends Model
     }
 
 
-
     public function tolak_konfirmasi()
     {
         // return Data::where('opd_id', '=', Auth::user()->opd_id)->get();
@@ -253,7 +247,6 @@ class Data extends Model
             ->where('opds.id', '=', Auth::user()->opd_id)
             ->get();
     }
-
 
 
     public function verifikasi_data()
@@ -285,7 +278,6 @@ class Data extends Model
     }
 
 
-
     public function verifikasi_opd()
     {
         return DB::table("data")
@@ -300,7 +292,6 @@ class Data extends Model
             ->where('opd_id', '=', Auth::user()->opd_id)
             ->get();
     }
-
 
 
     public function get_draft()
