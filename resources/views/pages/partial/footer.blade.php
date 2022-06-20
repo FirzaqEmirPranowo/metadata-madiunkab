@@ -1,7 +1,7 @@
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      <p class="text-center" style="margin-top: -60px;" id="copyright">Copyright &copy; 2022. PEMERINTAH KABUPATEN MADIUN <a href="" target="_blank"></a></p>
+      <p class="text-center" style="margin-top: -60px;" id="copyright">Copyright &copy; {{date('Y')}}. PEMERINTAH KABUPATEN MADIUN <a href="" target="_blank"></a></p>
     </div>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->
@@ -14,4 +14,3 @@
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  

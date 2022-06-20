@@ -41,21 +41,21 @@
             <i class="bi bi-circle"></i><span>Ditolak</span>
           </a>
         </li>
-        
+
       </ul>
     </li>
 
     <li class="nav-heading">Pengumpulan Data</li>
 
     <li class="nav-item">
-      <a class="nav-link collapse" href="/data_produsen/verifikasi_data">
+      <a class="nav-link collapse" href="/data_produsen/pengumpulan">
         <i class="bi bi-list-check"></i>
         <span>Daftar Data</span>
       </a>
     </li><!-- End Dashboard Nav -->
 
 
-    
+
 
   </ul>
 

@@ -4,19 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Opd;
-use App\Models\User;
-use App\Models\Status;
-use App\Models\ActivityLog;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 
 class Data extends Model
 {
     use HasFactory;
-   
+    use InteractsWithMedia;
 
     protected $table = 'data';
     protected $fillable = [
@@ -28,14 +26,15 @@ class Data extends Model
         'status_id',
         'user_id',
         'alasan',
+        'progress',
     ];
-    // protected $primaryKey = 'id';
+
     protected $guarded = [];
     public $timestamps = true;
 
     public function data()
     {
-        return $users = Data::Select('*')
+        return Data::select('*')
             ->get();
     }
 
@@ -48,6 +47,7 @@ class Data extends Model
     {
         return $this->belongsTo(Opd::class);
     }
+
     public function status()
     {
         return $this->belongsTo(Status::class);
@@ -56,6 +56,58 @@ class Data extends Model
     public function ActivityLog()
     {
         return $this->belongsTo(ActivityLog::class);
+    }
+
+    public function standar(): HasOne
+    {
+        return $this->hasOne(StandarData::class);
+    }
+
+    public function meta()
+    {
+        return $this->hasMany(strtolower($this->jenis_data) == 'Indikator' ? MetadataIndikator::class : MetadataVariabel::class, 'data_id');
+    }
+
+    public function indikator()
+    {
+        return $this->hasMany(MetadataIndikator::class);
+    }
+
+    public function variabel()
+    {
+        return $this->hasMany(MetadataVariabel::class);
+    }
+
+    public function kegiatan()
+    {
+        return $this->hasOne(MetadataKegiatan::class);
+    }
+
+    public function berkas(): HasMany
+    {
+        return $this->hasMany(Berkas::class);
+    }
+
+    public function calculateProgress(): int
+    {
+        $progress = 0;
+        if (!empty($this->standar)) {
+            $progress += 25;
+        }
+
+        if (!blank($this->indikator) && blank($this->variabel)) {
+            $progress += 25;
+        }
+
+        if (blank($this->indikator) && !blank($this->variabel)) {
+            $progress += 25;
+        }
+
+        if ($this->berkas->isNotEmpty()) {
+            $progress += 10;
+        }
+
+        return min(100, $progress);
     }
 
     public function data_nonprodusen()
@@ -157,7 +209,6 @@ class Data extends Model
     }
 
 
-
     public function selesai_konfirmasi()
     {
         // return Data::where('opd_id', '=', Auth::user()->opd_id)->get();
@@ -178,7 +229,6 @@ class Data extends Model
     }
 
 
-
     public function tolak_konfirmasi()
     {
         // return Data::where('opd_id', '=', Auth::user()->opd_id)->get();
@@ -197,7 +247,6 @@ class Data extends Model
             ->where('opds.id', '=', Auth::user()->opd_id)
             ->get();
     }
-
 
 
     public function verifikasi_data()
@@ -229,7 +278,6 @@ class Data extends Model
     }
 
 
-
     public function verifikasi_opd()
     {
         return DB::table("data")
@@ -244,7 +292,6 @@ class Data extends Model
             ->where('opd_id', '=', Auth::user()->opd_id)
             ->get();
     }
-
 
 
     public function get_draft()
