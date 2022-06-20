@@ -52,6 +52,12 @@
                                 </div>
                             </div>
 
+                            <div class="row mb-3">
+                                <label for="satuan" class="col-sm-2 col-form-label">Satuan</label>
+                                <div class="col-sm-10">
+                                    <textarea id="satuan" name="satuan" class="form-control" placeholder="Satuan Standar Data">{{old('satuan', optional($data->standar)->satuan)}}</textarea>
+                                </div>
+                            </div>
 
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label"></label>

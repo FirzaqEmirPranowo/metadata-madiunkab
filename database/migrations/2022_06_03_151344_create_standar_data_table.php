@@ -19,7 +19,8 @@ class CreateStandarDataTable extends Migration
             $table->longText('konsep')->nullable();
             $table->longText('definisi')->nullable();
             $table->longText('klasifikasi')->nullable();
-            $table->longText('ukuran')->nullable();
+            $table->string('ukuran')->nullable();
+            $table->string('satuan')->nullable();
             $table->timestamps();
         });
     }
