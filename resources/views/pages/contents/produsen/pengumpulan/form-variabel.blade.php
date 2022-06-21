@@ -26,7 +26,7 @@
                                 <label for="nama" class="col-sm-2 col-form-label">Nama Variabel</label>
                                 <div class="col-sm-10">
                                     <input id="nama" name="nama" type="text" class="form-control"
-                                           placeholder="Nama Variabel" value="{{old('nama', optional($data->variabel)->nama)}}">
+                                           placeholder="Nama Variabel" value="{{old('nama', optional($data->variabel)->nama ?? $data->nama_data)}}">
                                 </div>
                             </div>
 
