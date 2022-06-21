@@ -132,10 +132,10 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="nama_variabel_pembangun" class="col-sm-2 col-form-label">Nama Variabel
-                                        Pembangun</label>
+                                    <label for="nama_variabel_pembangun" class="col-sm-2 col-form-label">Nama Variabel Pembangun</label>
                                     <div class="col-sm-10">
-                                        <input id="nama_variabel_pembangun" name="nama_variabel_pembangun" type="text" class="form-control" value="{{old('nama_variabel_pembangun', optional($data->indikator)->nama_variabel_pembangun)}}">
+                                        <textarea name="nama_variabel_pembangun" class="form-control" style="height: 100px" spellcheck="false" placeholder="Nama Variabel Pembangun">{{old('nama_variabel_pembangun', optional($data->indikator)->nama_variabel_pembangun)}}</textarea>
+                                        <small class="text-muted">Daftar nama dipisah menggunakan enter.</small>
                                     </div>
                                 </div>
                             </section>
