@@ -61,7 +61,7 @@
                             <div class="row mb-3">
                                 <label for="referensi_waktu" class="col-sm-2 col-form-label">Referensi Waktu</label>
                                 <div class="col-sm-10">
-                                    <input id="referensi_waktu" name="referensi_waktu" type="datetime-local" class="form-control" placeholder="Referensi Waktu" value="{{old('referensi_waktu', optional($data->variabel)->referensi_waktu)}}">
+                                    <input id="referensi_waktu" name="referensi_waktu" type="text" class="form-control" placeholder="Referensi Waktu" value="{{old('referensi_waktu', optional($data->variabel)->referensi_waktu)}}">
                                 </div>
                             </div>
 
