@@ -108,8 +108,9 @@ Route::middleware(['role:walidata'])->group(function () {
 
     Route::get('/data_walidata/pengumpulan', [PengumpulanController::class, 'pengumpulan']);
     Route::get('/data_walidata/pengumpulan/{id}/data', [PengumpulanController::class, 'detailData']);
-    Route::get('/data_walidata/pengumpulan/{id}/variabel', [PengumpulanController::class, 'variabel'])->name('variabel');
-    Route::get('/data_walidata/pengumpulan/{id}/standar', [PengumpulanController::class, 'standarData'])->name('standar');
+    Route::get('/data_walidata/pengumpulan/{id}/variabel', [PengumpulanController::class, 'variabel']);
+    Route::get('/data_walidata/pengumpulan/{id}/standar', [PengumpulanController::class, 'standarData']);
+    Route::get('/data_walidata/pengumpulan/{id}/kegiatan', [PengumpulanController::class, 'kegiatan']);
 
 
     Route::post('/data_walidata/import', function () {
