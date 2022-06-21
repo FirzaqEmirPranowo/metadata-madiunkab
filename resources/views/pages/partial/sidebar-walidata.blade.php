@@ -13,7 +13,7 @@
 
     <li class="nav-heading">Perencanaan Data</li>
 
-    
+
     <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
         <i class="bi bi-menu-button-wide"></i><span>Konfirmasi Data</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -34,7 +34,7 @@
             <i class="bi bi-circle"></i><span>Ditolak</span>
           </a>
         </li>
-        
+
       </ul>
     </li>
     {{-- <li class="nav-item">
@@ -64,7 +64,7 @@
     <li class="nav-heading">Pengumpulan Data</li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="/data_walidata/verifikasi_data">
+      <a class="nav-link collapsed" href="/data_walidata/pengumpulan">
         <i class="bi bi-list-check"></i>
         <span>Daftar Data</span>
       </a>
@@ -73,7 +73,7 @@
     <li class="nav-heading">Pemeriksaan Data</li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="pages-blank.html">
+      <a class="nav-link collapsed" href="#">
         <i class="bi bi-folder-check"></i>
         <span>Validasi Data</span>
       </a>

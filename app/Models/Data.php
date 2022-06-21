@@ -70,12 +70,12 @@ class Data extends Model
 
     public function indikator()
     {
-        return $this->hasMany(MetadataIndikator::class);
+        return $this->hasOne(MetadataIndikator::class);
     }
 
     public function variabel()
     {
-        return $this->hasMany(MetadataVariabel::class);
+        return $this->hasOne(MetadataVariabel::class);
     }
 
     public function kegiatan()

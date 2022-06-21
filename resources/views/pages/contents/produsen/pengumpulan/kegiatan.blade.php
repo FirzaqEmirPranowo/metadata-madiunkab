@@ -225,12 +225,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="row mb-3">
-                                        <div class="col-sm-2"></div>
-                                        <div class="col-sm-10">
-                                            <button class="btn btn-outline-primary"><i class="bi bi-save"></i> Simpan</button>
+                                    @if(auth()->user()->hasAnyRole('produsen'))
+                                        <div class="row mb-3">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-10">
+                                                <button class="btn btn-outline-primary"><i class="bi bi-save"></i> Simpan</button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 </div>
 
                                 <!-- Penanggung Jawab -->
@@ -276,12 +278,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="row mb-3">
-                                        <div class="col-sm-2"></div>
-                                        <div class="col-sm-10">
-                                            <button class="btn btn-outline-primary"><i class="bi bi-save"></i> Simpan</button>
+                                    @if(auth()->user()->hasAnyRole('produsen'))
+                                        <div class="row mb-3">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-10">
+                                                <button class="btn btn-outline-primary"><i class="bi bi-save"></i> Simpan</button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 </div>
 
                                 <!-- Perencaana & Persiapan -->
@@ -376,13 +380,15 @@
                                         </li>
                                     </ol>
 
-                                    <div class="row mb-3">
-                                        <div class="col-sm-2 mx-auto">
-                                            <button class="btn btn-outline-primary"><i class="bi bi-save"></i> Simpan</button>
+                                    @if(auth()->user()->hasAnyRole('produsen'))
+                                        <div class="row mb-3">
+                                            <div class="col-sm-2 mx-auto">
+                                                <button class="btn btn-outline-primary"><i class="bi bi-save"></i> Simpan</button>
+                                            </div>
+                                            <div class="col-auto">
+                                            </div>
                                         </div>
-                                        <div class="col-auto">
-                                        </div>
-                                    </div>
+                                    @endif
 
                                     <h5 class="card-title">
                                         Variabel (karakteristik) yang Dikumpulkan
@@ -552,12 +558,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="row mb-3">
-                                        <div class="col-sm-2"></div>
-                                        <div class="col-sm-10">
-                                            <button class="btn btn-outline-primary"><i class="bi bi-save"></i> Simpan</button>
+                                    @if(auth()->user()->hasAnyRole('produsen'))
+                                        <div class="row mb-3">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-10">
+                                                <button class="btn btn-outline-primary"><i class="bi bi-save"></i> Simpan</button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 </div>
 
                                 <!-- Desain sampel -->
@@ -643,12 +651,14 @@
                                         </div>
                                     </section>
 
-                                    <div class="row mb-3">
-                                        <div class="col-sm-2"></div>
-                                        <div class="col-sm-10">
-                                            <button class="btn btn-outline-primary"><i class="bi bi-save"></i> Simpan</button>
+                                    @if(auth()->user()->hasAnyRole('produsen'))
+                                        <div class="row mb-3">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-10">
+                                                <button class="btn btn-outline-primary"><i class="bi bi-save"></i> Simpan</button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 </div>
 
                                 <!-- Pengumpulan Data -->
@@ -737,12 +747,14 @@
                                         </div>
                                     </section>
 
-                                    <div class="row mb-3">
-                                        <div class="col-sm-2"></div>
-                                        <div class="col-sm-10">
-                                            <button class="btn btn-outline-primary"><i class="bi bi-save"></i> Simpan</button>
+                                    @if(auth()->user()->hasAnyRole('produsen'))
+                                        <div class="row mb-3">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-10">
+                                                <button class="btn btn-outline-primary"><i class="bi bi-save"></i> Simpan</button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 </div>
 
                                 <!-- Pengolahan & Analisis -->
@@ -831,12 +843,15 @@
                                         </div>
                                     </div>
 
-                                    <div class="row mb-3">
-                                        <div class="col-sm-2"></div>
-                                        <div class="col-sm-10">
-                                            <button class="btn btn-outline-primary"><i class="bi bi-save"></i> Simpan</button>
+                                    @if(auth()->user()->hasAnyRole('produsen'))
+                                        <div class="row mb-3">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-10">
+                                                <button class="btn btn-outline-primary"><i class="bi bi-save"></i> Simpan</button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif
+
                                 </div>
 
                                 <!-- Diseminasi Hasil -->
@@ -872,12 +887,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="row mb-3">
-                                        <div class="col-sm-2"></div>
-                                        <div class="col-sm-10">
-                                            <button class="btn btn-outline-primary"><i class="bi bi-save"></i> Simpan</button>
+                                    @if(auth()->user()->hasAnyRole('produsen'))
+                                        <div class="row mb-3">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-10">
+                                                <button class="btn btn-outline-primary"><i class="bi bi-save"></i> Simpan</button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif
 
                                     <h5 class="card-title">
                                         Judul dan Rencana Rilis Produk Kegiatan

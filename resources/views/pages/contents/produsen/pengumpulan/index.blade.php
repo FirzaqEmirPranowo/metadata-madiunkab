@@ -1,6 +1,9 @@
 @extends('pages.main.layout')
 
 @section('content')
+    @php
+        $role = auth()->user()->hasAnyRole('produsen') ? 'produsen' : 'walidata';
+    @endphp
 
     <div class="pagetitle">
         <h1>Daftar Data</h1>
@@ -46,10 +49,10 @@
                                     </td>
                                     <td>
                                         <div class="d-flex flex-column gap-2">
-                                            <a class="btn btn-outline-primary btn-sm" href="/data_produsen/pengumpulan/{{$dt->id}}/data"><i class="bi bi-info-circle"></i> Detail Data</a>
-                                            <a class="btn btn-outline-primary btn-sm" href="/data_produsen/pengumpulan/{{$dt->id}}/standar"><i class="bi bi-sim-fill"></i> Standar Data</a>
-                                            <a class="btn btn-outline-success btn-sm" href="/data_produsen/pengumpulan/{{$dt->id}}/metadata"><i class="bi bi-bar-chart"></i> Meta Data {{$dt->jenis_data}}</a>
-                                            <a class="btn btn-outline-success btn-sm" href="/data_produsen/pengumpulan/{{$dt->id}}/kegiatan"><i class="bi bi-activity"></i> Meta Data Kegiatan</a>
+                                            <a class="btn btn-outline-primary btn-sm" href="/data_{{$role}}/pengumpulan/{{$dt->id}}/data"><i class="bi bi-info-circle"></i> Detail Data</a>
+                                            <a class="btn btn-outline-primary btn-sm" href="/data_{{$role}}/pengumpulan/{{$dt->id}}/standar"><i class="bi bi-sim-fill"></i> Standar Data</a>
+                                            <a class="btn btn-outline-success btn-sm" href="/data_{{$role}}/pengumpulan/{{$dt->id}}/{{strtolower($dt->jenis_data)}}"><i class="bi bi-bar-chart"></i> Meta Data {{$dt->jenis_data}}</a>
+                                            <a class="btn btn-outline-success btn-sm" href="/data_{{$role}}/pengumpulan/{{$dt->id}}/kegiatan"><i class="bi bi-activity"></i> Meta Data Kegiatan</a>
                                         </div>
                                     </td>
                                 </tr>

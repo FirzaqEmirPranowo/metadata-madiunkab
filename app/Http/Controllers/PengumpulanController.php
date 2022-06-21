@@ -77,10 +77,6 @@ class PengumpulanController extends Controller
             );
 
             $data->refresh();
-
-            if (!empty($data->standar) && $data->progress + 25 < 100) {
-                $data->increment('progress', 25);
-            }
         }
 
         return view('pages.contents.produsen.pengumpulan.standar', compact('data'));
@@ -139,24 +135,27 @@ class PengumpulanController extends Controller
         return view('pages.contents.produsen.pengumpulan.' . strtolower($data->jenis_data), compact('data'));
     }
 
-    public function tambahIndikator($id)
+    public function indikator($id)
     {
-        $data = Data::findOrFail($id);
+        $data = Data::with(['indikator', 'standar'])->findOrFail($id);
         return view('pages.contents.produsen.pengumpulan.form-indikator', compact('data'));
     }
 
     public function simpanIndikator($id, Request $request)
     {
-        $data = Data::findOrFail($id);
+        $data = Data::with(['indikator'])->findOrFail($id);
 
-        $data->indikator()->create($request->all());
+        $data->indikator()->updateOrCreate(
+            ['data_id' => $data->id],
+            array_merge($request->all(), ['data_id' => $data->id])
+        );
 
-        return redirect()->route('metadata', $id);
+        return redirect()->back();
     }
 
-    public function tambahVariabel($id)
+    public function variabel($id)
     {
-        $data = Data::findOrFail($id);
+        $data = Data::with(['variabel', 'standar'])->findOrFail($id);
         return view('pages.contents.produsen.pengumpulan.form-variabel', compact('data'));
     }
 
@@ -164,9 +163,12 @@ class PengumpulanController extends Controller
     {
         $data = Data::findOrFail($id);
 
-        $data->variabel()->create($request->all());
+        $data->variabel()->updateOrCreate(
+            ['data_id' => $data->id],
+            array_merge($request->all(), ['data_id' => $data->id])
+        );
 
-        return redirect()->route('metadata', $id);
+        return redirect()->back();
     }
 
     public function kegiatan($id)

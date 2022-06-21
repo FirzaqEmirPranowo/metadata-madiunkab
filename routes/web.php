@@ -1,36 +1,20 @@
 <?php
 
+use App\Http\Controllers\DataController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\DataController;
 use App\Http\Controllers\OpdController;
 use App\Http\Controllers\PengumpulanController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\PortalController;
 use App\Http\Controllers\UpdownloadController;
-use App\Imports\OpdImport;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\WilayahController;
 use App\Imports\DataImport;
+use App\Imports\OpdImport;
 use App\Imports\UserImport;
-// use Maatwebsite\Excel\Facades\Excel;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Models\Opd;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Facades\Excel;
 
 Route::get('/masuk', function () {
     return redirect('login');
@@ -122,6 +106,10 @@ Route::middleware(['role:walidata'])->group(function () {
     Route::get('/data_walidata/restore/{id}', [DataController::class, 'restore'])->name('data_walidata');
     Route::get('getData', [DataController::class, 'getData'])->name('getData');
 
+    Route::get('/data_walidata/pengumpulan', [PengumpulanController::class, 'pengumpulan']);
+    Route::get('/data_walidata/pengumpulan/{id}/data', [PengumpulanController::class, 'detailData']);
+    Route::get('/data_walidata/pengumpulan/{id}/variabel', [PengumpulanController::class, 'variabel'])->name('variabel');
+    Route::get('/data_walidata/pengumpulan/{id}/standar', [PengumpulanController::class, 'standarData'])->name('standar');
 
 
     Route::post('/data_walidata/import', function () {
@@ -153,10 +141,9 @@ Route::middleware('role:produsen')->group(function () {
     Route::get('/data_produsen/pengumpulan/{id}/data', [PengumpulanController::class, 'detailData']);
     Route::patch('/data_produsen/pengumpulan/{id}/data', [PengumpulanController::class, 'simpanData'])->name('simpan-data');
 
-    Route::get('/data_produsen/pengumpulan/{id}/metadata', [PengumpulanController::class, 'metadata'])->name('metadata');
-    Route::get('/data_produsen/pengumpulan/{id}/tambah-indikator', [PengumpulanController::class, 'tambahIndikator'])->name('tambah-indikator');
+    Route::get('/data_produsen/pengumpulan/{id}/indikator', [PengumpulanController::class, 'indikator'])->name('indikator');
     Route::post('/data_produsen/pengumpulan/{id}/simpan-indikator', [PengumpulanController::class, 'simpanIndikator'])->name('simpan-indikator');
-    Route::get('/data_produsen/pengumpulan/{id}/tambah-variabel', [PengumpulanController::class, 'tambahVariabel'])->name('tambah-variabel');
+    Route::get('/data_produsen/pengumpulan/{id}/variabel', [PengumpulanController::class, 'variabel'])->name('variabel');
     Route::post('/data_produsen/pengumpulan/{id}/simpan-variabel', [PengumpulanController::class, 'simpanVariabel'])->name('simpan-variabel');
     Route::get('/data_produsen/pengumpulan/{id}/kegiatan', [PengumpulanController::class, 'kegiatan']);
     Route::post('/data_produsen/pengumpulan/{id}/kegiatan', [PengumpulanController::class, 'simpanKegiatan'])->name('simpan-kegiatan');
@@ -166,8 +153,7 @@ Route::middleware('role:produsen')->group(function () {
     Route::get('/data_produsen/pengumpulan', [PengumpulanController::class, 'pengumpulan'])->name('pengumpulan');
     Route::get('/data_produsen/indikator', [PengumpulanController::class, 'metaIndikator'])->name('meta-indikator');
     Route::view('/data_produsen/variabel/form', 'pages.contents.produsen.pengumpulan.form-variabel')->name('meta-indikator');
-    Route::get('/data_produsen/variabel', [PengumpulanController::class, 'metaVariabel'])->name('meta-variabel');
-    Route::match(['get', 'post'],'/data_produsen/pengumpulan/{id}/standar', [PengumpulanController::class, 'standarData'])->name('standar');
+    Route::match(['get', 'post'], '/data_produsen/pengumpulan/{id}/standar', [PengumpulanController::class, 'standarData'])->name('standar');
     Route::post('/data_produsen/{id}/upload-berkas', [PengumpulanController::class, 'uploadBerkas'])->name('upload-berkas');
     Route::delete('/data_produsen/{id}/delete-berkas/{berkasId}', [PengumpulanController::class, 'deleteBerkas'])->name('delete-berkas');
 
@@ -181,7 +167,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/filepreview', [FileController::class, 'preview'])->name('filepreview');
 });
 
-Route::get('/ajax/provinces', [\App\Http\Controllers\WilayahController::class, 'province'])->name('ajax.provinces');
-Route::get('/ajax/cities/{provinceId?}', [\App\Http\Controllers\WilayahController::class, 'city'])->name('ajax.cities');
+Route::get('/ajax/provinces', [WilayahController::class, 'province'])->name('ajax.provinces');
+Route::get('/ajax/cities/{provinceId?}', [WilayahController::class, 'city'])->name('ajax.cities');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
