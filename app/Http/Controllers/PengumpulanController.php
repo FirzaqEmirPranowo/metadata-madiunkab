@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Berkas;
 use App\Models\Data;
-use App\Models\Opd;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
@@ -14,7 +13,7 @@ class PengumpulanController extends Controller
 {
     public function pengumpulan()
     {
-        $data = Data::where('status_id', 1)->with(['opd', 'berkas', 'indikator', 'variabel'])->get();
+        $data = Data::whereIn('status_id', [1, 4, 5])->with(['opd', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])->paginate();
 
         return view('pages.contents.produsen.pengumpulan.index', compact('data'));
     }
@@ -22,7 +21,6 @@ class PengumpulanController extends Controller
     public function detailData($id)
     {
         $data = Data::with(['opd', 'berkas'])->findOrFail($id);
-        $opds = Opd::get();
         $existingBerkas = $data->berkas->transform(function ($b) use ($data) {
             return [
                 'name' => $b->name,
@@ -32,30 +30,11 @@ class PengumpulanController extends Controller
             ];
         })->toArray();
 
-        if ($data->status_id != 1) {
+        if (!in_array($data->status_id, [1, 4, 5, 6])) {
             return redirect()->back()->with('errors', 'Status Data belum selesai');
         }
 
-        return view('pages.contents.produsen.pengumpulan.edit-data', compact('data', 'opds', 'existingBerkas'));
-    }
-
-    public function simpanData($id, Request $request)
-    {
-        $validated = $request->validate([
-            'nama_data' => 'required|string',
-            'sumber_data' => 'required|string'
-        ]);
-
-        $data = Data::findOrFail($id);
-
-        $data->update($validated);
-
-        return redirect()->back();
-    }
-
-    public function metaVariabel()
-    {
-        return view('pages.contents.produsen.pengumpulan.variabel');
+        return view('pages.contents.produsen.pengumpulan.edit-data', compact('data', 'existingBerkas'));
     }
 
     public function standarData($id, Request $request)
@@ -231,5 +210,26 @@ class PengumpulanController extends Controller
         }
 
         return response()->noContent();
+    }
+
+    public function siapVerifikasi($id)
+    {
+        $data = Data::with(['kegiatan', 'standar'])->findOrFail($id);
+
+        if (in_array(strtolower($data->jenis_data), ['variabel', 'indikator'])) {
+            $data->with(strtolower($data->jenis_data));
+        }
+
+        if ($data->calculateProgress() < 60) {
+            return response()->json(['ok' => false, 'message' => 'Mohon lengkapi isian metadata terlebih dahulu sebelum lanjut ke proses verifikasi']);
+        }
+
+        if ($data->status_id == 4) {
+            return response()->json(['ok' => false, 'message' => 'Data ini sedang dalam proses verifikasi']);
+        }
+
+        $data->update(['progress' => 100, 'status_id' => 4]);
+
+        return response()->json(['ok' => true, 'message' => 'Sukses! Data dalam tahap verifikasi']);
     }
 }

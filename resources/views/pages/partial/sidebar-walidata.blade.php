@@ -73,7 +73,7 @@
     <li class="nav-heading">Pemeriksaan Data</li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="#">
+      <a class="nav-link collapsed" href="/data_walidata/verifikasi">
         <i class="bi bi-folder-check"></i>
         <span>Validasi Data</span>
       </a>

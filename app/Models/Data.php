@@ -90,7 +90,12 @@ class Data extends Model
 
     public function calculateProgress(): int
     {
-        $progress = 0;
+        $progress = $this->progress;
+
+        if ($progress >= 100) {
+            return min(100, $progress);
+        }
+
         if (!empty($this->standar)) {
             $progress += 25;
         }

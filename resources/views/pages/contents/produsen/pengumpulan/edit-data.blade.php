@@ -19,48 +19,39 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Edit Data</h5>
+                        <h5 class="card-title">Detail Data</h5>
 
-                        <form action="{{route('simpan-data', $data->id)}}" method="POST">
-                            @csrf
-                            @method('PATCH')
                             <div class="row mb-3">
                                 <label for="inputText" class="col-sm-2 col-form-label">Nama Data</label>
                                 <div class="col-sm-10">
                                     <input id="nama_data" name="nama_data" type="text" class="form-control"
-                                           value="{{$data->nama_data}}">
+                                           value="{{$data->nama_data}}" readonly>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Jenis Data</label>
                                 <div class="col-sm-10">
                                     <select id="jenis_data" name="jenis_data" class="form-select" disabled>
-                                        <option selected value="{{$data->jenis_data}}">{{$data->jenis_data}}</option>
-                                        <option value="Indikator">Indikator</option>
-                                        <option value="Variabel">Variabel</option>
+                                        <option value="indikator" {{$data->jenis_data === 'indikator' ? 'checked' : ''}}>Indikator</option>
+                                        <option value="variabel" {{$data->jenis_data === 'variabel' ? 'checked' : ''}}>Variabel</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">Produsen Data(PIC)</label>
+                                <label class="col-sm-2 col-form-label" id="opd_id">Produsen Data(PIC)</label>
                                 <div class="col-sm-10">
-                                    <select id="opd_id" name="opd_id" class="form-select"
-                                            aria-label="Default select example" value="{{$data->opd_id}}" disabled>
+                                    <select id="opd_id" name="opd_id" class="form-select" disabled>
                                         <option selected value="{{$data->opd_id}}">{{$data->opd->nama_opd}}</option>
-                                        @foreach($opds as $opd)
-                                            <option value="{{ $opd->id }}">{{ $opd->nama_opd }}</option>
-                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Sumber Data</label>
                                 <div class="col-sm-10">
-                                    <select id="sumber_data" name="sumber_data" class="form-select" aria-label="Sumber Data">
-                                        <option selected value="{{$data->sumber_data}}">{{$data->sumber_data}}</option>
-                                        <option value="RPJMD">RPJMD</option>
-                                        <option value="SPM">SPM</option>
-                                        <option value="SDGs">SDGs</option>
+                                    <select id="sumber_data" name="sumber_data" class="form-select" aria-label="Sumber Data" disabled>
+                                        <option value="RPJMD" {{ $data->sumber_data === 'RPJMD' ? 'checked' : '' }}>RPJMD</option>
+                                        <option value="SPM" {{ $data->sumber_data === 'SPM' ? 'checked' : '' }}>SPM</option>
+                                        <option value="SDGs" {{ $data->sumber_data === 'SDGs' ? 'checked' : '' }}>SDGs</option>
                                     </select>
                                 </div>
                             </div>
@@ -69,12 +60,17 @@
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label"></label>
                                     <div class="col-sm-10">
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                        @php
+                                            $progress = $data->calculateProgress();
+                                        @endphp
+                                        @if($progress >= 60)
+                                            <button class="btn btn-outline-success" {{$data->status_id == 4 ? 'disabled' : ''}} id="btnReadyVerification">{{$data->status_id == 4 ? 'Dalam tahap proses verifikasi' : 'Siap Verifikasi'}} <i class="bi bi-check"></i></button>
+                                        @else
+                                            <small class="text-muted">Data ini belum mencapai minimal skor untuk di verifikasi</small>
+                                        @endif
                                     </div>
                                 </div>
                             @endif
-
-                        </form><!-- End General Form Elements -->
 
                     </div>
                 </div>
@@ -111,28 +107,64 @@
             let existingBerkas = @json($existingBerkas);
             let berkasDz = new Dropzone('#berkas', {
                 paramName: 'berkas',
-                url: '{{route('upload-berkas', $data->id)}}',
-                addRemoveLinks: true,
+                url: {{auth()->user()->hasAnyRole('produsen') ? 1 : 0}} != 1 ? '#' : '{{route('upload-berkas', $data->id)}}',
+                addRemoveLinks: {{auth()->user()->hasAnyRole('produsen') ? 1 : 0}} === 1,
             });
-            berkasDz.on('removedfile', function (file) {
-                $.ajax({
-                    url: file.deleteUrl,
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{csrf_token()}}'
-                    }
+
+            @if (auth()->user()->hasAnyRole('produsen'))
+                berkasDz.on('removedfile', function (file) {
+                    $.ajax({
+                        url: file.deleteUrl,
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{csrf_token()}}'
+                        }
+                    })
+                });
+                berkasDz.on('addedfile', function(file) {
+                    file.previewElement.addEventListener('click', () => window.open(file.previewUrl))
                 })
-            });
-            berkasDz.on('addedfile', function(file) {
-                file.previewElement.addEventListener('click', () => window.open(file.previewUrl))
-                console.log(file);
-            })
+            @endif
+
             $.each(existingBerkas, function (i, file) {
                 berkasDz.files.push(file);
                 berkasDz.emit('addedfile', file);
                 berkasDz.emit('complete', file);
             });
 
+
+            $('#btnReadyVerification').on('click', function (e) {
+                e.preventDefault();
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                    },
+                    buttonsStyling: false
+                })
+
+                swalWithBootstrapButtons.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: 'Pastikan semua metadata sudah terisi lengkap sebelum memasuki proses verifikasi!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ajukan Verifikasi!',
+                    cancelButtonText: 'Batal',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '{{route('siap-verifikasi', $data->id)}}',
+                            method: 'PATCH',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{csrf_token()}}'
+                            }
+                        })
+                            .then((r) => Swal.fire(r.ok ? 'Sukses' : 'Gagal', r.message, r.ok ? 'success' : 'error'))
+                            .catch(() => Swal.fire('Error', 'Terjadi galat saat memproses permintaan', 'error'));
+                    }
+                })
+            });
         });
     </script>
 @endpush

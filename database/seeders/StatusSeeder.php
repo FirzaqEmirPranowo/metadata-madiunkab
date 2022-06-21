@@ -29,5 +29,15 @@ class StatusSeeder extends Seeder
             'status' => 'Draf',
 
         ]);
+
+        Status::create([
+            'status' => 'Proses Verifikasi'
+        ]);
+        Status::create([
+           'status' => 'Revisi'
+        ]);
+        Status::create([
+            'status' => 'Selesai'
+        ]);
     }
 }
