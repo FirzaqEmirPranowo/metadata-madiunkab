@@ -115,7 +115,12 @@ Route::middleware(['role:walidata'])->group(function () {
     Route::get('/data_walidata/pengumpulan/{id}/kegiatan', [PengumpulanController::class, 'kegiatan']);
 
     Route::get('/data_walidata/verifikasi', [VerifikasiController::class, 'index'])->name('verifikasi.index');
-
+    Route::get('/data_walidata/verifikasi/{id}/berkas', [VerifikasiController::class, 'berkas'])->name('verifikasi.berkas');
+    Route::get('/data_walidata/verifikasi/{id}/variabel', [VerifikasiController::class, 'variabel'])->name('verifikasi.variabel');
+    Route::get('/data_walidata/verifikasi/{id}/indikator', [VerifikasiController::class, 'indikator'])->name('verifikasi.indikator');
+    Route::get('/data_walidata/verifikasi/{id}/komentar', [VerifikasiController::class, 'getKomentar'])->name('verifikasi.get-komentar');
+    Route::post('/data_walidata/verifikasi/{id}/komentar', [VerifikasiController::class, 'komentar'])->name('verifikasi.komentar');
+    Route::patch('/data_walidata/verifikasi/{id}/verify', [VerifikasiController::class, 'verify'])->name('verifikasi.verify');
 
     Route::post('/data_walidata/import', function () {
         Excel::import(new DataImport, request()->file('file'));

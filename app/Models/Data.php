@@ -88,6 +88,11 @@ class Data extends Model
         return $this->hasMany(Berkas::class);
     }
 
+    public function verifikasi()
+    {
+        return $this->hasMany(Verifikasi::class);
+    }
+
     public function calculateProgress(): int
     {
         $progress = $this->progress;

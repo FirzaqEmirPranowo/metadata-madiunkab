@@ -121,10 +121,11 @@
                         }
                     })
                 });
-                berkasDz.on('addedfile', function(file) {
-                    file.previewElement.addEventListener('click', () => window.open(file.previewUrl))
-                })
             @endif
+
+            berkasDz.on('addedfile', function(file) {
+                file.previewElement.addEventListener('click', () => window.open(file.previewUrl))
+            });
 
             $.each(existingBerkas, function (i, file) {
                 berkasDz.files.push(file);
