@@ -41,7 +41,7 @@
                                 <div class="col-sm-2">
                                     <div class="btn-group-sm">
                                         <button class="btn btn-actions btn-accept btn-sm {{$nama && $nama->accepted ? 'btn-success' : 'btn-outline-success'}}" data-name="nama">Setuju <i class="bi bi-check"></i></button>
-                                        <button class="btn btn-actions btn-reject btn-sm {{$nama && !$nama->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="nama">Tolak <i class="bi bi-x"></i></button>
+                                        <button class="btn btn-actions btn-reject btn-sm {{$nama && !$nama->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="nama">Revisi <i class="bi bi-x"></i></button>
                                         <button class="btn btn-comment btn-sm btn-outline-primary" data-name="nama"><i class="bi bi-chat-dots"></i> Komentar</button>
                                     </div>
                                 </div>
@@ -55,7 +55,7 @@
                                 <div class="col-sm-2">
                                     <div class="btn-group-sm">
                                         <button class="btn btn-actions btn-accept btn-sm {{$konsep && $konsep->accepted ? 'btn-success' : 'btn-outline-success'}}" data-name="konsep">Setuju <i class="bi bi-check"></i></button>
-                                        <button class="btn btn-actions btn-reject btn-sm {{$konsep && !$konsep->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="konsep">Tolak <i class="bi bi-x"></i></button>
+                                        <button class="btn btn-actions btn-reject btn-sm {{$konsep && !$konsep->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="konsep">Revisi <i class="bi bi-x"></i></button>
                                         <button class="btn btn-comment btn-sm btn-outline-primary" data-name="konsep"><i class="bi bi-chat-dots"></i> Komentar</button>
                                     </div>
                                 </div>
@@ -69,7 +69,7 @@
                                 <div class="col-sm-2">
                                     <div class="btn-group-sm">
                                         <button class="btn btn-actions btn-accept btn-sm {{$definisi && $definisi->accepted ? 'btn-success' : 'btn-outline-success'}}" data-name="definisi">Setuju <i class="bi bi-check"></i></button>
-                                        <button class="btn btn-actions btn-reject btn-sm {{$definisi && !$definisi->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="definisi">Tolak <i class="bi bi-x"></i></button>
+                                        <button class="btn btn-actions btn-reject btn-sm {{$definisi && !$definisi->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="definisi">Revisi <i class="bi bi-x"></i></button>
                                         <button class="btn btn-comment btn-sm btn-outline-primary" data-name="definisi"><i class="bi bi-chat-dots"></i> Komentar</button>
                                     </div>
                                 </div>
@@ -83,7 +83,7 @@
                                 <div class="col-sm-2">
                                     <div class="btn-group-sm">
                                         <button class="btn btn-actions btn-accept btn-sm {{$interpretasi && $interpretasi->accepted ? 'btn-success' : 'btn-outline-success'}}" data-name="interpretasi">Setuju <i class="bi bi-check"></i></button>
-                                        <button class="btn btn-actions btn-reject btn-sm {{$interpretasi && !$interpretasi->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="interpretasi">Tolak <i class="bi bi-x"></i></button>
+                                        <button class="btn btn-actions btn-reject btn-sm {{$interpretasi && !$interpretasi->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="interpretasi">Revisi <i class="bi bi-x"></i></button>
                                         <button class="btn btn-comment btn-sm btn-outline-primary" data-name="interpretasi"><i class="bi bi-chat-dots"></i> Komentar</button>
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@
                                 <div class="col-sm-2">
                                     <div class="btn-group-sm">
                                         <button class="btn btn-actions btn-accept btn-sm {{$metode && $metode->accepted ? 'btn-success' : 'btn-outline-success'}}" data-name="metode">Setuju <i class="bi bi-check"></i></button>
-                                        <button class="btn btn-actions btn-reject btn-sm {{$metode && !$metode->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="metode">Tolak <i class="bi bi-x"></i></button>
+                                        <button class="btn btn-actions btn-reject btn-sm {{$metode && !$metode->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="metode">Revisi <i class="bi bi-x"></i></button>
                                         <button class="btn btn-comment btn-sm btn-outline-primary" data-name="metode"><i class="bi bi-chat-dots"></i> Komentar</button>
                                     </div>
                                 </div>
@@ -115,7 +115,7 @@
                                 <div class="col-sm-2">
                                     <div class="btn-group-sm">
                                         <button class="btn btn-actions btn-accept btn-sm {{$ukuran && $ukuran->accepted ? 'btn-success' : 'btn-outline-success'}}" data-name="ukuran">Setuju <i class="bi bi-check"></i></button>
-                                        <button class="btn btn-actions btn-reject btn-sm {{$ukuran && !$ukuran->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="ukuran">Tolak <i class="bi bi-x"></i></button>
+                                        <button class="btn btn-actions btn-reject btn-sm {{$ukuran && !$ukuran->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="ukuran">Revisi <i class="bi bi-x"></i></button>
                                         <button class="btn btn-comment btn-sm btn-outline-primary" data-name="ukuran"><i class="bi bi-chat-dots"></i> Komentar</button>
                                     </div>
                                 </div>
@@ -129,7 +129,7 @@
                                 <div class="col-sm-2">
                                     <div class="btn-group-sm">
                                         <button class="btn btn-actions btn-accept btn-sm {{$satuan && $satuan->accepted ? 'btn-success' : 'btn-outline-success'}}" data-name="satuan">Setuju <i class="bi bi-check"></i></button>
-                                        <button class="btn btn-actions btn-reject btn-sm {{$satuan && !$satuan->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="satuan">Tolak <i class="bi bi-x"></i></button>
+                                        <button class="btn btn-actions btn-reject btn-sm {{$satuan && !$satuan->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="satuan">Revisi <i class="bi bi-x"></i></button>
                                         <button class="btn btn-comment btn-sm btn-outline-primary" data-name="satuan"><i class="bi bi-chat-dots"></i> Komentar</button>
                                     </div>
                                 </div>
@@ -143,7 +143,7 @@
                                 <div class="col-sm-2">
                                     <div class="btn-group-sm">
                                         <button class="btn btn-actions btn-accept btn-sm {{$klasifikasi_penyajian && $klasifikasi_penyajian->accepted ? 'btn-success' : 'btn-outline-success'}}" data-name="klasifikasi_penyajian">Setuju <i class="bi bi-check"></i></button>
-                                        <button class="btn btn-actions btn-reject btn-sm {{$klasifikasi_penyajian && !$klasifikasi_penyajian->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="klasifikasi_penyajian">Tolak <i class="bi bi-x"></i></button>
+                                        <button class="btn btn-actions btn-reject btn-sm {{$klasifikasi_penyajian && !$klasifikasi_penyajian->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="klasifikasi_penyajian">Revisi <i class="bi bi-x"></i></button>
                                         <button class="btn btn-comment btn-sm btn-outline-primary" data-name="klasifikasi_penyajian"><i class="bi bi-chat-dots"></i> Komentar</button>
                                     </div>
                                 </div>
@@ -171,7 +171,7 @@
                                     <div class="col-sm-2">
                                         <div class="btn-group-sm">
                                             <button class="btn btn-actions btn-accept btn-sm {{$publikasi_indikator_pembangun && $publikasi_indikator_pembangun->accepted ? 'btn-success' : 'btn-outline-success'}}" data-name="publikasi_indikator_pembangun">Setuju <i class="bi bi-check"></i></button>
-                                            <button class="btn btn-actions btn-reject btn-sm {{$publikasi_indikator_pembangun && !$publikasi_indikator_pembangun->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="publikasi_indikator_pembangun">Tolak <i class="bi bi-x"></i></button>
+                                            <button class="btn btn-actions btn-reject btn-sm {{$publikasi_indikator_pembangun && !$publikasi_indikator_pembangun->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="publikasi_indikator_pembangun">Revisi <i class="bi bi-x"></i></button>
                                             <button class="btn btn-comment btn-sm btn-outline-primary" data-name="publikasi_indikator_pembangun"><i class="bi bi-chat-dots"></i> Komentar</button>
                                         </div>
                                     </div>
@@ -187,7 +187,7 @@
                                     <div class="col-sm-2">
                                         <div class="btn-group-sm">
                                             <button class="btn btn-actions btn-accept btn-sm {{$nama_indikator_pembangun && $nama_indikator_pembangun->accepted ? 'btn-success' : 'btn-outline-success'}}" data-name="nama_indikator_pembangun">Setuju <i class="bi bi-check"></i></button>
-                                            <button class="btn btn-actions btn-reject btn-sm {{$nama_indikator_pembangun && !$nama_indikator_pembangun->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="nama_indikator_pembangun">Tolak <i class="bi bi-x"></i></button>
+                                            <button class="btn btn-actions btn-reject btn-sm {{$nama_indikator_pembangun && !$nama_indikator_pembangun->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="nama_indikator_pembangun">Revisi <i class="bi bi-x"></i></button>
                                             <button class="btn btn-comment btn-sm btn-outline-primary" data-name="nama_indikator_pembangun"><i class="bi bi-chat-dots"></i> Komentar</button>
                                         </div>
                                     </div>
@@ -209,7 +209,7 @@
                                     <div class="col-sm-2">
                                         <div class="btn-group-sm">
                                             <button class="btn btn-actions btn-accept btn-sm {{$kegiatan_variabel_pembangun && $kegiatan_variabel_pembangun->accepted ? 'btn-success' : 'btn-outline-success'}}" data-name="kegiatan_variabel_pembangun">Setuju <i class="bi bi-check"></i></button>
-                                            <button class="btn btn-actions btn-reject btn-sm {{$kegiatan_variabel_pembangun && !$kegiatan_variabel_pembangun->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="kegiatan_variabel_pembangun">Tolak <i class="bi bi-x"></i></button>
+                                            <button class="btn btn-actions btn-reject btn-sm {{$kegiatan_variabel_pembangun && !$kegiatan_variabel_pembangun->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="kegiatan_variabel_pembangun">Revisi <i class="bi bi-x"></i></button>
                                             <button class="btn btn-comment btn-sm btn-outline-primary" data-name="kegiatan_variabel_pembangun"><i class="bi bi-chat-dots"></i> Komentar</button>
                                         </div>
                                     </div>
@@ -224,7 +224,7 @@
                                     <div class="col-sm-2">
                                         <div class="btn-group-sm">
                                             <button class="btn btn-actions btn-accept btn-sm {{$nama_variabel_pembangun && $nama_variabel_pembangun->accepted ? 'btn-success' : 'btn-outline-success'}}" data-name="nama_variabel_pembangun">Setuju <i class="bi bi-check"></i></button>
-                                            <button class="btn btn-actions btn-reject btn-sm {{$nama_variabel_pembangun && !$nama_variabel_pembangun->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="nama_variabel_pembangun">Tolak <i class="bi bi-x"></i></button>
+                                            <button class="btn btn-actions btn-reject btn-sm {{$nama_variabel_pembangun && !$nama_variabel_pembangun->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="nama_variabel_pembangun">Revisi <i class="bi bi-x"></i></button>
                                             <button class="btn btn-comment btn-sm btn-outline-primary" data-name="nama_variabel_pembangun"><i class="bi bi-chat-dots"></i> Komentar</button>
                                         </div>
                                     </div>
@@ -247,7 +247,7 @@
                                 <div class="col-sm-2">
                                     <div class="btn-group-sm">
                                         <button class="btn btn-actions btn-accept btn-sm {{$level_estimasi && $level_estimasi->accepted ? 'btn-success' : 'btn-outline-success'}}" data-name="level_estimasi">Setuju <i class="bi bi-check"></i></button>
-                                        <button class="btn btn-actions btn-reject btn-sm {{$level_estimasi && !$level_estimasi->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="level_estimasi">Tolak <i class="bi bi-x"></i></button>
+                                        <button class="btn btn-actions btn-reject btn-sm {{$level_estimasi && !$level_estimasi->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="level_estimasi">Revisi <i class="bi bi-x"></i></button>
                                         <button class="btn btn-comment btn-sm btn-outline-primary" data-name="level_estimasi"><i class="bi bi-chat-dots"></i> Komentar</button>
                                     </div>
                                 </div>
@@ -273,7 +273,7 @@
                                 <div class="col-sm-2">
                                     <div class="btn-group-sm">
                                         <button class="btn btn-actions btn-accept btn-sm {{$umum && $umum->accepted ? 'btn-success' : 'btn-outline-success'}}" data-name="umum">Setuju <i class="bi bi-check"></i></button>
-                                        <button class="btn btn-actions btn-reject btn-sm {{$umum && !$umum->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="umum">Tolak <i class="bi bi-x"></i></button>
+                                        <button class="btn btn-actions btn-reject btn-sm {{$umum && !$umum->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="umum">Revisi <i class="bi bi-x"></i></button>
                                         <button class="btn btn-comment btn-sm btn-outline-primary" data-name="umum"><i class="bi bi-chat-dots"></i> Komentar</button>
                                     </div>
                                 </div>

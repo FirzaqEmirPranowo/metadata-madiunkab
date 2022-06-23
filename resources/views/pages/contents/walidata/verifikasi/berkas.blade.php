@@ -41,7 +41,7 @@
                                         <td>
                                             <div class="btn-group-sm">
                                                 <button class="btn btn-actions btn-accept btn-sm {{$v && $v->accepted ? 'btn-success' : 'btn-outline-success'}}" data-name="{{$berkas['id']}}">Setuju <i class="bi bi-check"></i></button>
-                                                <button class="btn btn-actions btn-reject btn-sm {{$v && !$v->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="{{$berkas['id']}}">Tolak <i class="bi bi-x"></i></button>
+                                                <button class="btn btn-actions btn-reject btn-sm {{$v && !$v->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="{{$berkas['id']}}">Revisi <i class="bi bi-x"></i></button>
                                                 <button class="btn btn-comment btn-sm btn-outline-primary" data-name="{{$berkas['id']}}"><i class="bi bi-chat-dots"></i> Komentar</button>
                                             </div>
                                         </td>
