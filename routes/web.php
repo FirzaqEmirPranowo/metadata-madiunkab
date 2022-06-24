@@ -109,7 +109,7 @@ Route::middleware(['role:walidata'])->group(function () {
 
     Route::get('/data_walidata/pengumpulan', [PengumpulanController::class, 'pengumpulan']);
     Route::get('/data_walidata/pengumpulan/{id}/data', [PengumpulanController::class, 'detailData']);
-    Route::get('/data_produsen/pengumpulan/{id}/indikator', [PengumpulanController::class, 'indikator']);
+    Route::get('/data_walidata/pengumpulan/{id}/indikator', [PengumpulanController::class, 'indikator']);
     Route::get('/data_walidata/pengumpulan/{id}/variabel', [PengumpulanController::class, 'variabel']);
     Route::get('/data_walidata/pengumpulan/{id}/standar', [PengumpulanController::class, 'standarData']);
     Route::get('/data_walidata/pengumpulan/{id}/kegiatan', [PengumpulanController::class, 'kegiatan']);
