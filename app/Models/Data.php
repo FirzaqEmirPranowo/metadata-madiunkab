@@ -96,7 +96,7 @@ class Data extends Model implements HasMedia
 
     public function calculateProgress(): int
     {
-        $progress = $this->progress;
+        $progress = $this->progress ?? 0;
 
         if ($progress >= 100) {
             return min(100, $progress);
