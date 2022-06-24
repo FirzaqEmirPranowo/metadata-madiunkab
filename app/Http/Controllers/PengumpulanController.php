@@ -13,7 +13,10 @@ class PengumpulanController extends Controller
 {
     public function pengumpulan()
     {
-        $data = Data::whereIn('status_id', [1, 4, 5])->with(['opd', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])->paginate();
+        $data = Data::whereIn('status_id', [1, 4, 5])
+            ->when(auth()->user()->hasAnyRole('produsen'), fn ($q) => $q->where('opd_id', auth()->user()->opd_id))
+            ->with(['opd', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])
+            ->paginate();
 
         return view('pages.contents.produsen.pengumpulan.index', compact('data'));
     }
