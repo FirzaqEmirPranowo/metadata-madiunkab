@@ -164,7 +164,7 @@ class PengumpulanController extends Controller
             ['data_id' => $data->id],
             array_merge($request->all(), ['data_id' => $data->id]),
         );
-//        dd($request->all());
+
         return redirect()->back()->withInput();
     }
 

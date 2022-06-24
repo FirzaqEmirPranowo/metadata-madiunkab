@@ -2,30 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Opd;
-use App\Models\Role;
+use App\Http\Controllers\Director;
 use App\Models\Data;
-use App\Models\Status;
 use App\Models\Document;
-use App\Models\ActivityLog;
-use Illuminate\Auth\Events\Validated;
-use Spatie\Activitylog\Models\Activity;
-use Spatie\Activitylog\Traits\LogsActivity;
+use App\Models\Opd;
+use App\Providers\SweetAlertServiceProvider;
+use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Barryvdh\DomPDF\Facade as PDF;
+use RealRashid\SweetAlert\Facades\Alert;
+use SweetAlert;
 use Yajra\DataTables\Facades\DataTables;
+
 // use Spatie\Activitylog\Traits\LogsActivity;
 
 // use Alert;
-use App\Http\Controllers\Director;
-use PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf;
-use App\Providers\SweetAlertServiceProvider;
-use SweetAlert;
-use RealRashid\SweetAlert\Facades\Alert;
 // use RealRashid\SweetAlert\Facades\Alert;
 // or
 // use Alert;ss
@@ -68,6 +60,7 @@ class DataController extends Controller
             return view('pages.contents.produsen.indexdata', compact('data', 'draft'));
         }
     }
+
     public function show()
     {
         if (Auth::user()->role_id == '1') {
@@ -313,11 +306,10 @@ class DataController extends Controller
     }
 
 
-
     public function destroy($id)
     {
-        $user = Data::findOrFail($id);
-        $nama_data = $user->nama_data;
+        $data = Data::findOrFail($id);
+        $nama_data = $data->nama_data;
 
         // if (Auth::user()->role_id == '1') {
         //     return redirect('/data_administrator');
@@ -329,10 +321,10 @@ class DataController extends Controller
         //     return redirect('/home');
         // }
 
-        if ($user) {
+        if ($data) {
             if (Auth::user()->role_id == '1') {
                 activity()->log('Menghapus Daftar Data ' . $nama_data);
-                $user->delete();
+                $data->delete();
                 return redirect('/data_administrator')
                     ->with([
                         Alert::error('Berhasil', 'Berhasil Menghapus Data!')
@@ -340,8 +332,8 @@ class DataController extends Controller
                 // return redirect('/data_administrator');
             } elseif (Auth::user()->role_id == '2') {
 
-                activity()->performedOn($user)->log('Menghapus Daftar Data ' . $nama_data);
-                $user->delete();
+                activity()->performedOn($data)->log('Menghapus Daftar Data ' . $nama_data);
+                $data->delete();
                 return redirect('/data_walidata/draft')
                     ->with([
                         Alert::error('Berhasil', 'Berhasil Menghapus Data!')
@@ -349,7 +341,7 @@ class DataController extends Controller
                 // return redirect('/data_walidata/draft');
             } elseif (Auth::user()->role_id == '3') {
                 activity()->log('Menghapus Daftar Data' . $nama_data);
-                $user->delete();
+                $data->delete();
                 return redirect('/data_produsen/draft')
                     ->with([
                         Alert::error('Berhasil', 'Berhasil Menghapus Data!')
@@ -405,7 +397,6 @@ class DataController extends Controller
         // dd($request->id, $draft);
         return view('pages.contents.walidata.index_get_opd', compact('data', 'opd', 'draft'));
     }
-
 
 
     public function getData(Request $request)
@@ -555,7 +546,6 @@ class DataController extends Controller
     }
 
 
-
     public function verifikasi_data()
     {
         $verifikasi = Data::verifikasi_data();
@@ -610,7 +600,6 @@ class DataController extends Controller
         // $logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
 
 
-
         $pdf = PDF::loadView('pages.contents.pdf', compact('data', 'hari', 'dt', 'tgl', 'bln', 'tahun', 'pict', 'opd'));
         return $pdf->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'serif'])->stream();
     }
@@ -642,7 +631,6 @@ class DataController extends Controller
 
 
         // dd($opd);
-
 
 
         // $pdf = PDF::loadView('pages.contents.pdf', compact('data', 'hari', 'dt', 'tgl', 'bln', 'tahun', 'pict', 'opd'));
