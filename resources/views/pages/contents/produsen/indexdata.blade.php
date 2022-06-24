@@ -132,10 +132,47 @@
                             <td>
                               <a href="{{ route('detail_produsen',['id'=>$dt->id])  }}" class="btn btn-sm btn-warning" style="color: white" data-bs-placement="bottom" title="Detail Data"><i class="bi bi-info-circle"></i></a>
                             </td>
-                            <td>
+                            {{-- <td>
                               <form id="setuju-data-{{ $dt->id }}" action="{{ url('/data_produsen/setuju/'.encrypt($dt->id)) }}" >
                                 <button type="button" class="btn btn-sm btn-success" onclick="confirmSetuju('setuju-data-{{ $dt->id }}')"><i class="bi bi-check-circle"></i></button>
                               </form>
+                            </td> --}}
+                            <td>
+                              {{-- <form id="detail-alasan">
+                                <button type="button" class="btn btn-sm btn-danger btn-als" data-id="{{ $dt->id }}"><i class="bi bi-x-circle"></i></button>
+                              </form> --}}
+                              
+                              <a href="" class="btn btn-sm btn-success  float-right" data-bs-toggle="modal" data-bs-target="#menyetujui-{{ $dt->id }}"><i class="bi bi-check-circle"></i></a>
+                              <!-- Vertically centered Modal -->
+                               {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
+                                 Vertically centered
+                               </button> --}}
+                               <div class="modal fade" id="menyetujui-{{ $dt->id }}" tabindex="-1">
+                                 <div class="modal-dialog modal-dialog-centered">
+                                   <div class="modal-content">
+                                     <div class="modal-header">
+                                       <h5 class="modal-title" style="font-weight: bold; color:green">SETUJUI DATA!</h5>
+                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                     </div>
+                                     <div class="modal-body">
+                                      
+                                      <h7 class="modal-title"><i class="bi bi-caret-right-fill"></i>Apakah anda sudah yakin untuk menyetujui data?</h7>
+                                     </div>
+                                     <div class="modal-footer">
+                                       
+                                       <form action="{{ url('/data_produsen/setuju/'.encrypt($dt->id)) }}" method="get" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="input-group mb-3">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <button class="btn btn-primary" type="submit" id="button-addon2">Kirim</button>
+                                        </div>
+                                    </form> 
+                                     </div>
+                                   </div>
+                                 </div>
+                               </div><!-- End Vertically centered Modal-->
+                              {{-- modal input --}}
+                              
                             </td>
                             <td>
                               {{-- <form id="detail-alasan">
