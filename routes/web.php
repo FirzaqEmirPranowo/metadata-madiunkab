@@ -121,6 +121,8 @@ Route::middleware(['role:walidata'])->group(function () {
     Route::get('/data_walidata/verifikasi/{id}/komentar', [VerifikasiController::class, 'getKomentar'])->name('verifikasi.get-komentar');
     Route::post('/data_walidata/verifikasi/{id}/komentar', [VerifikasiController::class, 'komentar'])->name('verifikasi.komentar');
     Route::patch('/data_walidata/verifikasi/{id}/verify', [VerifikasiController::class, 'verify'])->name('verifikasi.verify');
+    Route::get('/data_walidata/verifikasi/{id}/status', [VerifikasiController::class, 'status'])->name('verifikasi.status');
+    Route::patch('/data_walidata/verifikasi/{id}/complete', [VerifikasiController::class, 'complete'])->name('verifikasi.complete');
 
     Route::post('/data_walidata/import', function () {
         Excel::import(new DataImport, request()->file('file'));

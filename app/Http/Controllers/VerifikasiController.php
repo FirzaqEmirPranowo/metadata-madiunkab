@@ -11,7 +11,7 @@ class VerifikasiController extends Controller
 {
     public function index()
     {
-        $data = Data::whereIn('status_id', [4, 5])->with(['opd', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])->paginate();
+        $data = Data::where('status_id', 4)->with(['opd', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])->paginate();
 
         return view('pages.contents.walidata.verifikasi.index', compact('data'));
     }
@@ -101,5 +101,52 @@ class VerifikasiController extends Controller
         );
 
         return response()->json(['ok' => true, 'message' => 'Berhasil disimpan']);
+    }
+
+    public function status($id)
+    {
+        $data = Data::with(['verifikasi'])->find($id);
+
+        if (!$data) {
+            return response()->json(['ok' => false, 'code' => 404, 'message' => 'Data tidak ditemukan']);
+        }
+
+        if ($data->status_id != 4) {
+            return response()->json(['ok' => false, 'code' => -2, 'message' => 'Status data tidak valid']);
+        }
+
+        if ($data->verifikasi->count() < 1) {
+            return response()->json(['ok' => false, 'code' => -1, 'message' => 'Anda belum menyelesaikan proses verifikasi']);
+        }
+
+        if ($data->verifikasi->where('accepted', 0)->count() > 0) {
+            return response()->json(['ok' => true, 'code' => 0, 'message' => 'Terdapat isian yang harus direvisi, apakah Anda yakin ingin mengajukan revisi?']);
+        }
+
+        return response()->json(['ok' => true, 'code' => 1, 'message' => 'Tidak ditemukan isian yang harus direvisi, apakah Anda yakin ingin menyelesaikan proses verifikasi?']);
+    }
+
+    public function complete($id)
+    {
+        $data = Data::with(['verifikasi'])->find($id);
+
+        if (!$data) {
+            return response()->json(['ok' => false,'message' => 'Data tidak ditemukan']);
+        }
+
+        if ($data->status_id != 4) {
+            return response()->json(['ok' => false, 'message' => 'Status data tidak valid']);
+        }
+
+        if ($data->verifikasi->count() < 1) {
+            return response()->json(['ok' => false, 'message' => 'Anda belum menyelesaikan proses verifikasi']);
+        }
+
+        $isRevisi = $data->verifikasi->where('accepted', 0)->count() > 0;
+        $data->update([
+            'status_id' => $isRevisi ? 5 : 6
+        ]);
+
+        return response()->json(['ok' => true, 'message' => 'Data telah diubah menjadi '. ($isRevisi ? 'revisi' : 'siap untuk dipublish')]);
     }
 }

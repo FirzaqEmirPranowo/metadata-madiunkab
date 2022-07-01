@@ -13,8 +13,8 @@ class PengumpulanController extends Controller
 {
     public function pengumpulan()
     {
-        $data = Data::whereIn('status_id', [1, 4, 5])
-            ->when(auth()->user()->hasAnyRole('produsen'), fn ($q) => $q->where('opd_id', auth()->user()->opd_id))
+        $data = Data::whereIn('status_id', [1, 5])
+            ->when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))
             ->with(['opd', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])
             ->paginate();
 
@@ -24,7 +24,7 @@ class PengumpulanController extends Controller
     public function detailData($id)
     {
         $data = Data::with(['opd', 'berkas'])
-            ->when(auth()->user()->hasAnyRole('produsen'), fn ($q) => $q->where('opd_id', auth()->user()->opd_id))
+            ->when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))
             ->findOrFail($id);
         $existingBerkas = $data->berkas->transform(function ($b) use ($data) {
             return [
@@ -45,7 +45,7 @@ class PengumpulanController extends Controller
     public function standarData($id, Request $request)
     {
         $data = Data::with(['opd', 'standar'])
-            ->when(auth()->user()->hasAnyRole('produsen'), fn ($q) => $q->where('opd_id', auth()->user()->opd_id))
+            ->when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))
             ->findOrFail($id);
 
         if ($request->filled('definisi')) {
@@ -74,7 +74,7 @@ class PengumpulanController extends Controller
             'berkas' => 'required|file'
         ]);
 
-        $data = Data::when(auth()->user()->hasAnyRole('produsen'), fn ($q) => $q->where('opd_id', auth()->user()->opd_id))->findOrFail($id);
+        $data = Data::when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))->findOrFail($id);
 
         if ($data->status_id != 1) {
             return response()->json(['message' => 'invalid'], 403);
@@ -112,7 +112,7 @@ class PengumpulanController extends Controller
 
     public function metadata($id)
     {
-        $data = Data::when(auth()->user()->hasAnyRole('produsen'), fn ($q) => $q->where('opd_id', auth()->user()->opd_id))->findOrFail($id);
+        $data = Data::when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))->findOrFail($id);
 
         if (in_array(strtolower($data->jenis_data), ['variabel', 'indikator'])) {
             $data->with(strtolower($data->jenis_data));
@@ -124,13 +124,18 @@ class PengumpulanController extends Controller
     public function indikator($id)
     {
         $data = Data::with(['indikator', 'standar'])->findOrFail($id);
+
+        if ($data->status_id == 5) {
+            $data->load('verifikasi');
+        }
+
         return view('pages.contents.produsen.pengumpulan.form-indikator', compact('data'));
     }
 
     public function simpanIndikator($id, Request $request)
     {
         $data = Data::with(['indikator'])
-            ->when(auth()->user()->hasAnyRole('produsen'), fn ($q) => $q->where('opd_id', auth()->user()->opd_id))
+            ->when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))
             ->findOrFail($id);
 
         $data->indikator()->updateOrCreate(
@@ -144,14 +149,19 @@ class PengumpulanController extends Controller
     public function variabel($id)
     {
         $data = Data::with(['variabel', 'standar'])
-            ->when(auth()->user()->hasAnyRole('produsen'), fn ($q) => $q->where('opd_id', auth()->user()->opd_id))
+            ->when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))
             ->findOrFail($id);
+
+        if ($data->status_id == 5) {
+            $data->load('verifikasi');
+        }
+
         return view('pages.contents.produsen.pengumpulan.form-variabel', compact('data'));
     }
 
     public function simpanVariabel($id, Request $request)
     {
-        $data = Data::when(auth()->user()->hasAnyRole('produsen'), fn ($q) => $q->where('opd_id', auth()->user()->opd_id))
+        $data = Data::when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))
             ->findOrFail($id);
 
         $data->variabel()->updateOrCreate(
@@ -165,7 +175,7 @@ class PengumpulanController extends Controller
     public function kegiatan($id)
     {
         $data = Data::with(['kegiatan'])
-            ->when(auth()->user()->hasAnyRole('produsen'), fn ($q) => $q->where('opd_id', auth()->user()->opd_id))
+            ->when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))
             ->findOrFail($id);
         $provinces = Province::pluck('name', 'code');
         return view('pages.contents.produsen.pengumpulan.kegiatan', compact('data', 'provinces'));
@@ -174,7 +184,7 @@ class PengumpulanController extends Controller
     public function simpanKegiatan($id, Request $request)
     {
         $data = Data::with(['kegiatan'])
-            ->when(auth()->user()->hasAnyRole('produsen'), fn ($q) => $q->where('opd_id', auth()->user()->opd_id))
+            ->when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))
             ->findOrFail($id);
         $data->kegiatan()->updateOrCreate(
             ['data_id' => $data->id],
@@ -193,7 +203,7 @@ class PengumpulanController extends Controller
             'referensi_waktu' => 'required|date',
         ]);
         $data = Data::with(['kegiatan'])
-            ->when(auth()->user()->hasAnyRole('produsen'), fn ($q) => $q->where('opd_id', auth()->user()->opd_id))
+            ->when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))
             ->findOrFail($id);
 
         if (empty($data->kegiatan)) {
@@ -216,7 +226,7 @@ class PengumpulanController extends Controller
             'rencana_rilis' => 'required|date',
         ]);
         $data = Data::with(['kegiatan'])
-            ->when(auth()->user()->hasAnyRole('produsen'), fn ($q) => $q->where('opd_id', auth()->user()->opd_id))
+            ->when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))
             ->findOrFail($id);
 
         if (empty($data->kegiatan)) {
@@ -235,7 +245,7 @@ class PengumpulanController extends Controller
     public function siapVerifikasi($id)
     {
         $data = Data::with(['kegiatan', 'standar'])
-            ->when(auth()->user()->hasAnyRole('produsen'), fn ($q) => $q->where('opd_id', auth()->user()->opd_id))
+            ->when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))
             ->findOrFail($id);
 
         if (in_array(strtolower($data->jenis_data), ['variabel', 'indikator'])) {
