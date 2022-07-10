@@ -194,26 +194,26 @@
                                 </div>
                             </section>
                             <section class="no-komposit-section">
-                                <div class="row mb-3">
-                                    <label for="kode_kegiatan_variabel_pembangun" class="col-sm-2 col-form-label">Kode Kegiatan Penghasil Variabel Pembangun</label>
-                                    <div class="col-sm-8">
-                                        <input id="kode_kegiatan_variabel_pembangun" name="kode_kegiatan_variabel_pembangun" type="text" class="form-control" disabled placeholder="Diisi oleh petugas" value="{{old('kode_kegiatan_variabel_pembangun', optional($data->indikator)->kode_kegiatan_variabel_pembangun)}}">
-                                    </div>
-                                </div>
+{{--                                <div class="row mb-3">--}}
+{{--                                    <label for="kode_kegiatan_variabel_pembangun" class="col-sm-2 col-form-label">Kode Kegiatan Penghasil Variabel Pembangun</label>--}}
+{{--                                    <div class="col-sm-8">--}}
+{{--                                        <input id="kode_kegiatan_variabel_pembangun" name="kode_kegiatan_variabel_pembangun" type="text" class="form-control" disabled placeholder="Diisi oleh petugas" value="{{old('kode_kegiatan_variabel_pembangun', optional($data->indikator)->kode_kegiatan_variabel_pembangun)}}">--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
-                                <div class="row mb-3">
-                                    <label for="kegiatan_variabel_pembangun" class="col-sm-2 col-form-label">Kegiatan Penghasil Variabel Pembangun</label>
-                                    <div class="col-sm-8">
-                                        <input id="kegiatan_variabel_pembangun" name="kegiatan_variabel_pembangun" type="text" class="form-control {{ $kegiatan_variabel_pembangun ? ($kegiatan_variabel_pembangun->accepted ? 'is-valid' : 'is-invalid') : '' }} bg-light" value="{{old('kegiatan_variabel_pembangun', optional($data->indikator)->kegiatan_variabel_pembangun)}}">
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <div class="btn-group-sm">
-                                            <button class="btn btn-actions btn-accept btn-sm {{$kegiatan_variabel_pembangun && $kegiatan_variabel_pembangun->accepted ? 'btn-success' : 'btn-outline-success'}}" data-name="kegiatan_variabel_pembangun">Setuju <i class="bi bi-check"></i></button>
-                                            <button class="btn btn-actions btn-reject btn-sm {{$kegiatan_variabel_pembangun && !$kegiatan_variabel_pembangun->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="kegiatan_variabel_pembangun">Revisi <i class="bi bi-x"></i></button>
-                                            <button class="btn btn-comment btn-sm btn-outline-primary" data-name="kegiatan_variabel_pembangun"><i class="bi bi-chat-dots"></i> Komentar</button>
-                                        </div>
-                                    </div>
-                                </div>
+{{--                                <div class="row mb-3">--}}
+{{--                                    <label for="kegiatan_variabel_pembangun" class="col-sm-2 col-form-label">Kegiatan Penghasil Variabel Pembangun</label>--}}
+{{--                                    <div class="col-sm-8">--}}
+{{--                                        <input id="kegiatan_variabel_pembangun" name="kegiatan_variabel_pembangun" type="text" class="form-control {{ $kegiatan_variabel_pembangun ? ($kegiatan_variabel_pembangun->accepted ? 'is-valid' : 'is-invalid') : '' }} bg-light" value="{{old('kegiatan_variabel_pembangun', optional($data->indikator)->kegiatan_variabel_pembangun)}}">--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-sm-2">--}}
+{{--                                        <div class="btn-group-sm">--}}
+{{--                                            <button class="btn btn-actions btn-accept btn-sm {{$kegiatan_variabel_pembangun && $kegiatan_variabel_pembangun->accepted ? 'btn-success' : 'btn-outline-success'}}" data-name="kegiatan_variabel_pembangun">Setuju <i class="bi bi-check"></i></button>--}}
+{{--                                            <button class="btn btn-actions btn-reject btn-sm {{$kegiatan_variabel_pembangun && !$kegiatan_variabel_pembangun->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="kegiatan_variabel_pembangun">Revisi <i class="bi bi-x"></i></button>--}}
+{{--                                            <button class="btn btn-comment btn-sm btn-outline-primary" data-name="kegiatan_variabel_pembangun"><i class="bi bi-chat-dots"></i> Komentar</button>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
                                 <div class="row mb-3">
                                     <label for="nama_variabel_pembangun" class="col-sm-2 col-form-label">Nama Variabel Pembangun</label>
