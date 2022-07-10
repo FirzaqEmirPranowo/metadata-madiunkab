@@ -16,7 +16,7 @@
       <li class="nav-item">
         <a class="nav-link collapsed " href="/data_administrator">
           <i class="bi bi-file-earmark-bar-graph"></i>
-          <span>Konfirmasi Data</span>
+          <span>Perencanaan Data</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
@@ -50,7 +50,7 @@
           <span>Kelola User</span>
         </a>
       </li>
-      
+
 
     </ul>
 

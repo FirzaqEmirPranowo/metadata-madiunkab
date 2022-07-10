@@ -26,13 +26,6 @@ Route::get('/datas', [PortalController::class, 'data']);
 Route::get('/berita', [PortalController::class, 'berita']);
 Route::get('/ckan', [PortalController::class, 'ckan']);
 Auth::routes();
-// Route::get('/d_administrator', [App\Http\Controllers\HomeController::class, 'index'])->name('d_administrator');
-// Route::get('/d_walidata', [App\Http\Controllers\HomeController::class, 'index'])->name('d_walidata');
-// Route::get('/d_produsen', [App\Http\Controllers\HomeController::class, 'index'])->name('d_produsen');
-
-// Route::middleware('role:administrator')->get('/d_administrator', function () {
-//         return 'Dashboard';
-//     })->name('d_administrator');
 
 Route::middleware(['role:administrator'])->group(function () {
     Route::get('/d_administrator', [HomeController::class, 'index1'])->name('d_administrator');

@@ -137,20 +137,6 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label for="klasifikasi_isian" class="col-sm-2 col-form-label">Klasifikasi Isian</label>
-                                <div class="col-sm-8">
-                                    <textarea name="klasifikasi_isian" class="form-control {{ $klasifikasi_isian ? ($klasifikasi_isian->accepted ? 'is-valid' : 'is-invalid') : '' }} bg-light" style="height: 100px" spellcheck="false" placeholder="Klasifikasi Isian" disabled>{{old('klasifikasi_isian', optional($data->variabel)->klasifikasi_isian ?? optional($data->standar)->klasifikasi)}}</textarea>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div class="btn-group-sm">
-                                        <button class="btn btn-actions btn-accept btn-sm {{$klasifikasi_isian && $klasifikasi_isian->accepted ? 'btn-success' : 'btn-outline-success'}}" data-name="klasifikasi_isian">Setuju <i class="bi bi-check"></i></button>
-                                        <button class="btn btn-actions btn-reject btn-sm {{$klasifikasi_isian && !$klasifikasi_isian->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="klasifikasi_isian">Revisi <i class="bi bi-x"></i></button>
-                                        <button class="btn btn-comment btn-sm btn-outline-primary" data-name="klasifikasi_isian"><i class="bi bi-chat-dots"></i> Komentar</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
                                 <label for="ukuran" class="col-sm-2 col-form-label">Ukuran</label>
                                 <div class="col-sm-8">
                                     <input id="ukuran" name="ukuran" type="text" class="form-control {{ $ukuran ? ($ukuran->accepted ? 'is-valid' : 'is-invalid') : '' }} bg-light" placeholder="Ukuran" value="{{old('ukuran', optional($data->variabel)->ukuran ?? optional($data->standar)->ukuran)}}" disabled>
@@ -174,6 +160,20 @@
                                         <button class="btn btn-actions btn-accept btn-sm {{$satuan && $satuan->accepted ? 'btn-success' : 'btn-outline-success'}}" data-name="satuan">Setuju <i class="bi bi-check"></i></button>
                                         <button class="btn btn-actions btn-reject btn-sm {{$satuan && !$satuan->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="satuan">Revisi <i class="bi bi-x"></i></button>
                                         <button class="btn btn-comment btn-sm btn-outline-primary" data-name="satuan"><i class="bi bi-chat-dots"></i> Komentar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="klasifikasi_isian" class="col-sm-2 col-form-label">Klasifikasi Isian</label>
+                                <div class="col-sm-8">
+                                    <textarea name="klasifikasi_isian" class="form-control {{ $klasifikasi_isian ? ($klasifikasi_isian->accepted ? 'is-valid' : 'is-invalid') : '' }} bg-light" style="height: 100px" spellcheck="false" placeholder="Klasifikasi Isian" disabled>{{old('klasifikasi_isian', optional($data->variabel)->klasifikasi_isian ?? optional($data->standar)->klasifikasi)}}</textarea>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="btn-group-sm">
+                                        <button class="btn btn-actions btn-accept btn-sm {{$klasifikasi_isian && $klasifikasi_isian->accepted ? 'btn-success' : 'btn-outline-success'}}" data-name="klasifikasi_isian">Setuju <i class="bi bi-check"></i></button>
+                                        <button class="btn btn-actions btn-reject btn-sm {{$klasifikasi_isian && !$klasifikasi_isian->accepted ? 'btn-danger' : 'btn-outline-danger'}}" data-name="klasifikasi_isian">Revisi <i class="bi bi-x"></i></button>
+                                        <button class="btn btn-comment btn-sm btn-outline-primary" data-name="klasifikasi_isian"><i class="bi bi-chat-dots"></i> Komentar</button>
                                     </div>
                                 </div>
                             </div>

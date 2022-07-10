@@ -110,16 +110,6 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label for="klasifikasi_isian" class="col-sm-2 col-form-label">Klasifikasi Isian</label>
-                                <div class="col-sm-10">
-                                    <textarea name="klasifikasi_isian" class="form-control {{ isset($klasifikasi_isian) ? ($klasifikasi_isian->accepted ? 'is-valid' : 'is-invalid') : '' }}" style="height: 100px" spellcheck="false" placeholder="Klasifikasi Isian">{{old('klasifikasi_isian', optional($data->variabel)->klasifikasi_isian ?? optional($data->standar)->klasifikasi)}}</textarea>
-                                    @if (isset($klasifikasi_isian) && !empty($klasifikasi_isian->comment))
-                                        <p class="text-muted text-comment">Komentar: {{$klasifikasi_isian->comment}}</p>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
                                 <label for="ukuran" class="col-sm-2 col-form-label">Ukuran</label>
                                 <div class="col-sm-10">
                                     <input id="ukuran" name="ukuran" type="text" class="form-control {{ isset($ukuran) ? ($ukuran->accepted ? 'is-valid' : 'is-invalid') : '' }}" placeholder="Ukuran" value="{{old('ukuran', optional($data->variabel)->ukuran ?? optional($data->standar)->ukuran)}}">
@@ -135,6 +125,16 @@
                                     <input id="satuan" name="satuan" type="text" class="form-control {{ isset($satuan) ? ($satuan->accepted ? 'is-valid' : 'is-invalid') : '' }}" placeholder="Satuan" value="{{old('satuan', optional($data->variabel)->satuan ?? optional($data->standar)->satuan)}}">
                                     @if (isset($satuan) && !empty($satuan->comment))
                                         <p class="text-muted text-comment">Komentar: {{$satuan->comment}}</p>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="klasifikasi_isian" class="col-sm-2 col-form-label">Klasifikasi Isian</label>
+                                <div class="col-sm-10">
+                                    <textarea name="klasifikasi_isian" class="form-control {{ isset($klasifikasi_isian) ? ($klasifikasi_isian->accepted ? 'is-valid' : 'is-invalid') : '' }}" style="height: 100px" spellcheck="false" placeholder="Klasifikasi Isian">{{old('klasifikasi_isian', optional($data->variabel)->klasifikasi_isian ?? optional($data->standar)->klasifikasi)}}</textarea>
+                                    @if (isset($klasifikasi_isian) && !empty($klasifikasi_isian->comment))
+                                        <p class="text-muted text-comment">Komentar: {{$klasifikasi_isian->comment}}</p>
                                     @endif
                                 </div>
                             </div>

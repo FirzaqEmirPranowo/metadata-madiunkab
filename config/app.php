@@ -174,6 +174,7 @@ return [
         /*
          * Package Service Providers...
          */
+//        Germanazo\CkanApi\CkanServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -244,6 +245,7 @@ return [
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'DataTables'  =>  Yajra\DataTables\Facades\DataTables::class,
         'Indonesia' => Laravolt\Indonesia\Facade::class,
+//        'CkanApi' => Germanazo\CkanApi\Facades\CkanApi::class,
 
     ],
 

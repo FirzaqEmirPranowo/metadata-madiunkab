@@ -160,27 +160,27 @@
                                 </div>
                             </section>
                             <section class="no-komposit-section">
-                                <div class="row mb-3">
-                                    <label for="kode_kegiatan_variabel_pembangun" class="col-sm-2 col-form-label">Kode Kegiatan
-                                        Penghasil Variabel Pembangun</label>
-                                    <div class="col-sm-10">
-                                        <input id="kode_kegiatan_variabel_pembangun" name="kode_kegiatan_variabel_pembangun" type="text" class="form-control {{ isset($kode_kegiatan_variabel_pembangun) ? ($kode_kegiatan_variabel_pembangun->accepted ? 'is-valid' : 'is-invalid') : '' }}" disabled placeholder="Diisi oleh petugas" value="{{old('kode_kegiatan_variabel_pembangun', optional($data->indikator)->kode_kegiatan_variabel_pembangun)}}">
-                                        @if (isset($definisi) && !empty($definisi->comment))
-                                            <p class="text-muted text-comment">Komentar: {{$definisi->comment}}</p>
-                                        @endif
-                                    </div>
-                                </div>
+{{--                                <div class="row mb-3">--}}
+{{--                                    <label for="kode_kegiatan_variabel_pembangun" class="col-sm-2 col-form-label">Kode Kegiatan--}}
+{{--                                        Penghasil Variabel Pembangun</label>--}}
+{{--                                    <div class="col-sm-10">--}}
+{{--                                        <input id="kode_kegiatan_variabel_pembangun" name="kode_kegiatan_variabel_pembangun" type="text" class="form-control {{ isset($kode_kegiatan_variabel_pembangun) ? ($kode_kegiatan_variabel_pembangun->accepted ? 'is-valid' : 'is-invalid') : '' }}" disabled placeholder="Diisi oleh petugas" value="{{old('kode_kegiatan_variabel_pembangun', optional($data->indikator)->kode_kegiatan_variabel_pembangun)}}">--}}
+{{--                                        @if (isset($kode_kegiatan_vaariabel_pembangun) && !empty($kode_kegiatan_vaariabel_pembangun->comment))--}}
+{{--                                            <p class="text-muted text-comment">Komentar: {{$kode_kegiatan_vaariabel_pembangun->comment}}</p>--}}
+{{--                                        @endif--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
-                                <div class="row mb-3">
-                                    <label for="kegiatan_variabel_pembangun" class="col-sm-2 col-form-label">Kegiatan
-                                        Penghasil Variabel Pembangun</label>
-                                    <div class="col-sm-10">
-                                        <input id="kegiatan_variabel_pembangun" name="kegiatan_variabel_pembangun" type="text" class="form-control {{ isset($kegiatan_variabel_pembangun) ? ($kegiatan_variabel_pembangun->accepted ? 'is-valid' : 'is-invalid') : '' }}" value="{{old('kegiatan_variabel_pembangun', optional($data->indikator)->kegiatan_variabel_pembangun)}}">
-                                        @if (isset($kegiatan_variabel_pembangun) && !empty($kegiatan_variabel_pembangun->comment))
-                                            <p class="text-muted text-comment">Komentar: {{$kegiatan_variabel_pembangun->comment}}</p>
-                                        @endif
-                                    </div>
-                                </div>
+{{--                                <div class="row mb-3">--}}
+{{--                                    <label for="kegiatan_variabel_pembangun" class="col-sm-2 col-form-label">Kegiatan--}}
+{{--                                        Penghasil Variabel Pembangun</label>--}}
+{{--                                    <div class="col-sm-10">--}}
+{{--                                        <input id="kegiatan_variabel_pembangun" name="kegiatan_variabel_pembangun" type="text" class="form-control {{ isset($kegiatan_variabel_pembangun) ? ($kegiatan_variabel_pembangun->accepted ? 'is-valid' : 'is-invalid') : '' }}" value="{{old('kegiatan_variabel_pembangun', optional($data->indikator)->kegiatan_variabel_pembangun)}}">--}}
+{{--                                        @if (isset($kegiatan_variabel_pembangun) && !empty($kegiatan_variabel_pembangun->comment))--}}
+{{--                                            <p class="text-muted text-comment">Komentar: {{$kegiatan_variabel_pembangun->comment}}</p>--}}
+{{--                                        @endif--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
                                 <div class="row mb-3">
                                     <label for="nama_variabel_pembangun" class="col-sm-2 col-form-label">Nama Variabel Pembangun</label>
