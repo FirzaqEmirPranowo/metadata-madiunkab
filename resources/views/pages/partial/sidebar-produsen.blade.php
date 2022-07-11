@@ -24,7 +24,7 @@
         <li class="nav-item">
             <a class="nav-link {{\Illuminate\Support\Str::contains(request()->url(), 'data_produsen/pengumpulan') ? 'collapse' : 'collapsed'}}" href="/data_produsen/pengumpulan">
                 <i class="bi bi-list-check"></i>
-                <span>Daftar Data</span>
+                <span>Pengumpulan Data</span>
             </a>
         </li>
     </ul>

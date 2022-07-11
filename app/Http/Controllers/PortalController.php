@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\CkanApi\Facades\CkanApi;
 use Illuminate\Http\Request;
 
 class PortalController extends Controller
@@ -16,9 +17,31 @@ class PortalController extends Controller
         return view('portal.landingpage.tentang');
     }
 
-    public function data()
+    public function data(Request $request)
     {
-        return view('portal.landingpage.data');
+        $searchQuery = [
+            'q' => $request->get('q'),
+            'sort' => $request->get('sort', 'score desc, metadata_modified desc'),
+        ];
+
+        $searchQuery['fq'] = [];
+        if ($request->filled('group')) {
+            $searchQuery['fq'][] = 'groups:' . $request->get('group');
+        }
+        if ($request->filled('org')) {
+            $searchQuery['fq'][] = 'organization:'. $request->get('org');
+        }
+        $searchQuery['fq'] = implode(' AND ', $searchQuery['fq']);
+
+        $data = CkanApi::dataset()->all($searchQuery);
+        $orgs = CkanApi::organization()->all();
+        $groups = CkanApi::group()->all();
+
+        $data = $data['success'] ? $data['result']['results'] : [];
+        $orgs = $orgs['success'] ? $orgs['result'] : [];
+        $groups = $groups['success'] ? $groups['result'] : [];
+
+        return view('portal.landingpage.data', compact('data', 'orgs', 'groups'));
     }
 
     public function berita()

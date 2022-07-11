@@ -22,7 +22,7 @@ Route::get('/masuk', function () {
 });
 Route::get('/', [PortalController::class, 'index']);
 Route::get('/tentang', [PortalController::class, 'tentang']);
-Route::get('/datas', [PortalController::class, 'data']);
+Route::get('/dataset', [PortalController::class, 'data'])->name('dataset');
 Route::get('/berita', [PortalController::class, 'berita']);
 Route::get('/ckan', [PortalController::class, 'ckan']);
 Auth::routes();

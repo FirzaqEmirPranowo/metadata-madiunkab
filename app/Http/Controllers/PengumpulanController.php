@@ -13,7 +13,7 @@ class PengumpulanController extends Controller
 {
     public function pengumpulan()
     {
-        $data = Data::whereIn('status_id', [1, 5])
+        $data = Data::whereIn('status_id', [Data::STATUS_SETUJU, Data::STATUS_REVISI])
             ->when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))
             ->with(['opd', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])
             ->paginate();
@@ -35,7 +35,7 @@ class PengumpulanController extends Controller
             ];
         })->toArray();
 
-        if (!in_array($data->status_id, [1, 4, 5, 6])) {
+        if (!in_array($data->status_id, [Data::STATUS_SETUJU, Data::STATUS_PROSES_VERIFIKASI, Data::STATUS_REVISI, Data::STATUS_SELESAI_VERIFIKASI])) {
             return redirect()->back()->with('errors', 'Status Data belum selesai');
         }
 
@@ -76,18 +76,19 @@ class PengumpulanController extends Controller
 
         $data = Data::when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))->findOrFail($id);
 
-        if ($data->status_id != 1) {
+        if ($data->status_id != Data::STATUS_SETUJU || $data->status_id != Data::STATUS_REVISI) {
             return response()->json(['message' => 'invalid'], 403);
         }
 
-        $storedPath = $request->file('berkas')->store('berkas');
+        $fileName = date('Ymdhis') . '-' .$request->file('berkas')->getClientOriginalName();
+        $storedPath = $request->file('berkas')->storeAs('berkas', $fileName);
 
         if (!$storedPath) {
             return response([], 500);
         }
 
         $berkas = $data->berkas()->create([
-            'name' => $request->file('berkas')->getClientOriginalName(),
+            'name' => $fileName,
             'size' => Storage::size($storedPath),
             'path' => $storedPath
         ]);
@@ -125,7 +126,7 @@ class PengumpulanController extends Controller
     {
         $data = Data::with(['indikator', 'standar'])->findOrFail($id);
 
-        if ($data->status_id == 5) {
+        if ($data->status_id == Data::STATUS_REVISI) {
             $data->load('verifikasi');
         }
 
@@ -138,9 +139,15 @@ class PengumpulanController extends Controller
             ->when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))
             ->findOrFail($id);
 
+        $formData = $request->all();
+
+        if ($request->hasFile('metode_image')) {
+            $formData['metode'] = $request->file('metode_image')->storeAs('public/metode', date('Ymdhis') .'-'. $request->file('metode_image')->getClientOriginalName());
+        }
+
         $data->indikator()->updateOrCreate(
             ['data_id' => $data->id],
-            array_merge($request->all(), ['data_id' => $data->id])
+            array_merge($formData, ['data_id' => $data->id])
         );
 
         return redirect()->back();
@@ -152,7 +159,7 @@ class PengumpulanController extends Controller
             ->when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))
             ->findOrFail($id);
 
-        if ($data->status_id == 5) {
+        if ($data->status_id == Data::STATUS_REVISI) {
             $data->load('verifikasi');
         }
 
@@ -256,7 +263,7 @@ class PengumpulanController extends Controller
             return response()->json(['ok' => false, 'message' => 'Mohon lengkapi isian metadata terlebih dahulu sebelum lanjut ke proses verifikasi']);
         }
 
-        if ($data->status_id == 4) {
+        if ($data->status_id == Data::STATUS_PROSES_VERIFIKASI) {
             return response()->json(['ok' => false, 'message' => 'Data ini sedang dalam proses verifikasi']);
         }
 

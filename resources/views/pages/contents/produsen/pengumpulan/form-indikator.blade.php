@@ -31,7 +31,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Metadata Indikator</h5>
 
-                        <form action="{{route('simpan-indikator', $data->id)}}" method="POST">
+                        <form action="{{route('simpan-indikator', $data->id)}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row mb-3">
                                 <label for="nama" class="col-sm-2 col-form-label">Nama Indikator</label>
@@ -76,16 +76,27 @@
 
                             <div class="row mb-3">
                                 <label for="metode" class="col-sm-2 col-form-label">Metode / Rumus Perhitungan</label>
-                                <div class="col-sm-10">
-                                    <span id="metode_editor" class="form-control {{ isset($metode) ? ($metode->accepted ? 'is-valid' : 'is-invalid') : '' }}"></span>
-                                    <textarea name="metode" id="metode" class="form-control d-none" style="height: 100px" spellcheck="false" placeholder="Metode / Rumus Perhitungan"></textarea>
-                                    @if (isset($metode) && !empty($metode->comment))
-                                        <p class="text-muted text-comment">Komentar: {{$metode->comment}}</p>
-                                        <hr>
-                                    @endif
-                                    <small class="help-block text-muted">
-                                        Rumus menggunakan format LaTeX.
-                                    </small>
+                                <div class="row col-sm-10">
+                                    <div class="col-sm-6">
+                                        <span id="metode_editor" class="form-control {{ isset($metode) ? ($metode->accepted ? 'is-valid' : 'is-invalid') : '' }}"></span>
+                                        <textarea name="metode" id="metode" class="form-control d-none" style="height: 100px" spellcheck="false" placeholder="Metode / Rumus Perhitungan"></textarea>
+                                        @if (isset($metode) && !empty($metode->comment))
+                                            <p class="text-muted text-comment">Komentar: {{$metode->comment}}</p>
+                                            <hr>
+                                        @endif
+                                        <small class="help-block text-muted">
+                                            Rumus menggunakan format LaTeX.
+                                        </small>
+                                    </div>
+                                    <div class="col-sm-auto">
+                                        <p>atau</p>
+                                    </div>
+                                    <div class="col-auto flex-fill">
+                                        @if (optional($data->indikator)->metode && \Illuminate\Support\Str::startsWith(optional($data->indikator)->metode, 'public/'))
+                                            <img class="img-fluid rounded" height="150px" width="150px" src="{{Storage::url(optional($data->indikator)->metode)}}">
+                                        @endif
+                                        <input class="form-control" name="metode_image" accept="image/*" type="file" id="metode_image">
+                                    </div>
                                 </div>
                             </div>
 
@@ -256,7 +267,6 @@
     </section>
 @endsection
 
-
 @section('css')
     <link href="{{asset('assets/vendor/mathquill/mathquill.css')}}" rel="stylesheet">
 @endsection
@@ -286,7 +296,16 @@
                     }
                 }
             });
-            let oldMetode = decodeURIComponent('{{old('metode', optional($data->indikator)->metode)}}');
+
+
+            @php
+                $metode = optional($data->indikator)->metode;
+                if ($metode !== null && \Illuminate\Support\Str::startsWith($metode, 'public/')) {
+                    $metode = null;
+                }
+            @endphp
+
+            let oldMetode = decodeURIComponent('{{old('metode', $metode)}}');
             if (oldMetode !== '') {
                 metode.latex(oldMetode);
             }

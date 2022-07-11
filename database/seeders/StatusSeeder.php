@@ -37,7 +37,10 @@ class StatusSeeder extends Seeder
            'status' => 'Revisi'
         ]);
         Status::create([
-            'status' => 'Selesai'
+            'status' => 'Selesai Verifikasi'
+        ]);
+        Status::create([
+            'status' => 'Terpublikasi'
         ]);
     }
 }

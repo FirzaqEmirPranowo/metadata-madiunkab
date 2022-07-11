@@ -91,12 +91,22 @@
 
                             <div class="row mb-3">
                                 <label for="metode" class="col-sm-2 col-form-label">Metode / Rumus Perhitungan</label>
-                                <div class="col-sm-8">
-                                    <span id="metode_editor" class="form-control"></span>
-                                    <textarea name="metode" id="metode" class="form-control d-none" style="height: 100px" spellcheck="false" placeholder="Metode / Rumus Perhitungan"></textarea>
-                                    <small class="help-block text-muted">
-                                        Rumus menggunakan format LaTeX.
-                                    </small>
+                                <div class="row col-sm-8">
+                                    @php
+                                        $isImage = \Illuminate\Support\Str::startsWith(optional($data->indikator)->metode, 'public/');
+                                    @endphp
+                                    <div class="col-sm-{{$isImage ? 4 : 8}}">
+                                        <span id="metode_editor" class="form-control"></span>
+                                        <textarea name="metode" id="metode" class="form-control d-none" style="height: 100px" spellcheck="false" placeholder="Metode / Rumus Perhitungan"></textarea>
+                                        <small class="help-block text-muted">
+                                            Rumus menggunakan format LaTeX.
+                                        </small>
+                                    </div>
+                                    @if ($isImage)
+                                        <div class="col-sm-4">
+                                            <img class="img-fluid rounded" height="150px" width="150px" src="{{Storage::url(optional($data->indikator)->metode)}}">
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="col-sm-2">
                                     <div class="btn-group-sm">
@@ -322,7 +332,7 @@
             });
             document.querySelector('.mq-textarea textarea').disabled = true;
 
-            let oldMetode = decodeURIComponent('{{old('metode', optional($data->indikator)->metode)}}');
+            let oldMetode = decodeURIComponent('{{old('metode', !$isImage ? optional($data->indikator)->metode : null)}}');
             if (oldMetode !== '') {
                 metode.latex(oldMetode);
             }

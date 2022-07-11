@@ -63,9 +63,9 @@ class DataController extends Controller
 
     public function store(Request $request)
     {
-        $status_id = 3;
+        $status_id = Data::STATUS_DRAFT;
         if (Auth::user()->role == '3' | Auth::user()->opd_id == $request->opd_id) {
-            $status_id = 1;
+            $status_id = Data::STATUS_SETUJU;
         }
         $user_id = Auth::user()->id;
         $create = Data::create([

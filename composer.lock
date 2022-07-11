@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e4f7c01e376777c5aca32d3c5300bb3",
+    "content-hash": "ca9282837a20710778285544a1797314",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -767,16 +767,6 @@
                 }
             ],
             "time": "2022-02-23T14:25:13+00:00"
-        },
-        {
-            "name": "germanazo/laravel-ckan-api",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/evaleries/laravel-ckan-api.git",
-                "reference": "master"
-            },
-            "type": "library"
         },
         {
             "name": "graham-campbell/result-type",
@@ -9613,5 +9603,5 @@
         "php": "^7.4|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
