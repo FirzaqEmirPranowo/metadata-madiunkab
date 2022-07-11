@@ -31,7 +31,7 @@ class StatusSeeder extends Seeder
         ]);
 
         Status::create([
-            'status' => 'Proses Verifikasi'
+            'status' => 'Proses Pengumpulan'
         ]);
         Status::create([
            'status' => 'Revisi'

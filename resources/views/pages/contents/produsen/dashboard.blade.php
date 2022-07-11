@@ -130,7 +130,7 @@
 
     <section class="section">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Daftar 10 Data Terbaru</h5>
@@ -155,20 +155,6 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-body"><h5 class="card-title">Aktivitas Terbaru</h5>
-                        <div class="activity d-flex flex-column gap-2 justify-content-evenly">
-                            @foreach($lastActivities as $a)
-                                <div class="activity-item d-flex justify-content-between">
-                                    <div class="activite-label">{{optional($a->created_at)->diffForHumans()}}</div>
-                                    <div class="activity-content"> {{$a->causer->name }} {{$a->description}}</div>
-                                </div>
-                            @endforeach
                         </div>
                     </div>
                 </div>

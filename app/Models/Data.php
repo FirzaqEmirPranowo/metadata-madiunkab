@@ -20,7 +20,7 @@ class Data extends Model implements HasMedia
     const STATUS_SETUJU = 1;
     const STATUS_TOLAK = 2;
     const STATUS_DRAFT = 3;
-    const STATUS_PROSES_VERIFIKASI = 4;
+    const STATUS_PROSES_PENGUMPULAN = 4;
     const STATUS_REVISI = 5;
     const STATUS_SELESAI_VERIFIKASI = 6;
     const STATUS_TERPUBLIKASI = 7;

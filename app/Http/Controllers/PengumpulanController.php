@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\MetadataIndikatorImport;
 use App\Models\Berkas;
 use App\Models\Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Laravolt\Indonesia\Models\Province;
+use Maatwebsite\Excel\Excel;
 
 class PengumpulanController extends Controller
 {
@@ -35,7 +37,7 @@ class PengumpulanController extends Controller
             ];
         })->toArray();
 
-        if (!in_array($data->status_id, [Data::STATUS_SETUJU, Data::STATUS_PROSES_VERIFIKASI, Data::STATUS_REVISI, Data::STATUS_SELESAI_VERIFIKASI])) {
+        if (!in_array($data->status_id, [Data::STATUS_SETUJU, Data::STATUS_PROSES_PENGUMPULAN, Data::STATUS_REVISI, Data::STATUS_SELESAI_VERIFIKASI])) {
             return redirect()->back()->with('errors', 'Status Data belum selesai');
         }
 
@@ -131,6 +133,18 @@ class PengumpulanController extends Controller
         }
 
         return view('pages.contents.produsen.pengumpulan.form-indikator', compact('data'));
+    }
+
+    public function importIndikator($id, Request $request)
+    {
+//        $data = Data::findOrFail($id);
+
+//        $indikatorData = Excel::toCollection(new MetadataIndikatorImport($data->id), $request->file('metadata'));
+
+//        if ($indikatorData->count() < 1) {
+//            return redirect()->back()->with()
+//        }
+        
     }
 
     public function simpanIndikator($id, Request $request)
@@ -263,11 +277,11 @@ class PengumpulanController extends Controller
             return response()->json(['ok' => false, 'message' => 'Mohon lengkapi isian metadata terlebih dahulu sebelum lanjut ke proses verifikasi']);
         }
 
-        if ($data->status_id == Data::STATUS_PROSES_VERIFIKASI) {
+        if ($data->status_id == Data::STATUS_PROSES_PENGUMPULAN) {
             return response()->json(['ok' => false, 'message' => 'Data ini sedang dalam proses verifikasi']);
         }
 
-        $data->update(['progress' => 100, 'status_id' => 4]);
+        $data->update(['progress' => 100, 'status_id' => Data::STATUS_PROSES_PENGUMPULAN]);
 
         return response()->json(['ok' => true, 'message' => 'Sukses! Data dalam tahap verifikasi']);
     }

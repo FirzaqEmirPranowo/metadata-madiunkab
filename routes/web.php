@@ -28,7 +28,7 @@ Route::get('/ckan', [PortalController::class, 'ckan']);
 Auth::routes();
 
 Route::middleware(['role:administrator'])->group(function () {
-    Route::get('/d_administrator', [HomeController::class, 'index1'])->name('d_administrator');
+    Route::get('/d_administrator', [HomeController::class, 'dashboardAdmin'])->name('d_administrator');
     Route::get('/data_administrator', [DataController::class, 'index'])->name('data_administrator');
     Route::get('/data_administrator/create', [DataController::class, 'create'])->name('data_administrator');
     Route::post('/data_administrator/store', [DataController::class, 'store'])->name('data_administrator');
@@ -77,7 +77,7 @@ Route::middleware(['role:administrator'])->group(function () {
 });
 
 Route::middleware(['role:walidata'])->group(function () {
-    Route::get('/d_walidata', [HomeController::class, 'index2'])->name('d_walidata');
+    Route::get('/d_walidata', [HomeController::class, 'dashboardWalidata'])->name('d_walidata');
 
     Route::get('/data_walidata/draft', [DataController::class, 'index'])->name('draft');
     Route::get('/data_walidata/create', [DataController::class, 'create'])->name('data_walidata');
@@ -127,7 +127,7 @@ Route::middleware(['role:walidata'])->group(function () {
 });
 
 Route::middleware('role:produsen')->group(function () {
-    Route::get('/d_produsen', [HomeController::class, 'index3'])->name('d_produsen');
+    Route::get('/d_produsen', [HomeController::class, 'dashboardProdusen'])->name('d_produsen');
     Route::get('/data_produsen/draft', [DataController::class, 'index'])->name('draft');
     Route::get('/data_produsen/create', [DataController::class, 'create'])->name('data_produsen');
     Route::post('/data_produsen/store', [DataController::class, 'store'])->name('data_produsen');

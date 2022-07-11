@@ -28,7 +28,7 @@ class VerifikasiController extends Controller
             ];
         })->toArray();
 
-        if (!in_array($data->status_id, [1, 4, 5, 6])) {
+        if (!in_array($data->status_id, [Data::STATUS_SETUJU, Data::STATUS_PROSES_PENGUMPULAN, Data::STATUS_REVISI, Data::STATUS_SELESAI_VERIFIKASI])) {
             return redirect()->back()->with('errors', 'Status Data belum selesai');
         }
 
@@ -111,7 +111,7 @@ class VerifikasiController extends Controller
             return response()->json(['ok' => false, 'code' => 404, 'message' => 'Data tidak ditemukan']);
         }
 
-        if ($data->status_id != 4) {
+        if ($data->status_id != Data::STATUS_PROSES_PENGUMPULAN) {
             return response()->json(['ok' => false, 'code' => -2, 'message' => 'Status data tidak valid']);
         }
 
@@ -134,7 +134,7 @@ class VerifikasiController extends Controller
             return response()->json(['ok' => false,'message' => 'Data tidak ditemukan']);
         }
 
-        if ($data->status_id != 4) {
+        if ($data->status_id != Data::STATUS_PROSES_PENGUMPULAN) {
             return response()->json(['ok' => false, 'message' => 'Status data tidak valid']);
         }
 
@@ -144,7 +144,8 @@ class VerifikasiController extends Controller
 
         $isRevisi = $data->verifikasi->where('accepted', 0)->count() > 0;
         $data->update([
-            'status_id' => $isRevisi ? 5 : 6
+            'status_id' => $isRevisi ? Data::STATUS_REVISI : Data::STATUS_SELESAI_VERIFIKASI,
+            'progress' => $isRevisi ? 50 : 100,
         ]);
 
         return response()->json(['ok' => true, 'message' => 'Data telah diubah menjadi '. ($isRevisi ? 'revisi' : 'siap untuk dipublish')]);
