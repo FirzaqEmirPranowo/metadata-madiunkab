@@ -86,8 +86,8 @@
             <div class="row justify-content-center wow fadeInUp">
                 <div class="col-lg-8">
                     <h3>Pencarian Dataset</h3>
-                    <form action="#">
-                        <input type="text" class="form-control" placeholder="Cari data">
+                    <form action="{{route('dataset')}}">
+                        <input type="text" class="form-control" name="q" placeholder="Cari data">
                         <button type="submit" class="btn btn-ungu">Cari</button>
                     </form>
                 </div>
