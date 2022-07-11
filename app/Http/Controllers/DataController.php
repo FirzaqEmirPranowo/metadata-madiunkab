@@ -266,13 +266,17 @@ class DataController extends Controller
     public function selesai_konfirmasi_walidata()
     {
         $data = Data::selesai_konfirmasi_walidata();
-        return view('pages.contents.walidata.selesai_konfirmasi_walidata', compact('data'));
+        $status = 'disetujui';
+
+        return view('pages.contents.walidata.indexdata', compact('data', 'status'));
     }
 
     public function tolak_konfirmasi_walidata()
     {
         $data = Data::data_tolak_walidata();
-        return view('pages.contents.walidata.tolak_konfirmasi_walidata', compact('data'));
+        $status = 'ditolak';
+
+        return view('pages.contents.walidata.indexdata', compact('data', 'status'));
     }
 
     public function get_all_opd()
