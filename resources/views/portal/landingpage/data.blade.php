@@ -27,10 +27,12 @@
                             <div class="fab"><span class="mai-play"></span></div>
                         </button>
 
-                        <a href="{{route('dataset')}}" class="btn btn-outline-danger rounded-3">
-                            Reset Pencarian
-                            <i class="bi bi-x"></i>
-                        </a>
+                        @if(!empty(request()->all()))
+                            <a href="{{route('dataset')}}" class="btn btn-outline-danger rounded-3">
+                                Reset Pencarian
+                                <i class="bi bi-x"></i>
+                            </a>
+                        @endif
                     </form>
                 </div>
             </div>
