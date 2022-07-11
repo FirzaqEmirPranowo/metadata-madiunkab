@@ -20,13 +20,6 @@
           </a>
       </li>
 
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="/get_all_opdall">
-        <i class="bi bi-arrow-down-circle-fill"></i>
-        <span>Berita Acara</span>
-      </a>
-    </li>
-
     <li class="nav-heading">Pengumpulan Data</li>
 
     <li class="nav-item">

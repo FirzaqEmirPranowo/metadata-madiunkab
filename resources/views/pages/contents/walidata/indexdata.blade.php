@@ -22,11 +22,15 @@
 
                         <a href="/data_walidata/create" class="btn btn-md btn-primary mb-3 float-right"><i class="bi bi-plus-circle"></i> Tambah Data</a>
 
-
                         {{-- inport --}}
                         <a href="" class="btn btn-md btn-success mb-3 float-right" data-bs-toggle="modal"
                            data-bs-target="#verticalycentered">
                             <i class="bi bi-file-earmark-spreadsheet"></i> Import Data
+                        </a>
+
+                        <a class="btn btn-md btn-outline-primary mb-3 float-right" href="/get_all_opdall">
+                            <i class="bi bi-arrow-down-circle-fill"></i>
+                            <span>Berita Acara</span>
                         </a>
 
 
