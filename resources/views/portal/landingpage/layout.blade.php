@@ -53,8 +53,8 @@
                     <li class="nav-item {{ Request::segment(1) === '/' ? 'active' : null }}">
                         <a class="nav-link" href="/">Home</a>
                     </li>
-                    <li class="nav-item {{ Request::segment(1) === 'datas' ? 'active' : null }}">
-                        <a class="nav-link" href="/datas">Dataset</a>
+                    <li class="nav-item {{ request()->routeIs('dataset') ? 'active' : null }}">
+                        <a class="nav-link" href="{{route('dataset')}}">Dataset</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/ckan">Open-Data</a>
