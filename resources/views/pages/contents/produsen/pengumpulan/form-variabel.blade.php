@@ -10,6 +10,7 @@
 @endphp
 
 @section('content')
+    @include('sweetalert::alert')
 
     <div class="pagetitle">
         <h1>Metadata Variabel</h1>
@@ -28,7 +29,12 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Metadata Variabel</h5>
+                        <div class="d-flex align-content-center justify-content-between flex-wrap mb-3">
+                            <h5 class="card-title">Metadata Variabel</h5>
+                            <div class="align-self-center">
+                                <button class="btn btn-xs btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalImport">Import Metadata <i class="bi bi-file-excel"></i></button>
+                            </div>
+                        </div>
 
                         <form action="{{route('simpan-variabel', $data->id)}}" method="POST">
                             @csrf
@@ -199,6 +205,31 @@
 
             </div>
 
+            <div class="modal fade" id="modalImport" tabindex="-1" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header"><h5 class="modal-title">Import Metadata Variabel dari Excel</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Anda dapat meng-<em>import</em> metadata dari file Excel menggunakan template yang sudah disediakan.</p>
+                            <form enctype="multipart/form-data" action="{{route('import-variabel', $data->id)}}" id="formImport" method="POST">
+                                @csrf
+                                <div class="row mb-3">
+                                    <label for="inputNumber" class="col-sm-2 col-form-label">Berkas Excel</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="file" id="fileImport" name="metadata" required>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            <button type="button" class="btn btn-primary" form="formImport" role="button" onclick="document.getElementById('formImport').submit();">Upload</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </section>

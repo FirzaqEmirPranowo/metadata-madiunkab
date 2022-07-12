@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\MetadataIndikatorImport;
+use App\Imports\MetadataVariabelImport;
 use App\Models\Berkas;
 use App\Models\Data;
 use Illuminate\Http\Request;
@@ -146,7 +147,7 @@ class PengumpulanController extends Controller
         $meta = data_get($indikatorData, '1.0', []);
         if ($meta->count() < 16) {
             return redirect()->back()->with([
-                Alert::error('Gagal', 'Berkas excel tidak valid. Data kosong! Pastikan Anda menggunakan tempalate yang sudah disediakan')
+                Alert::error('Gagal', 'Berkas excel tidak valid. Data kosong! Pastikan Anda menggunakan template yang sudah disediakan')
             ]);
         }
 
@@ -189,6 +190,27 @@ class PengumpulanController extends Controller
         }
 
         return view('pages.contents.produsen.pengumpulan.form-variabel', compact('data'));
+    }
+
+    public function importVariabel($id, Request $request)
+    {
+        $data = Data::findOrFail($id);
+
+        $indikatorData = Excel::toCollection(new MetadataVariabelImport($data->id), $request->file('metadata'));
+
+        $meta = data_get($indikatorData, '0.0', []);
+        if ($meta->count() < 14) {
+            return redirect()->back()->with([
+                Alert::error('Gagal', 'Berkas excel tidak valid. Data kosong! Pastikan Anda menggunakan template yang sudah disediakan')
+            ]);
+        }
+
+        $import = new MetadataVariabelImport($data->id);
+        $import->model($meta->all());
+
+        return redirect()->back()->with([
+            Alert::success('Berhasil', 'Import metadata berhasil. Silahkan periksa kembali hasil import metadata')
+        ]);
     }
 
     public function simpanVariabel($id, Request $request)

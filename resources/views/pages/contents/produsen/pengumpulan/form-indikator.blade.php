@@ -1,7 +1,5 @@
 @extends('pages.main.layout')
 
-@include('sweetalert::alert')
-
 @php
     if ($data->status_id == 5) {
         $v = optional($data->verifikasi);
@@ -13,6 +11,7 @@
 @endphp
 
 @section('content')
+    @include('sweetalert::alert')
 
     <div class="pagetitle">
         <h1>Metadata Indikator</h1>
