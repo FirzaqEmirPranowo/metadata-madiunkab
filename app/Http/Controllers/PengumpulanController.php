@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Laravolt\Indonesia\Models\Province;
-use Maatwebsite\Excel\Excel;
+use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Writer\Ods\Meta;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PengumpulanController extends Controller
 {
@@ -137,14 +139,23 @@ class PengumpulanController extends Controller
 
     public function importIndikator($id, Request $request)
     {
-//        $data = Data::findOrFail($id);
+        $data = Data::findOrFail($id);
 
-//        $indikatorData = Excel::toCollection(new MetadataIndikatorImport($data->id), $request->file('metadata'));
+        $indikatorData = Excel::toCollection(new MetadataIndikatorImport($data->id), $request->file('metadata'));
 
-//        if ($indikatorData->count() < 1) {
-//            return redirect()->back()->with()
-//        }
-        
+        $meta = data_get($indikatorData, '1.0', []);
+        if ($meta->count() < 16) {
+            return redirect()->back()->with([
+                Alert::error('Gagal', 'Berkas excel tidak valid. Data kosong! Pastikan Anda menggunakan tempalate yang sudah disediakan')
+            ]);
+        }
+
+        $import = new MetadataIndikatorImport($data->id);
+        $import->model($meta->all());
+
+        return redirect()->back()->with([
+            Alert::success('Berhasil', 'Import metadata berhasil. Silahkan periksa kembali hasil import metadata')
+        ]);
     }
 
     public function simpanIndikator($id, Request $request)

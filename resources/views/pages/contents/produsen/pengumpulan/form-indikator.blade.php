@@ -1,5 +1,7 @@
 @extends('pages.main.layout')
 
+@include('sweetalert::alert')
+
 @php
     if ($data->status_id == 5) {
         $v = optional($data->verifikasi);
@@ -29,7 +31,12 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Metadata Indikator</h5>
+                        <div class="d-flex align-content-center justify-content-between flex-wrap mb-3">
+                            <h5 class="card-title">Metadata Indikator</h5>
+                            <div class="align-self-center">
+                                <button class="btn btn-xs btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalImport">Import Metadata <i class="bi bi-file-excel"></i></button>
+                            </div>
+                        </div>
 
                         <form action="{{route('simpan-indikator', $data->id)}}" method="POST" enctype="multipart/form-data">
                             @csrf
@@ -209,14 +216,14 @@
                             <div class="row mb-3">
                                 <label for="level_estimasi" class="col-sm-2 col-form-label">Level Estimasi</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control {{ isset($level_estimasi) ? ($level_estimasi->accepted ? 'is-valid' : 'is-invalid') : '' }}" name="level_estimasi" id="level_estimasi">
-                                        <option value="nasional" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'nasional' || empty(old('level_estimasi', optional($data->indikator)->level_estimasi)) ? 'checked' : ''}}>Nasional</option>
-                                        <option value="provinsi" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'provinsi' ? 'checked' : ''}}>Provinsi</option>
-                                        <option value="kota" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'kota' ? 'checked' : ''}}>Kabupaten/kota</option>
-                                        <option value="kecamatan" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'kecamatan' ? 'checked' : ''}}>Kecamatan</option>
-                                        <option value="kelurahan" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'kelurahan' ? 'checked' : ''}}>Desa/Kelurahan</option>
-                                        <option value="rt" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'rt' ? 'checked' : ''}}>Rumah Tangga</option>
-                                        <option value="individu" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'individu' ? 'checked' : ''}}>Individu</option>
+                                    <select class="form-control form-select {{ isset($level_estimasi) ? ($level_estimasi->accepted ? 'is-valid' : 'is-invalid') : '' }}" name="level_estimasi" id="level_estimasi">
+                                        <option value="nasional" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'nasional' || empty(old('level_estimasi', optional($data->indikator)->level_estimasi)) ? 'selected' : ''}}>Nasional</option>
+                                        <option value="provinsi" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'provinsi' ? 'selected' : ''}}>Provinsi</option>
+                                        <option value="kabupaten" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'kabupaten' ? 'selected' : ''}}>Kabupaten/kota</option>
+                                        <option value="kecamatan" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'kecamatan' ? 'selected' : ''}}>Kecamatan</option>
+                                        <option value="kelurahan" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'kelurahan' ? 'selected' : ''}}>Desa/Kelurahan</option>
+                                        <option value="rt" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'rt' ? 'selected' : ''}}>Rumah Tangga</option>
+                                        <option value="individu" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'individu' ? 'selected' : ''}}>Individu</option>
                                     </select>
                                     @if (isset($level_estimasi) && !empty($level_estimasi->comment))
                                         <p class="text-muted text-comment">Komentar: {{$level_estimasi->comment}}</p>
@@ -262,6 +269,31 @@
 
             </div>
 
+            <div class="modal fade" id="modalImport" tabindex="-1" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header"><h5 class="modal-title">Import Metadata Indikator dari Excel</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Anda dapat meng-<em>import</em> metadata dari file Excel menggunakan template yang sudah disediakan.</p>
+                            <form enctype="multipart/form-data" action="{{route('import-indikator', $data->id)}}" id="formImport" method="POST">
+                                @csrf
+                                <div class="row mb-3">
+                                    <label for="inputNumber" class="col-sm-2 col-form-label">Berkas Excel</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="file" id="fileImport" name="metadata" required>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            <button type="button" class="btn btn-primary" form="formImport" role="button" onclick="document.getElementById('formImport').submit();">Upload</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </section>
@@ -296,7 +328,6 @@
                     }
                 }
             });
-
 
             @php
                 $metode = optional($data->indikator)->metode;

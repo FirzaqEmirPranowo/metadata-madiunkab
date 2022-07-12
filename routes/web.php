@@ -146,6 +146,7 @@ Route::middleware('role:produsen')->group(function () {
     Route::get('/data_produsen/pengumpulan/{id}/data', [PengumpulanController::class, 'detailData']);
     Route::get('/data_produsen/pengumpulan/{id}/indikator', [PengumpulanController::class, 'indikator'])->name('indikator');
     Route::post('/data_produsen/pengumpulan/{id}/simpan-indikator', [PengumpulanController::class, 'simpanIndikator'])->name('simpan-indikator');
+    Route::post('/data_produsen/pengumpulan/{id}/upload-indikator', [PengumpulanController::class, 'importIndikator'])->name('import-indikator');
     Route::get('/data_produsen/pengumpulan/{id}/variabel', [PengumpulanController::class, 'variabel'])->name('variabel');
     Route::post('/data_produsen/pengumpulan/{id}/simpan-variabel', [PengumpulanController::class, 'simpanVariabel'])->name('simpan-variabel');
     Route::get('/data_produsen/pengumpulan/{id}/kegiatan', [PengumpulanController::class, 'kegiatan']);

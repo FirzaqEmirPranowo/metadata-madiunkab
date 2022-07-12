@@ -75,11 +75,11 @@
                                 <div class="d-flex align-items-center">
                                     <div
                                         class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-journal-check"></i>
+                                        <i class="bi bi-journal"></i>
                                     </div>
                                     <div class="ps-3">
                                         <h6>{{$dataTidakLengkap}}</h6>
-                                        <span class="text-success small pt-1 fw-bold">Data</span>
+                                        <span class="text-danger small pt-1 fw-bold">Data</span>
 
                                     </div>
                                 </div>
@@ -99,7 +99,7 @@
                                 <div class="d-flex align-items-center">
                                     <div
                                         class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-check2"></i>
+                                        <i class="bi bi-journal-check"></i>
                                     </div>
                                     <div class="ps-3">
                                         <h6>{{$dataSiapPublish}}</h6>

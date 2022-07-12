@@ -52,7 +52,7 @@
                                 <div class="d-flex align-items-center">
                                     <div
                                         class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-folder2-open"></i>
+                                        <i class="bi bi-journal-check"></i>
                                     </div>
                                     <div class="ps-3">
                                         <h6>{{$dataLengkap}}</h6>
@@ -75,7 +75,7 @@
                                 <div class="d-flex align-items-center">
                                     <div
                                         class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-journal-check"></i>
+                                        <i class="bi bi-journal"></i>
                                     </div>
                                     <div class="ps-3">
                                         <h6>{{$dataTidakLengkap}}</h6>

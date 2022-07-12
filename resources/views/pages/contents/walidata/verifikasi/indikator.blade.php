@@ -245,13 +245,13 @@
                                 <label for="level_estimasi" class="col-sm-2 col-form-label">Level Estimasi</label>
                                 <div class="col-sm-8">
                                     <select class="form-control {{ $level_estimasi ? ($level_estimasi->accepted ? 'is-valid' : 'is-invalid') : '' }} bg-light" name="level_estimasi" id="level_estimasi" disabled>
-                                        <option value="nasional" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'nasional' || empty(old('level_estimasi', optional($data->indikator)->level_estimasi)) ? 'checked' : ''}}>Nasional</option>
-                                        <option value="provinsi" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'provinsi' ? 'checked' : ''}}>Provinsi</option>
-                                        <option value="kota" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'kota' ? 'checked' : ''}}>Kabupaten/kota</option>
-                                        <option value="kecamatan" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'kecamatan' ? 'checked' : ''}}>Kecamatan</option>
-                                        <option value="kelurahan" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'kelurahan' ? 'checked' : ''}}>Desa/Kelurahan</option>
-                                        <option value="rt" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'rt' ? 'checked' : ''}}>Rumah Tangga</option>
-                                        <option value="individu" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'individu' ? 'checked' : ''}}>Individu</option>
+                                        <option value="nasional" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'nasional' || empty(old('level_estimasi', optional($data->indikator)->level_estimasi)) ? 'selected' : ''}}>Nasional</option>
+                                        <option value="provinsi" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'provinsi' ? 'selected' : ''}}>Provinsi</option>
+                                        <option value="kabupaten" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'kabupaten' ? 'selected' : ''}}>Kabupaten/kota</option>
+                                        <option value="kecamatan" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'kecamatan' ? 'selected' : ''}}>Kecamatan</option>
+                                        <option value="kelurahan" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'kelurahan' ? 'selected' : ''}}>Desa/Kelurahan</option>
+                                        <option value="rt" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'rt' ? 'selected' : ''}}>Rumah Tangga</option>
+                                        <option value="individu" {{old('level_estimasi', optional($data->indikator)->level_estimasi) == 'individu' ? 'selected' : ''}}>Individu</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
