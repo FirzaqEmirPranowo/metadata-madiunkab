@@ -15,7 +15,14 @@ class HomeController extends Controller
 
     public function dashboardAdmin()
     {
-        return view('pages.contents.walidata.dashboard');
+        $data = Data::count();
+        $disetujui = Data::where('status_id', Data::STATUS_SETUJU)->count();
+        $dataLengkap = Data::where('status_id')->where('progress', '>', 80)->count();
+        $dataTidakLengkap = Data::where('status_id', '>=', Data::STATUS_DRAFT)->where('progress', '<', 80)->count();
+        $dataSiapPublish = Data::where('status_id', '=', Data::STATUS_SELESAI_VERIFIKASI)->count();
+        $dataTerbaru = Data::with('opd')->latest()->take(10)->get();
+        $lastActivities = Activity::with('causer')->latest()->take(20)->get();
+        return view('pages.contents.walidata.dashboard', compact('disetujui', 'data', 'dataLengkap', 'dataTidakLengkap', 'dataSiapPublish', 'dataTerbaru', 'lastActivities'));
     }
 
     public function dashboardWalidata()
