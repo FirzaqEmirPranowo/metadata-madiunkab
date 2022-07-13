@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DataExport;
 use App\Imports\MetadataIndikatorImport;
 use App\Imports\MetadataVariabelImport;
 use App\Models\Berkas;
@@ -9,9 +10,9 @@ use App\Models\Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Laravolt\Indonesia\Models\Province;
 use Maatwebsite\Excel\Facades\Excel;
-use PhpOffice\PhpSpreadsheet\Writer\Ods\Meta;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PengumpulanController extends Controller
@@ -81,11 +82,11 @@ class PengumpulanController extends Controller
 
         $data = Data::when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))->findOrFail($id);
 
-        if ($data->status_id != Data::STATUS_SETUJU || $data->status_id != Data::STATUS_REVISI) {
+        if ($data->status_id != Data::STATUS_SETUJU && $data->status_id != Data::STATUS_REVISI) {
             return response()->json(['message' => 'invalid'], 403);
         }
 
-        $fileName = date('Ymdhis') . '-' .$request->file('berkas')->getClientOriginalName();
+        $fileName = date('Ymdhis') . '-' . $request->file('berkas')->getClientOriginalName();
         $storedPath = $request->file('berkas')->storeAs('berkas', $fileName);
 
         if (!$storedPath) {
@@ -168,7 +169,7 @@ class PengumpulanController extends Controller
         $formData = $request->all();
 
         if ($request->hasFile('metode_image')) {
-            $formData['metode'] = $request->file('metode_image')->storeAs('public/metode', date('Ymdhis') .'-'. $request->file('metode_image')->getClientOriginalName());
+            $formData['metode'] = $request->file('metode_image')->storeAs('public/metode', date('Ymdhis') . '-' . $request->file('metode_image')->getClientOriginalName());
         }
 
         $data->indikator()->updateOrCreate(
@@ -317,5 +318,12 @@ class PengumpulanController extends Controller
         $data->update(['progress' => 100, 'status_id' => Data::STATUS_PROSES_PENGUMPULAN]);
 
         return response()->json(['ok' => true, 'message' => 'Sukses! Data dalam tahap verifikasi']);
+    }
+
+    public function exportData($id)
+    {
+        $data = Data::when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))->findOrFail($id);
+
+        return Excel::download(new DataExport($data), 'testexcel-' . Str::random(10) . '.xlsx');
     }
 }
