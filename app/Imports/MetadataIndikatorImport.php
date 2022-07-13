@@ -65,6 +65,6 @@ class MetadataIndikatorImport implements ToModel, WithMultipleSheets, WithStartR
 
     public function startRow(): int
     {
-        return 3;
+        return 4;
     }
 }
