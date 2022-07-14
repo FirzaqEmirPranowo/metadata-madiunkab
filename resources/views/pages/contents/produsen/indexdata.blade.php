@@ -108,138 +108,141 @@
                                                                    data-bs-placement="bottom" title="Detail Data"><i
                                                                         class="bi bi-info-circle"></i></a>
                                                             </td>
-                                                            <td>
 
-                                                                <a href="" class="btn btn-sm btn-success  float-right"
-                                                                   data-bs-toggle="modal"
-                                                                   data-bs-target="#menyetujui-{{ $dt->id }}"><i
-                                                                        class="bi bi-check-circle"></i></a>
-                                                                <div class="modal fade" id="menyetujui-{{ $dt->id }}"
-                                                                     tabindex="-1">
-                                                                    <div class="modal-dialog modal-dialog-centered">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title"
-                                                                                    style="font-weight: bold; color:green">
-                                                                                    SETUJUI DATA!</h5>
-                                                                                <button type="button" class="btn-close"
-                                                                                        data-bs-dismiss="modal"
-                                                                                        aria-label="Close"></button>
-                                                                            </div>
-                                                                            <div class="modal-body">
+                                                            @if (!isset($status))
+                                                                <td>
 
-                                                                                <h7 class="modal-title"><i
-                                                                                        class="bi bi-caret-right-fill"></i>Apakah
-                                                                                    anda sudah yakin untuk menyetujui data?
-                                                                                </h7>
-                                                                            </div>
-                                                                            <div class="modal-footer">
+                                                                    <a href="" class="btn btn-sm btn-success  float-right"
+                                                                       data-bs-toggle="modal"
+                                                                       data-bs-target="#menyetujui-{{ $dt->id }}"><i
+                                                                            class="bi bi-check-circle"></i></a>
+                                                                    <div class="modal fade" id="menyetujui-{{ $dt->id }}"
+                                                                         tabindex="-1">
+                                                                        <div class="modal-dialog modal-dialog-centered">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        style="font-weight: bold; color:green">
+                                                                                        SETUJUI DATA!</h5>
+                                                                                    <button type="button" class="btn-close"
+                                                                                            data-bs-dismiss="modal"
+                                                                                            aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
 
-                                                                                <form
-                                                                                    action="{{ url('/data_produsen/setuju/'.encrypt($dt->id)) }}"
-                                                                                    method="get" enctype="multipart/form-data">
-                                                                                    @csrf
-                                                                                    <div class="input-group mb-3">
-                                                                                        <button type="button"
-                                                                                                class="btn btn-secondary"
-                                                                                                data-bs-dismiss="modal">Cancel
-                                                                                        </button>
-                                                                                        <button class="btn btn-primary"
-                                                                                                type="submit"
-                                                                                                id="button-addon2">Kirim
-                                                                                        </button>
-                                                                                    </div>
-                                                                                </form>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                                                    <h7 class="modal-title"><i
+                                                                                            class="bi bi-caret-right-fill"></i>Apakah
+                                                                                        anda sudah yakin untuk menyetujui data?
+                                                                                    </h7>
+                                                                                </div>
+                                                                                <div class="modal-footer">
 
-                                                            </td>
-                                                            <td>
-
-                                                                <a href="" class="btn btn-sm btn-danger  float-right"
-                                                                   data-bs-toggle="modal"
-                                                                   data-bs-target="#verticalycentered-{{ $dt->id }}"><i
-                                                                        class="bi bi-x-circle"></i></a>
-                                                                <div class="modal fade" id="verticalycentered-{{ $dt->id }}"
-                                                                     tabindex="-1">
-                                                                    <div class="modal-dialog modal-dialog-centered">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title"
-                                                                                    style="font-weight: bold; color:red">TOLAK DATA !</h5>
-                                                                                <button type="button" class="btn-close"
-                                                                                        data-bs-dismiss="modal"
-                                                                                        aria-label="Close"></button>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <h7 class="modal-title"><i
-                                                                                        class="bi bi-caret-right-fill"></i>Pastikan
-                                                                                    bahwa data yang anda TOLAK bukan atau tidak
-                                                                                    sesuai dengan DATA anda!
-                                                                                </h7>
-                                                                                <br>
-                                                                                <h7 class="modal-title"><i
-                                                                                        class="bi bi-caret-right-fill"></i>Apakah
-                                                                                    anda sudah yakin untuk menolak? Jika sudah
-                                                                                    yakin, Silahkan isikan Alasan untuk MENOLAK
-                                                                                    DATA!
-                                                                                </h7>
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button type="button" class="btn btn-secondary"
-                                                                                        data-bs-dismiss="modal">Cancel
-                                                                                </button>
-                                                                                <button type="button" class="btn btn-primary"
-                                                                                        data-bs-toggle="modal"
-                                                                                        data-bs-target="#alasan">Ok
-                                                                                </button>
+                                                                                    <form
+                                                                                        action="{{ url('/data_produsen/setuju/'.encrypt($dt->id)) }}"
+                                                                                        method="get" enctype="multipart/form-data">
+                                                                                        @csrf
+                                                                                        <div class="input-group mb-3">
+                                                                                            <button type="button"
+                                                                                                    class="btn btn-secondary"
+                                                                                                    data-bs-dismiss="modal">Cancel
+                                                                                            </button>
+                                                                                            <button class="btn btn-primary"
+                                                                                                    type="submit"
+                                                                                                    id="button-addon2">Kirim
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
 
-                                                                <div class="modal fade" id="alasan" tabindex="-1">
-                                                                    <div class="modal-dialog modal-dialog-centered">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title">Alasan Penolakan</h5>
-                                                                                <button type="button" class="btn-close"
-                                                                                        data-bs-dismiss="modal"
-                                                                                        aria-label="Close"></button>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <form
-                                                                                    action="{{ url('data_produsen/alasan', $dt->id) }}"
-                                                                                    method="post" enctype="multipart/form-data">
-                                                                                    @csrf
-                                                                                    <div class="input-group mb-3">
-                                                                                        <input type="text" name="alasan"
-                                                                                               id="alasan" class="form-control"
-                                                                                               placeholder="Berikan Alasan"
-                                                                                               aria-label="Berikan Alasan"
-                                                                                               aria-describedby="button-addon2">
-                                                                                        <button class="btn btn-primary"
-                                                                                                type="submit"
-                                                                                                id="button-addon2">Kirim
-                                                                                        </button>
-                                                                                    </div>
-                                                                                </form>
-                                                                            </div>
+                                                                </td>
+                                                                <td>
 
+                                                                    <a href="" class="btn btn-sm btn-danger  float-right"
+                                                                       data-bs-toggle="modal"
+                                                                       data-bs-target="#verticalycentered-{{ $dt->id }}"><i
+                                                                            class="bi bi-x-circle"></i></a>
+                                                                    <div class="modal fade" id="verticalycentered-{{ $dt->id }}"
+                                                                         tabindex="-1">
+                                                                        <div class="modal-dialog modal-dialog-centered">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        style="font-weight: bold; color:red">TOLAK DATA !</h5>
+                                                                                    <button type="button" class="btn-close"
+                                                                                            data-bs-dismiss="modal"
+                                                                                            aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <h7 class="modal-title"><i
+                                                                                            class="bi bi-caret-right-fill"></i>Pastikan
+                                                                                        bahwa data yang anda TOLAK bukan atau tidak
+                                                                                        sesuai dengan DATA anda!
+                                                                                    </h7>
+                                                                                    <br>
+                                                                                    <h7 class="modal-title"><i
+                                                                                            class="bi bi-caret-right-fill"></i>Apakah
+                                                                                        anda sudah yakin untuk menolak? Jika sudah
+                                                                                        yakin, Silahkan isikan Alasan untuk MENOLAK
+                                                                                        DATA!
+                                                                                    </h7>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-secondary"
+                                                                                            data-bs-dismiss="modal">Cancel
+                                                                                    </button>
+                                                                                    <button type="button" class="btn btn-primary"
+                                                                                            data-bs-toggle="modal"
+                                                                                            data-bs-target="#alasan">Ok
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            </td>
 
-                                                            <td>
-                                                                <form action="{{ url('/data_produsen/edit/'.($dt->id)) }}">
+                                                                    <div class="modal fade" id="alasan" tabindex="-1">
+                                                                        <div class="modal-dialog modal-dialog-centered">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title">Alasan Penolakan</h5>
+                                                                                    <button type="button" class="btn-close"
+                                                                                            data-bs-dismiss="modal"
+                                                                                            aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <form
+                                                                                        action="{{ url('data_produsen/alasan', $dt->id) }}"
+                                                                                        method="post" enctype="multipart/form-data">
+                                                                                        @csrf
+                                                                                        <div class="input-group mb-3">
+                                                                                            <input type="text" name="alasan"
+                                                                                                   id="alasan" class="form-control"
+                                                                                                   placeholder="Berikan Alasan"
+                                                                                                   aria-label="Berikan Alasan"
+                                                                                                   aria-describedby="button-addon2">
+                                                                                            <button class="btn btn-primary"
+                                                                                                    type="submit"
+                                                                                                    id="button-addon2">Kirim
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
 
-                                                                    <button type="submit" class="btn btn-sm btn-primary"><i
-                                                                            class="bi bi-pencil-fill"></i></button>
-                                                                </form>
-                                                            </td>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td>
+                                                                    <form action="{{ url('/data_produsen/edit/'.($dt->id)) }}">
+
+                                                                        <button type="submit" class="btn btn-sm btn-primary"><i
+                                                                                class="bi bi-pencil-fill"></i></button>
+                                                                    </form>
+                                                                </td>
+                                                            @endif
                                                         </tr>
                                                     </table>
                                                 @endif
