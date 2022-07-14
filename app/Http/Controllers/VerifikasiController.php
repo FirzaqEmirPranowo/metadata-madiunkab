@@ -11,7 +11,7 @@ class VerifikasiController extends Controller
 {
     public function index()
     {
-        $data = Data::where('status_id', 4)->with(['opd', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])->paginate();
+        $data = Data::where('status_id', Data::STATUS_BELUM_DIPERIKSA)->with(['opd', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])->paginate();
 
         return view('pages.contents.walidata.verifikasi.index', compact('data'));
     }
@@ -28,7 +28,7 @@ class VerifikasiController extends Controller
             ];
         })->toArray();
 
-        if (!in_array($data->status_id, [Data::STATUS_SETUJU, Data::STATUS_PROSES_PENGUMPULAN, Data::STATUS_REVISI, Data::STATUS_SELESAI_VERIFIKASI])) {
+        if ($data->status_id != Data::STATUS_BELUM_DIPERIKSA) {
             return redirect()->back()->with('errors', 'Status Data belum selesai');
         }
 
@@ -111,7 +111,7 @@ class VerifikasiController extends Controller
             return response()->json(['ok' => false, 'code' => 404, 'message' => 'Data tidak ditemukan']);
         }
 
-        if ($data->status_id != Data::STATUS_PROSES_PENGUMPULAN) {
+        if ($data->status_id != Data::STATUS_BELUM_LENGKAP) {
             return response()->json(['ok' => false, 'code' => -2, 'message' => 'Status data tidak valid']);
         }
 
@@ -134,7 +134,7 @@ class VerifikasiController extends Controller
             return response()->json(['ok' => false,'message' => 'Data tidak ditemukan']);
         }
 
-        if ($data->status_id != Data::STATUS_PROSES_PENGUMPULAN) {
+        if ($data->status_id != Data::STATUS_BELUM_LENGKAP) {
             return response()->json(['ok' => false, 'message' => 'Status data tidak valid']);
         }
 
@@ -144,10 +144,10 @@ class VerifikasiController extends Controller
 
         $isRevisi = $data->verifikasi->where('accepted', 0)->count() > 0;
         $data->update([
-            'status_id' => $isRevisi ? Data::STATUS_REVISI : Data::STATUS_SELESAI_VERIFIKASI,
+            'status_id' => $isRevisi ? Data::STATUS_REVISI : Data::STATUS_SIAP_PUBLIKASI,
             'progress' => $isRevisi ? 50 : 100,
         ]);
 
-        return response()->json(['ok' => true, 'message' => 'Data telah diubah menjadi '. ($isRevisi ? 'revisi' : 'siap untuk dipublish')]);
+        return response()->json(['ok' => true, 'message' => 'Data telah diubah menjadi '. ($isRevisi ? 'revisi' : 'siap untuk dipublikasi')]);
     }
 }

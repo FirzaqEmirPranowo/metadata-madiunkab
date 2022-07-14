@@ -68,6 +68,14 @@ class DataController extends Controller
             $status_id = Data::STATUS_SETUJU;
         }
         $user_id = Auth::user()->id;
+
+        $existingData = Data::where('nama_data', trim($request->nama_data))->count();
+        if ($existingData > 0) {
+            return redirect()->back()->with([
+                Alert::error('Gagal', 'Data dengan nama tersebut sudah terdaftar pada sistem')
+            ]);
+        }
+
         $create = Data::create([
             'nama_data' => $request->nama_data,
             'opd_id' => $request->opd_id,
@@ -120,9 +128,8 @@ class DataController extends Controller
     {
         $data = Data::findOrFail($id);
 
-        $restore = 3;
         $data->update([
-            'status_id' => $restore,
+            'status_id' => Data::STATUS_DRAFT,
         ]);
 
         if ($data) {
@@ -287,7 +294,7 @@ class DataController extends Controller
 
     public function get_all_opdall(Request $request)
     {
-        $data = Data::with('opd')->setuju()->OPD($request->id);
+        $data = Data::with('opd')->setuju()->opd($request->id);
         $opd = Opd::pluck('nama_opd', 'id');
         $draft = Data::where('opd_id', '=', $request->id)->where('status_id', '=', 3)->count();
         return view('pages.contents.walidata.index_get_opd', compact('data', 'opd', 'draft'));
@@ -331,9 +338,8 @@ class DataController extends Controller
         $id = decrypt($request->id);
         $data = Data::findOrFail($id);
 
-        $setuju = 1;
         $data->update([
-            'status_id' => $setuju,
+            'status_id' => Data::STATUS_SETUJU,
         ]);
         if ($data) {
             if (Auth::user()->role_id == '1') {
@@ -371,10 +377,9 @@ class DataController extends Controller
     {
         $data = Data::findOrFail($id);
         $alasan = $request->alasan;
-        $tolak = 2;
         $data->update([
             'alasan' => $alasan,
-            'status_id' => $tolak,
+            'status_id' => Data::STATUS_TOLAK,
         ]);
 
         if ($data) {

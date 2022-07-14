@@ -99,4 +99,9 @@ class OpdController extends Controller
         activity()->log('Menghapus OPD');
         return redirect('/opd');
     }
+
+    public function opds()
+    {
+        return Opd::select('id', 'nama_opd')->get();
+    }
 }

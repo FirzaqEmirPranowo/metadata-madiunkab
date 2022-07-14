@@ -5,7 +5,7 @@
     <li class="nav-heading">Dashboard</li>
 
     <li class="nav-item">
-      <a class="nav-link" href="/d_walidata">
+      <a class="nav-link {{request()->routeIs('d_walidata') ? 'collapse' : 'collapsed' }}" href="/d_walidata">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
       </a>
@@ -15,7 +15,7 @@
 
 
       <li class="nav-item">
-          <a class="nav-link collapsed" href="/data_walidata/draft">
+          <a class="nav-link {{in_array(request()->path(), ['data_walidata/draft', 'data_walidata/selesai_konfirmasi_walidata', 'data/walidata_tolak_konfirmasi_walidata']) ? 'collapse' : 'collapsed'}}" href="/data_walidata/draft">
               <i class="bi bi-check-square"></i><span>Perencanaan Data</span>
           </a>
       </li>
@@ -23,7 +23,7 @@
     <li class="nav-heading">Pengumpulan Data</li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="/data_walidata/pengumpulan">
+      <a class="nav-link {{Str::contains(request()->url(), 'data_walidata/pengumpulan') ? 'collapse' : 'collapsed'}}" href="/data_walidata/pengumpulan">
         <i class="bi bi-list-check"></i>
         <span>Daftar Data</span>
       </a>
@@ -32,7 +32,7 @@
     <li class="nav-heading">Pemeriksaan Data</li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="/data_walidata/verifikasi">
+      <a class="nav-link {{\Illuminate\Support\Str::contains(request()->url(), 'data_walidata/verifikasi') ? 'collapse' : 'collapsed'}}" href="/data_walidata/verifikasi">
         <i class="bi bi-folder-check"></i>
         <span>Validasi Data</span>
       </a>

@@ -28,16 +28,16 @@
     .tbl{
       border: 1px solid black;
       border-collapse: collapse;
-      Posisi : Relative,
-      Border : Collapse,
-      Widht   : Max-width,
+      position : relative,
+      Border : collapse,
+      width   : max-width,
       Margin : auto (otomatis),
       Padding : 10px,
       Text-Align : center,
     }
-    
+
   </style>
-  
+
 </head>
 <body>
   <table >
@@ -45,7 +45,7 @@
       <td><img src="<?php echo $pict ?>" width="120px" height="150px" alt=""></td>
       <td class="kop">
         <font size="5"><b>PEMERINTAH KABUPATEN MADIUN</b></font>
-        <font size="7"><b>SEKERTARIAT DAERAH</b></font><br>
+        <font size="7"><b>SEKRETARIAT DAERAH</b></font><br>
         <font size="2">Jalan Alun – alun Utara Nomor 1-3 Madiun</font><br>
         <font size="2">Telepon ( 0351 ) 448000 - 44870007</font><br>
         <font size="2">Website http://www.madiunkab.go.id</font><br>
@@ -65,7 +65,7 @@
         <font size="3"><b>PERANGKAT DAERAH TAHUN {{ $tahun }}</b></font><br>
       </td>
     </tr>
-  </table>  
+  </table>
   <br>
   <table>
     <tr>
@@ -76,15 +76,15 @@
         <font size="3">MENYEPAKATI</font>
       </td>
     </tr>
-  </table> 
+  </table>
   <br>
   <table class="menyatakan">
     <tr>
       <td><font size="3">KESATU</font></td>
       <td><font width="100px"> :</font></td>
-      <td style="padding-top:20px"><font width="100px"> Daftar Data dan Data Prioritas @foreach($opd as $nama) {{ $nama -> nama_opd }}@endforeach sebagaimana 
+      <td style="padding-top:20px"><font width="100px"> Daftar Data dan Data Prioritas @foreach($opd as $nama) {{ $nama -> nama_opd }}@endforeach sebagaimana
         tercantum dalam LAMPIRAN berita acara ini.</font></td>
-    </tr> 
+    </tr>
     <tr>
       <td></td>
     </tr>
@@ -99,7 +99,7 @@
     <tr>
       <td><font size="3">KETIGA</font></td>
       <td><font width="100px"> :</font></td>
-      <td style="padding-top:20px"><font width="100px"> Dalam hal pengumpulan data dilaksanakan melaui portal Satu Data 
+      <td style="padding-top:20px"><font width="100px"> Dalam hal pengumpulan data dilaksanakan melaui portal Satu Data
         Kabupuaten Madiun di laman www.data.madiunkab.go.id</font></td>
     </tr>
   </table>
@@ -110,7 +110,7 @@
         <font size="3">Demikian berita acara ini dibuat dan disahkan untuk digunakan sebagaimana mestinya.</font> <br>
       </td>
     </tr>
-  </table> 
+  </table>
   <br>
   <br>
   <table align="center" >
@@ -120,7 +120,7 @@
       </center>
          </td>
     </tr>
-  </table> 
+  </table>
   <br>
   <br>
   <table>
@@ -133,7 +133,7 @@
           <center>
             <font size="3">@foreach($opd as $nama) {{ $nama -> nama_opd }}@endforeach
             <br>
-            
+
             <br>
             <br>
             <br>
@@ -145,7 +145,7 @@
           </center>
           </td>
         </tr>
-      </table> 
+      </table>
     </td>
     <td class="ttd">
       <table>
@@ -166,10 +166,10 @@
           </center>
           </td>
         </tr>
-      </table> 
+      </table>
     </td>
     </tr>
-  </table> 
+  </table>
 
 
 

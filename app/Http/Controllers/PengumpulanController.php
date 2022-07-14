@@ -41,7 +41,7 @@ class PengumpulanController extends Controller
             ];
         })->toArray();
 
-        if (!in_array($data->status_id, [Data::STATUS_SETUJU, Data::STATUS_PROSES_PENGUMPULAN, Data::STATUS_REVISI, Data::STATUS_SELESAI_VERIFIKASI])) {
+        if (!in_array($data->status_id, [Data::STATUS_SETUJU, Data::STATUS_BELUM_LENGKAP, Data::STATUS_REVISI, Data::STATUS_SIAP_PUBLIKASI])) {
             return redirect()->back()->with('errors', 'Status Data belum selesai');
         }
 
@@ -195,6 +195,12 @@ class PengumpulanController extends Controller
 
     public function importVariabel($id, Request $request)
     {
+        if (!$request->hasFile('metadata')) {
+            return redirect()->back()->with([
+                Alert::error('Gagal', 'Berkas excel tidak valid. Data kosong! Pastikan Anda menggunakan template yang sudah disediakan')
+            ]);
+        }
+
         $data = Data::findOrFail($id);
 
         $indikatorData = Excel::toCollection(new MetadataVariabelImport($data->id), $request->file('metadata'));
@@ -311,11 +317,11 @@ class PengumpulanController extends Controller
             return response()->json(['ok' => false, 'message' => 'Mohon lengkapi isian metadata terlebih dahulu sebelum lanjut ke proses verifikasi']);
         }
 
-        if ($data->status_id == Data::STATUS_PROSES_PENGUMPULAN) {
+        if ($data->status_id == Data::STATUS_BELUM_DIPERIKSA) {
             return response()->json(['ok' => false, 'message' => 'Data ini sedang dalam proses verifikasi']);
         }
 
-        $data->update(['progress' => 100, 'status_id' => Data::STATUS_PROSES_PENGUMPULAN]);
+        $data->update(['progress' => 100, 'status_id' => Data::STATUS_BELUM_DIPERIKSA]);
 
         return response()->json(['ok' => true, 'message' => 'Sukses! Data dalam tahap verifikasi']);
     }

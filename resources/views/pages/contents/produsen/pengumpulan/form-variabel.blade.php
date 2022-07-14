@@ -1,7 +1,7 @@
 @extends('pages.main.layout')
 
 @php
-    if ($data->status_id == 5) {
+    if ($data->status_id == \App\Models\Data::STATUS_REVISI) {
         $variables = ['nama', 'alias', 'definisi', 'konsep', 'referensi_pemilihan', 'referensi_waktu', 'tipe_data', 'klasifikasi_isian', 'ukuran', 'satuan', 'aturan_validasi', 'kalimat_pertanyaan', 'umum'];
         foreach ($variables as $var) {
             $$var = $data->verifikasi->firstWhere('field', $var);
@@ -189,7 +189,7 @@
                                 </div>
                             </div>
 
-                            @if(auth()->user()->hasAnyRole('produsen') && !in_array($data->status_id, [4, 6]))
+                            @if(auth()->user()->hasAnyRole('produsen') && !in_array($data->status_id, [\App\Models\Data::STATUS_BELUM_LENGKAP, \App\Models\Data::STATUS_REVISI]))
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label"></label>
                                     <div class="col-sm-10">

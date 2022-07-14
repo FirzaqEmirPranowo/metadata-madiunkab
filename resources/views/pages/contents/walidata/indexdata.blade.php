@@ -93,20 +93,32 @@
                                                                 class="bi bi-info-circle"></i></a>
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('edit_walidata',['id'=>$dt->id])  }}"
-                                                           class="btn btn-sm btn-primary" data-bs-placement="bottom"
-                                                           title="Edit Data"><i class="bi bi-pencil-fill"></i></a>
-                                                    </td>
-                                                    <td>
-                                                        <form id="delete-pegawai-{{ $dt->id }}"
-                                                              action=" {{ url('/data_walidata/destroy/'.$dt->id) }}">
+                                                        <form id="restore-data-{{ $dt->id }}"
+                                                              action="{{ url('/data_walidata/restore/'.$dt->id) }}">
 
-                                                            <button type="button" class="btn btn-sm btn-danger"
-                                                                    onclick="confirmDelete('delete-pegawai-{{ $dt->id }}')"
-                                                                    data-bs-placement="bottom" title="Hapus Data"><i
-                                                                    class="bi bi-trash"></i></button>
+                                                            <button type="button" class="btn btn-sm btn-success"
+                                                                    onclick="confirmRestore('restore-data-{{ $dt->id }}')"
+                                                                    data-bs-placement="bottom" title="Restore Data">
+                                                                <i class="bi bi-arrow-repeat"></i></button>
                                                         </form>
                                                     </td>
+                                                    @if (!isset($status))
+                                                        <td>
+                                                            <a href="{{ route('edit_walidata',['id'=>$dt->id])  }}"
+                                                               class="btn btn-sm btn-primary" data-bs-placement="bottom"
+                                                               title="Edit Data"><i class="bi bi-pencil-fill"></i></a>
+                                                        </td>
+                                                        <td>
+                                                            <form id="delete-pegawai-{{ $dt->id }}"
+                                                                  action=" {{ url('/data_walidata/destroy/'.$dt->id) }}">
+
+                                                                <button type="button" class="btn btn-sm btn-danger"
+                                                                        onclick="confirmDelete('delete-pegawai-{{ $dt->id }}')"
+                                                                        data-bs-placement="bottom" title="Hapus Data"><i
+                                                                        class="bi bi-trash"></i></button>
+                                                            </form>
+                                                        </td>
+                                                    @endif
                                                 </tr>
                                             </table>
                                         </div>
@@ -134,23 +146,23 @@
                             aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h7 class="modal-title"><i class="bi bi-caret-right-fill"></i>Sebelum import
+                    <h6 class="modal-title"><i class="bi bi-caret-right-fill"></i>Sebelum import
                         data menggunakan file excel silahkan download Template nya disini!
                         <form action="{{ url('/up-download', 'DATA') }}">
                             <button type="submit" class="btn btn-sm btn-success">
                                 <i class="bi bi-download"></i> Template Data
                             </button>
                         </form>
-                    </h7>
+                    </h6>
                     <br>
-                    <h7 class="modal-title"><i class="bi bi-caret-right-fill"></i>Untuk panduan
+                    <h6 class="modal-title"><i class="bi bi-caret-right-fill"></i>Untuk panduan
                         pengisian data, cocokan terlebih dulu isi data disini!
                         <form action="{{ url('/up-download', 'PANDUAN') }}">
                             <button type="submit" class="btn btn-sm btn-success">
                                 <i class="bi bi-download"></i> Panduan Data
                             </button>
                         </form>
-                    </h7>
+                    </h6>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
@@ -214,6 +226,26 @@
     </script>
 
     <script type="text/javascript">
+        function confirmRestore(form_id) {
+            swal({
+                title: 'Apakah Anda Yakin Mengembalikan Data Menjadi DRAFT?',
+                text: "Anda akan mengembalikan data menjadi status Draft!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                buttons: true,
+                confirmButtonText: 'Yes, delete it!'
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $('#' + form_id).submit();
+                    } else {
+
+                    }
+                });
+        };
+
         function confirmDelete(item_id) {
             swal({
                 title: 'Apakah Anda Yakin Menghapus Data?',

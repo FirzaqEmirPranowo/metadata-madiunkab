@@ -156,6 +156,8 @@ Route::middleware('role:produsen')->group(function () {
     Route::post('/data_produsen/pengumpulan/{id}/kegiatan/publikasi', [PengumpulanController::class, 'simpanPublikasi'])->name('simpan-publikasi');
     Route::patch('/data_produsen/pengumpulan/{id}/verifikasi', [PengumpulanController::class, 'siapVerifikasi'])->name('siap-verifikasi');
 
+    Route::get('/data_produsen/pengumpulan/{id}/export', [PengumpulanController::class, 'exportData'])->name('export-data');
+
     Route::get('/data_produsen/pengumpulan', [PengumpulanController::class, 'pengumpulan'])->name('pengumpulan');
     Route::match(['get', 'post'], '/data_produsen/pengumpulan/{id}/standar', [PengumpulanController::class, 'standarData'])->name('standar');
     Route::post('/data_produsen/{id}/upload-berkas', [PengumpulanController::class, 'uploadBerkas'])->name('upload-berkas');
@@ -173,5 +175,6 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::get('/ajax/provinces', [WilayahController::class, 'province'])->name('ajax.provinces');
 Route::get('/ajax/cities/{provinceId?}', [WilayahController::class, 'city'])->name('ajax.cities');
+Route::get('/ajax/opds', [OpdController::class, 'opds'])->name('ajax.opds');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

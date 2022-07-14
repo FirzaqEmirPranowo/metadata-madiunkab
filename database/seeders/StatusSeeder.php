@@ -15,32 +15,16 @@ class StatusSeeder extends Seeder
      */
     public function run()
     {
-        Status::create([
-            'status' => 'Setuju',
-
-        ]);
-
-        Status::create([
-            'status' => 'Tolak',
-
-        ]);
-
-        Status::create([
-            'status' => 'Draf',
-
-        ]);
-
-        Status::create([
-            'status' => 'Proses Pengumpulan'
-        ]);
-        Status::create([
-           'status' => 'Revisi'
-        ]);
-        Status::create([
-            'status' => 'Selesai Verifikasi'
-        ]);
-        Status::create([
-            'status' => 'Terpublikasi'
-        ]);
+        collect([
+            'Setuju',
+            'Tolak',
+            'Draf',
+            'Belum Lengkap',
+            'Lengkap',
+            'Belum Diperiksa',
+            'Revisi',
+            'Siap Publikasi',
+            'Terpublikasi'
+        ])->map(fn ($status) => Status::create(compact('status')));
     }
 }
