@@ -17,14 +17,14 @@ class UpdownloadController extends Controller
     public function proses_upload(Request $request)
     {
         $this->validate($request, [
-            'document' => 'required',
+            'document' => 'required|mimes:xlsx,xls',
             'keterangan' => 'required',
             'type' => 'required',
         ]);
 
         $upload = $request->file('document');
         $path = $upload->store('public/storage');
-        $nama_file = $upload->getClientOriginalName();
+        $nama_file = date('Ymd') . '-' .$upload->getClientOriginalName();
 
         Document::create([
             'document' => $nama_file,
@@ -38,19 +38,13 @@ class UpdownloadController extends Controller
 
     public function destroy($id)
     {
-        $user = Document::findOrFail($id);
-        // dd($user);
-        $user->delete();
-        // activity()->log('Menghapus OPD');
+        Document::findOrFail($id)->delete();
         return redirect('/upload-download');
     }
 
     public function download($id)
     {
-        $dl = Document::where('type', '=', $id)->get();
-        // $ds = $dl[0]->path;      // dd($dl);
-        // dd($ds);
-        // $ag = $dl->path;
-        return Storage::download($dl[0]->path, $dl[0]->document);
+        $doc = Document::where('type', '=', $id)->firstOrFail();
+        return Storage::download($doc->path, $doc->document);
     }
 }

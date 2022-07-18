@@ -1,6 +1,6 @@
 @extends('pages.main.layout')
 @section('content')
-
+    @include('sweetalert::alert')
     <div class="pagetitle">
         <h1>Tambah Data</h1>
         <nav>

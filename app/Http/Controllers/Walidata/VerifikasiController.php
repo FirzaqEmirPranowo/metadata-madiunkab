@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Walidata;
 
+use App\Http\Controllers\Controller;
 use App\Models\Data;
 use App\Models\Verifikasi;
 use Illuminate\Http\Request;
@@ -111,8 +112,8 @@ class VerifikasiController extends Controller
             return response()->json(['ok' => false, 'code' => 404, 'message' => 'Data tidak ditemukan']);
         }
 
-        if ($data->status_id != Data::STATUS_BELUM_LENGKAP) {
-            return response()->json(['ok' => false, 'code' => -2, 'message' => 'Status data tidak valid']);
+        if ($data->status_id != Data::STATUS_BELUM_DIPERIKSA) {
+            return response()->json(['ok' => false, 'code' => -2, 'message' => 'Status data tidak valid', 'status' => $data->status_id]);
         }
 
         if ($data->verifikasi->count() < 1) {
@@ -134,7 +135,7 @@ class VerifikasiController extends Controller
             return response()->json(['ok' => false,'message' => 'Data tidak ditemukan']);
         }
 
-        if ($data->status_id != Data::STATUS_BELUM_LENGKAP) {
+        if ($data->status_id != Data::STATUS_BELUM_DIPERIKSA) {
             return response()->json(['ok' => false, 'message' => 'Status data tidak valid']);
         }
 

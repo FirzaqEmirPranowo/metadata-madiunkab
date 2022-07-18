@@ -19,7 +19,7 @@ class MetadataVariabelImport implements ToModel, WithMultipleSheets, WithStartRo
     public function sheets(): array
     {
         return [
-            0 => new MetadataVariabelImport($this->dataId),
+            new MetadataVariabelImport($this->dataId),
         ];
     }
 

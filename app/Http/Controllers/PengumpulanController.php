@@ -21,8 +21,9 @@ class PengumpulanController extends Controller
     {
         $data = Data::whereIn('status_id', [Data::STATUS_SETUJU, Data::STATUS_REVISI])
             ->when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))
-            ->with(['opd', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])
-            ->paginate();
+            ->with(['opd', 'status', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])
+            ->latest()
+            ->get();
 
         return view('pages.contents.produsen.pengumpulan.index', compact('data'));
     }
@@ -145,8 +146,8 @@ class PengumpulanController extends Controller
 
         $indikatorData = Excel::toCollection(new MetadataIndikatorImport($data->id), $request->file('metadata'));
 
-        $meta = data_get($indikatorData, '1.0', []);
-        if ($meta->count() < 16) {
+        $meta = data_get($indikatorData, '0.0', []);
+        if ($meta->count() < 12) {
             return redirect()->back()->with([
                 Alert::error('Gagal', 'Berkas excel tidak valid. Data kosong! Pastikan Anda menggunakan template yang sudah disediakan')
             ]);

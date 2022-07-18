@@ -19,7 +19,7 @@ class MetadataIndikatorImport implements ToModel, WithMultipleSheets, WithStartR
     public function sheets(): array
     {
         return [
-            1 => new MetadataIndikatorImport($this->dataId),
+            new MetadataIndikatorImport($this->dataId),
         ];
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\DataImport;
 use App\Models\Data;
 use App\Models\Document;
 use App\Models\Opd;
@@ -9,6 +10,8 @@ use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 use SweetAlert;
 use Yajra\DataTables\Facades\DataTables;
@@ -87,18 +90,14 @@ class DataController extends Controller
         ]);
 
         if ($create) {
+            activity()->causedBy(auth()->id())->performedOn($create)->log('Menambahkan data: ' . $create->nama_data);
+
             if (Auth::user()->role_id == '1') {
-                activity()
-                    ->performedOn($create)
-                    ->log('Menambahkan Daftar Data');
                 return redirect('/data_administrator')
                     ->with([
                         Alert::success('Berhasil', 'Berhasil menambahkan Data!')
                     ]);
             } elseif (Auth::user()->role_id == '2') {
-                activity()
-                    ->performedOn($create)
-                    ->log('Menambahkan Daftar Data');
 
                 return redirect('/data_walidata/draft')
                     ->with([
@@ -106,7 +105,6 @@ class DataController extends Controller
                     ]);
 
             } elseif (Auth::user()->role_id == '3') {
-                activity()->performedOn($create)->log('Menambahkan Daftar Data');
                 return redirect('/data_produsen/draft')
                     ->with([
                         Alert::success('Berhasil', 'Berhasil menambahkan Data!')
@@ -130,6 +128,7 @@ class DataController extends Controller
 
         $data->update([
             'status_id' => Data::STATUS_DRAFT,
+            'progress' => 0,
         ]);
 
         if ($data) {
@@ -469,11 +468,11 @@ class DataController extends Controller
             $data = Data::with('opd')->setuju()->OPD($id)->get();
         }
 
-        $dt = Carbon::Now()->translatedFormat('l, d F Y');
-        $tahun = Carbon::Now()->translatedFormat('Y');
-        $bln = Carbon::Now()->translatedFormat('F');
-        $tgl = Carbon::Now()->translatedFormat('j');
-        $hari = Carbon::Now()->translatedFormat('l');
+        $dt = Carbon::now()->translatedFormat('l, d F Y');
+        $tahun = Carbon::now()->translatedFormat('Y');
+        $bln = Carbon::now()->translatedFormat('F');
+        $tgl = Carbon::now()->translatedFormat('j');
+        $hari = Carbon::now()->translatedFormat('l');
 
         $path = base_path('public/assets/img/logo.png');
         $type = pathinfo($path, PATHINFO_EXTENSION);
@@ -510,5 +509,25 @@ class DataController extends Controller
         }
 
         return view('pages.contents.walidata.index_get_opd', compact('draft'));
+    }
+
+    public function importData(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls'
+        ]);
+
+        try {
+            Excel::import(new DataImport, $request->file('file'));
+
+            return redirect()->back()->with([
+                Alert::success('Berhasil', 'Data berhasil diimport')
+            ]);
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage(), ['importData', $exception->getCode()]);
+            return redirect()->back()->with([
+                Alert::error('Gagal', $exception->getMessage() . PHP_EOL . '. Pastikan Anda menggunakan template yang tepat.')
+            ]);
+        }
     }
 }

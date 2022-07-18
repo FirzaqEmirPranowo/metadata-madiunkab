@@ -8,7 +8,8 @@ use App\Http\Controllers\PengumpulanController;
 use App\Http\Controllers\PortalController;
 use App\Http\Controllers\UpdownloadController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\VerifikasiController;
+use App\Http\Controllers\Produsen;
+use App\Http\Controllers\Walidata;
 use App\Http\Controllers\WilayahController;
 use App\Imports\DataImport;
 use App\Imports\OpdImport;
@@ -27,7 +28,7 @@ Route::get('/berita', [PortalController::class, 'berita']);
 Route::get('/ckan', [PortalController::class, 'ckan']);
 Auth::routes();
 
-Route::middleware(['role:administrator'])->group(function () {
+Route::middleware(['role:administrator', 'auth:web'])->group(function () {
     Route::get('/d_administrator', [HomeController::class, 'dashboardAdmin'])->name('d_administrator');
     Route::get('/data_administrator', [DataController::class, 'index'])->name('data_administrator');
     Route::get('/data_administrator/create', [DataController::class, 'create'])->name('data_administrator');
@@ -76,7 +77,7 @@ Route::middleware(['role:administrator'])->group(function () {
     Route::get('/download/{id}', [UpdownloadController::class, 'download'])->name('user');
 });
 
-Route::middleware(['role:walidata'])->group(function () {
+Route::middleware(['role:walidata', 'auth:web'])->group(function () {
     Route::get('/d_walidata', [HomeController::class, 'dashboardWalidata'])->name('d_walidata');
 
     Route::get('/data_walidata/draft', [DataController::class, 'index'])->name('draft');
@@ -107,26 +108,23 @@ Route::middleware(['role:walidata'])->group(function () {
     Route::get('/data_walidata/pengumpulan/{id}/standar', [PengumpulanController::class, 'standarData']);
     Route::get('/data_walidata/pengumpulan/{id}/kegiatan', [PengumpulanController::class, 'kegiatan']);
 
-    Route::get('/data_walidata/verifikasi', [VerifikasiController::class, 'index'])->name('verifikasi.index');
-    Route::get('/data_walidata/verifikasi/{id}/berkas', [VerifikasiController::class, 'berkas'])->name('verifikasi.berkas');
-    Route::get('/data_walidata/verifikasi/{id}/variabel', [VerifikasiController::class, 'variabel'])->name('verifikasi.variabel');
-    Route::get('/data_walidata/verifikasi/{id}/indikator', [VerifikasiController::class, 'indikator'])->name('verifikasi.indikator');
-    Route::get('/data_walidata/verifikasi/{id}/komentar', [VerifikasiController::class, 'getKomentar'])->name('verifikasi.get-komentar');
-    Route::post('/data_walidata/verifikasi/{id}/komentar', [VerifikasiController::class, 'komentar'])->name('verifikasi.komentar');
-    Route::patch('/data_walidata/verifikasi/{id}/verify', [VerifikasiController::class, 'verify'])->name('verifikasi.verify');
-    Route::get('/data_walidata/verifikasi/{id}/status', [VerifikasiController::class, 'status'])->name('verifikasi.status');
-    Route::patch('/data_walidata/verifikasi/{id}/complete', [VerifikasiController::class, 'complete'])->name('verifikasi.complete');
+    Route::get('/data_walidata/verifikasi', [Walidata\VerifikasiController::class, 'index'])->name('verifikasi.index');
+    Route::get('/data_walidata/verifikasi/{id}/berkas', [Walidata\VerifikasiController::class, 'berkas'])->name('verifikasi.berkas');
+    Route::get('/data_walidata/verifikasi/{id}/variabel', [Walidata\VerifikasiController::class, 'variabel'])->name('verifikasi.variabel');
+    Route::get('/data_walidata/verifikasi/{id}/indikator', [Walidata\VerifikasiController::class, 'indikator'])->name('verifikasi.indikator');
+    Route::get('/data_walidata/verifikasi/{id}/komentar', [Walidata\VerifikasiController::class, 'getKomentar'])->name('verifikasi.get-komentar');
+    Route::post('/data_walidata/verifikasi/{id}/komentar', [Walidata\VerifikasiController::class, 'komentar'])->name('verifikasi.komentar');
+    Route::patch('/data_walidata/verifikasi/{id}/verify', [Walidata\VerifikasiController::class, 'verify'])->name('verifikasi.verify');
+    Route::get('/data_walidata/verifikasi/{id}/status', [Walidata\VerifikasiController::class, 'status'])->name('verifikasi.status');
+    Route::patch('/data_walidata/verifikasi/{id}/complete', [Walidata\VerifikasiController::class, 'complete'])->name('verifikasi.complete');
 
-    Route::post('/data_walidata/import', function () {
-        Excel::import(new DataImport, request()->file('file'));
-        return back();
-    });
+    Route::post('/data_walidata/import', [DataController::class, 'importData']);
     Route::get('/up-download/{id}', [UpdownloadController::class, 'download'])->name('user1');
     Route::get('/data_walidata/notif', [DataController::class, 'notif'])->name('notif');
     Route::get('/draft', [DataController::class, 'draft'])->name('draft');
 });
 
-Route::middleware('role:produsen')->group(function () {
+Route::middleware(['role:produsen', 'auth:web'])->group(function () {
     Route::get('/d_produsen', [HomeController::class, 'dashboardProdusen'])->name('d_produsen');
     Route::get('/data_produsen/draft', [DataController::class, 'index'])->name('draft');
     Route::get('/data_produsen/create', [DataController::class, 'create'])->name('data_produsen');
@@ -155,6 +153,8 @@ Route::middleware('role:produsen')->group(function () {
     Route::post('/data_produsen/pengumpulan/{id}/kegiatan/variabel-dikumpulkan', [PengumpulanController::class, 'simpanVariabelDikumpulkan'])->name('simpan-variabel-dikumpulkan');
     Route::post('/data_produsen/pengumpulan/{id}/kegiatan/publikasi', [PengumpulanController::class, 'simpanPublikasi'])->name('simpan-publikasi');
     Route::patch('/data_produsen/pengumpulan/{id}/verifikasi', [PengumpulanController::class, 'siapVerifikasi'])->name('siap-verifikasi');
+
+    Route::get('/data_produsen/verifikasi', [Produsen\VerifikasiController::class, 'index']);
 
     Route::get('/data_produsen/pengumpulan/{id}/export', [PengumpulanController::class, 'exportData'])->name('export-data');
 

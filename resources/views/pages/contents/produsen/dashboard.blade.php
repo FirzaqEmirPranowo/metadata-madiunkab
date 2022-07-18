@@ -140,6 +140,7 @@
                                 <tr>
                                     <td>#</td>
                                     <td>Nama</td>
+                                    <td>Status</td>
                                     <td>Produsen</td>
                                     <td>Tanggal</td>
                                 </tr>
@@ -149,6 +150,7 @@
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$d->nama_data}}</td>
+                                        <td>{{$d->status->status}}</td>
                                         <td>{{$d->opd->nama_opd}}</td>
                                         <td>{{optional($d->created_at)->format('d/m/Y H:i')}}</td>
                                     </tr>

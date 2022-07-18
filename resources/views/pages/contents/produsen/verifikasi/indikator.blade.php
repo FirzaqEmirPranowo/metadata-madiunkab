@@ -16,7 +16,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Daftar Pengumpulan Data</a></li>
                 <li class="breadcrumb-item">{{$data->nama_data}}</li>
-                <li class="breadcrumb-item active">Metadata Indikator</li>
+                <li class="breadcrumb-item active">Tambah Indikator</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->

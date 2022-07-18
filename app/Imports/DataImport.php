@@ -20,20 +20,28 @@ class DataImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        $cek_opd = Opd::select('id')->where('nama_opd', '=', $row['OPD'])->get();
-        $hasil =  $cek_opd[0]->id;
-        $user_id =  Auth::user()->id;
-        // dd($user_id);
-        $status = 3;
+        $cek_opd = Opd::select('id')->where('nama_opd', '=', $row['OPD'])->first();
+
+        if (!$cek_opd) {
+            throw new \Exception('OPD tidak ditemukan');
+        }
+        $existingData = Data::where('nama_data', $row['Nama Data'])->first();
+        if ($existingData) {
+            throw new \Exception('Data dengan nama tersebut sudah terdapat pada sistem');
+        }
+
         $data = Data::create([
             'nama_data'     => $row['Nama Data'],
-            'opd_id'     => $hasil,
+            'opd_id'     => $cek_opd->id,
             'jenis_data'     => $row['Jenis Data'],
             'sumber_data'     => $row['Sumber data'],
-            'status_id'     => $status,
-            'user_id'     => $user_id,
+            'status_id'     => Data::STATUS_DRAFT,
+            'user_id'     => auth()->id(),
 
         ]);
+
         activity()->performedOn($data)->log('Import Daftar Data');
+
+        return $data;
     }
 }
