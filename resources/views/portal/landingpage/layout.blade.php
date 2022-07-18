@@ -24,6 +24,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,600;1,700&display=swap" rel="stylesheet">
     <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
 </head>
 
 <body>
@@ -57,7 +62,7 @@
                         <a class="nav-link" href="{{route('dataset')}}">Dataset</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/ckan">Open-Data</a>
+                        <a class="nav-link" href="{{config('ckan_api.url')}}">Open-Data</a>
                     </li>
                     <li class="nav-item {{ Request::segment(1) === 'tentang' ? 'active' : null }}">
                         <a class="nav-link" href="/tentang">Tentang</a>

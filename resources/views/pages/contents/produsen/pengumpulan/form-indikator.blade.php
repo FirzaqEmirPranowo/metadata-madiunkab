@@ -80,9 +80,16 @@
                                 </div>
                             </div>
 
+                            @php
+                                $isImage = optional($data->indikator)->metode && \Illuminate\Support\Str::startsWith(optional($data->indikator)->metode, 'public/');
+                            @endphp
                             <div class="row mb-3">
                                 <label for="metode" class="col-sm-2 col-form-label">Metode / Rumus Perhitungan</label>
-                                <div class="row col-sm-10">
+                                @if(!$isImage && str_word_count(optional($data->indikator)->metode) > 5)
+                                    <div class="col-sm-10">
+                                        <textarea name="metode" id="metode" class="form-control">{{optional($data->indikator)->metode}}</textarea>
+                                    </div>
+                                @else
                                     <div class="col-sm-6">
                                         <span id="metode_editor" class="form-control {{ isset($metode) ? ($metode->accepted ? 'is-valid' : 'is-invalid') : '' }}"></span>
                                         <textarea name="metode" id="metode" class="form-control d-none" style="height: 100px" spellcheck="false" placeholder="Metode / Rumus Perhitungan"></textarea>
@@ -98,12 +105,12 @@
                                         <p>atau</p>
                                     </div>
                                     <div class="col-auto flex-fill">
-                                        @if (optional($data->indikator)->metode && \Illuminate\Support\Str::startsWith(optional($data->indikator)->metode, 'public/'))
+                                        @if ($isImage)
                                             <img class="img-fluid rounded" height="150px" width="150px" src="{{Storage::url(optional($data->indikator)->metode)}}">
                                         @endif
                                         <input class="form-control" name="metode_image" accept="image/*" type="file" id="metode_image">
                                     </div>
-                                </div>
+                                @endif
                             </div>
 
                             <div class="row mb-3">
