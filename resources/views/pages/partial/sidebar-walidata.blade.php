@@ -34,7 +34,7 @@
     <li class="nav-item">
       <a class="nav-link {{\Illuminate\Support\Str::contains(request()->url(), 'data_walidata/verifikasi') ? 'collapse' : 'collapsed'}}" href="/data_walidata/verifikasi">
         <i class="bi bi-folder-check"></i>
-        <span>Validasi Data</span>
+        <span>Verifikasi Data</span>
       </a>
     </li><!-- End Blank Page Nav -->
 
