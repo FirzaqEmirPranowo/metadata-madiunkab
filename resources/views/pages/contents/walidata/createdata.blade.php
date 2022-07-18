@@ -77,7 +77,8 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
-                                    <button type="submit" class="btn btn-primary">SIMPAN</button>
+                                    <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> SIMPAN</button>
+                                    <a href="/data_walidata/draft" class="btn btn-outline-danger"><i class="bi bi-arrow-left"></i> Batal</a>
                                 </div>
                             </div>
 
