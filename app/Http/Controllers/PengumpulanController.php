@@ -20,7 +20,7 @@ class PengumpulanController extends Controller
 {
     public function pengumpulan()
     {
-        $data = Data::where('status_id', Data::STATUS_SETUJU)
+        $data = Data::whereIn('status_id', [Data::STATUS_SETUJU, Data::STATUS_PROSES_PENGUMPULAN])
             ->when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))
             ->with(['opd', 'status', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])
             ->latest()
