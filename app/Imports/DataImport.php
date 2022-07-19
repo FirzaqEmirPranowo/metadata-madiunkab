@@ -25,7 +25,7 @@ class DataImport implements ToModel, WithHeadingRow
         if (!$cek_opd) {
             throw new \Exception('OPD tidak ditemukan');
         }
-        $existingData = Data::where('nama_data', $row['Nama Data'])->first();
+        $existingData = Data::where('opd_id', auth()->user()->opd_id)->where('nama_data', $row['Nama Data'])->first();
         if ($existingData) {
             throw new \Exception('Data dengan nama tersebut sudah terdapat pada sistem');
         }

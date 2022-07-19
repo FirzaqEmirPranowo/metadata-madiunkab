@@ -70,6 +70,8 @@ class PengumpulanController extends Controller
             );
 
             $data->refresh();
+
+            Alert::success('Berhasil', 'Standar data berhasil disimpan');
         }
 
         return view('pages.contents.produsen.pengumpulan.standar', compact('data'));
@@ -177,6 +179,8 @@ class PengumpulanController extends Controller
             ['data_id' => $data->id],
             array_merge($formData, ['data_id' => $data->id])
         );
+
+        Alert::success('Berhasil', 'Metadata berhasil disimpan');
 
         return redirect()->back();
     }

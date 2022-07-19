@@ -68,7 +68,7 @@ class DataController extends Controller
     {
         $user_id = Auth::user()->id;
 
-        $existingData = Data::where('nama_data', trim($request->nama_data))->count();
+        $existingData = Data::where('opd_id', auth()->user()->opd_id)->where('nama_data', trim($request->nama_data))->count();
         if ($existingData > 0) {
             return redirect()->back()->with([
                 Alert::error('Gagal', 'Data dengan nama tersebut sudah terdaftar pada sistem')
