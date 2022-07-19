@@ -249,7 +249,7 @@
                                 </div>
                             </div>
 
-                            @if(auth()->user()->hasAnyRole('produsen') && !in_array($data->status_id, [\App\Models\Data::STATUS_SETUJU, \App\Models\Data::STATUS_REVISI]))
+                            @if(auth()->user()->hasAnyRole('produsen'))
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label"></label>
                                     <div class="col-sm-10">
