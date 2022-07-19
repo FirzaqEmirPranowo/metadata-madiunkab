@@ -41,11 +41,15 @@
                                     <td>{{ $dt->status->status }}</td>
                                     <td>{{ $dt->updated_at->format('d/m/Y H:i A') }}</td>
                                     <td>
-                                        <div class="d-flex flex-column gap-2">
-                                            <a class="btn btn-outline-primary btn-sm" href="/data_walidata/verifikasi/{{$dt->id}}/berkas"><i class="bi bi-file-binary-fill"></i> Verifikasi Berkas</a>
-                                            <a class="btn btn-outline-info btn-sm" href="/data_walidata/verifikasi/{{$dt->id}}/{{strtolower($dt->jenis_data)}}"><i class="bi bi-bar-chart"></i> Verifikasi MetaData {{$dt->jenis_data}}</a>
-                                            <a class="btn btn-outline-primary btn-sm btn-action" href="#" data-status-url="{{route('verifikasi.status', $dt->id)}}" data-complete-url="{{route('verifikasi.complete', $dt->id)}}"><i class="bi bi-three-dots"></i> Selesaikan?</a>
-                                        </div>
+                                        @if ($dt->status_id == \App\Models\Data::STATUS_PROSES_VERIFIKASI)
+                                            <div class="d-flex flex-column gap-2">
+                                                <a class="btn btn-outline-primary btn-sm" href="/data_walidata/verifikasi/{{$dt->id}}/berkas"><i class="bi bi-file-binary-fill"></i> Verifikasi Berkas</a>
+                                                <a class="btn btn-outline-info btn-sm" href="/data_walidata/verifikasi/{{$dt->id}}/{{strtolower($dt->jenis_data)}}"><i class="bi bi-bar-chart"></i> Verifikasi MetaData {{$dt->jenis_data}}</a>
+                                                <a class="btn btn-outline-primary btn-sm btn-action" href="#" data-status-url="{{route('verifikasi.status', $dt->id)}}" data-complete-url="{{route('verifikasi.complete', $dt->id)}}"><i class="bi bi-three-dots"></i> Selesaikan?</a>
+                                            </div>
+                                        @else
+                                            -
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

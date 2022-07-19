@@ -13,14 +13,16 @@ class VerifikasiController extends Controller
 {
     public function index()
     {
-        $data = Data::whereIn('status_id', [Data::STATUS_PROSES_VERIFIKASI, Data::STATUS_REVISI, Data::STATUS_SIAP_PUBLIKASI])->with(['opd', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])->paginate();
+        $data = Data::whereIn('status_id', [Data::STATUS_PROSES_VERIFIKASI, Data::STATUS_REVISI, Data::STATUS_SIAP_PUBLIKASI])->with(['opd', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])
+            ->latest()
+            ->get();
 
         return view('pages.contents.walidata.verifikasi.index', compact('data'));
     }
 
     public function berkas($id)
     {
-        $data = Data::with(['opd', 'berkas', 'verifikasi' => fn ($q) => $q->category('berkas')])->findOrFail($id);
+        $data = Data::with(['opd', 'berkas', 'verifikasi' => fn($q) => $q->category('berkas')])->findOrFail($id);
         $existingBerkas = $data->berkas->transform(function ($b) use ($data) {
             return [
                 'id' => $b->id,
@@ -41,7 +43,7 @@ class VerifikasiController extends Controller
 
     public function variabel($id)
     {
-        $data = Data::with(['variabel', 'standar', 'verifikasi' => fn ($q) => $q->category('variabel')])->findOrFail($id);
+        $data = Data::with(['variabel', 'standar', 'verifikasi' => fn($q) => $q->category('variabel')])->findOrFail($id);
 
         if ($data->status_id != Data::STATUS_PROSES_VERIFIKASI) {
             return redirect()->back()->with([
@@ -54,7 +56,7 @@ class VerifikasiController extends Controller
 
     public function indikator($id)
     {
-        $data = Data::with(['indikator', 'standar', 'verifikasi' => fn ($q) => $q->category('indikator')])->findOrFail($id);
+        $data = Data::with(['indikator', 'standar', 'verifikasi' => fn($q) => $q->category('indikator')])->findOrFail($id);
 
         if ($data->status_id != Data::STATUS_PROSES_VERIFIKASI) {
             return redirect()->back()->with([
@@ -149,7 +151,7 @@ class VerifikasiController extends Controller
         $data = Data::with(['verifikasi'])->find($id);
 
         if (!$data) {
-            return response()->json(['ok' => false,'message' => 'Data tidak ditemukan']);
+            return response()->json(['ok' => false, 'message' => 'Data tidak ditemukan']);
         }
 
         if ($data->status_id != Data::STATUS_PROSES_VERIFIKASI) {
@@ -168,6 +170,6 @@ class VerifikasiController extends Controller
 
         activity()->causedBy(auth()->id())->performedOn($data)->log('Data telah diverifikasi dengan hasil: ' . ($isRevisi ? 'revisi' : 'lolos & siap dipublikasi'));
 
-        return response()->json(['ok' => true, 'message' => 'Data telah diubah menjadi '. ($isRevisi ? 'revisi' : 'siap untuk dipublikasi')]);
+        return response()->json(['ok' => true, 'message' => 'Data telah diubah menjadi ' . ($isRevisi ? 'revisi' : 'siap untuk dipublikasi')]);
     }
 }
