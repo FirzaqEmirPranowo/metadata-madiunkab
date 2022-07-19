@@ -96,11 +96,7 @@
                                         $isImage = \Illuminate\Support\Str::startsWith(optional($data->indikator)->metode, 'public/');
                                     @endphp
                                     <div class="col-sm-{{$isImage ? 4 : 8}}">
-                                        <span id="metode_editor" class="form-control"></span>
-                                        <textarea name="metode" id="metode" class="form-control d-none" style="height: 100px" spellcheck="false" placeholder="Metode / Rumus Perhitungan"></textarea>
-                                        <small class="help-block text-muted">
-                                            Rumus menggunakan format LaTeX.
-                                        </small>
+                                        <textarea name="metode" id="metode" class="form-control">{{optional($data->indikator)->metode}}</textarea>
                                     </div>
                                     @if ($isImage)
                                         <div class="col-sm-4">
@@ -299,16 +295,9 @@
     </section>
 @endsection
 
-
-@section('css')
-    <link href="{{asset('assets/vendor/mathquill/mathquill.css')}}" rel="stylesheet">
-@endsection
 @push('js')
-    <script src="{{asset('assets/vendor/mathquill/mathquill.min.js')}}"></script>
     <script>
         $(function () {
-            const MQ = MathQuill.getInterface(2);
-
             $('section.no-komposit-section').hide();
             $('section.komposit-section').hide();
             $('input[name="komposit"]').change(function () {
@@ -320,22 +309,6 @@
                     $('section.no-komposit-section').show();
                 }
             }).trigger('change');
-
-            let metode = MQ.MathField(document.getElementById('metode_editor'), {
-                disabled: true,
-                spaceBehavesLikeTab: true,
-                handlers: {
-                    edit: function() {
-                        $('#metode').val(encodeURIComponent(metode.latex()));
-                    }
-                }
-            });
-            document.querySelector('.mq-textarea textarea').disabled = true;
-
-            let oldMetode = decodeURIComponent('{{old('metode', !$isImage ? optional($data->indikator)->metode : null)}}');
-            if (oldMetode !== '') {
-                metode.latex(oldMetode);
-            }
 
             $('button.btn-actions').on('click', function (e) {
                 e.preventDefault();

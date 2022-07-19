@@ -22,7 +22,7 @@
                 <li class="breadcrumb-item active">Tambah Indikator</li>
             </ol>
         </nav>
-    </div><!-- End Page Title -->
+    </div>
 
     <section class="section">
         <div class="row">
@@ -43,7 +43,7 @@
                                 <label for="nama" class="col-sm-2 col-form-label">Nama Indikator</label>
                                 <div class="col-sm-10">
                                     <input id="nama" name="nama" type="text" class="form-control {{ isset($nama) ? ($nama->accepted ? 'is-valid' : 'is-invalid') : '' }}"
-                                           placeholder="Nama Indikator" value="{{old('nama', optional($data->indikator)->nama ?? $data->nama_data)}}">
+                                           placeholder="Nama Indikator" value="{{old('nama', optional($data->indikator)->nama ?? $data->nama_data)}}" readonly>
                                     @if (isset($nama) && !empty($nama->comment))
                                         <p class="text-muted text-comment">Komentar: {{$nama->comment}}</p>
                                     @endif
@@ -81,36 +81,26 @@
                             </div>
 
                             @php
-                                $isImage = optional($data->indikator)->metode && \Illuminate\Support\Str::startsWith(optional($data->indikator)->metode, 'public/');
+                                $isImage = optional($data->indikator)->metode && Str::startsWith(optional($data->indikator)->metode, 'public/');
                             @endphp
                             <div class="row mb-3">
                                 <label for="metode" class="col-sm-2 col-form-label">Metode / Rumus Perhitungan</label>
-                                @if(!$isImage && str_word_count(optional($data->indikator)->metode) > 5)
-                                    <div class="col-sm-10">
-                                        <textarea name="metode" id="metode" class="form-control">{{optional($data->indikator)->metode}}</textarea>
-                                    </div>
-                                @else
-                                    <div class="col-sm-6">
-                                        <span id="metode_editor" class="form-control {{ isset($metode) ? ($metode->accepted ? 'is-valid' : 'is-invalid') : '' }}"></span>
-                                        <textarea name="metode" id="metode" class="form-control d-none" style="height: 100px" spellcheck="false" placeholder="Metode / Rumus Perhitungan"></textarea>
-                                        @if (isset($metode) && !empty($metode->comment))
-                                            <p class="text-muted text-comment">Komentar: {{$metode->comment}}</p>
-                                            <hr>
-                                        @endif
-                                        <small class="help-block text-muted">
-                                            Rumus menggunakan format LaTeX.
-                                        </small>
-                                    </div>
-                                    <div class="col-sm-auto">
-                                        <p>atau</p>
-                                    </div>
-                                    <div class="col-auto flex-fill">
-                                        @if ($isImage)
-                                            <img class="img-fluid rounded" height="150px" width="150px" src="{{Storage::url(optional($data->indikator)->metode)}}">
-                                        @endif
-                                        <input class="form-control" name="metode_image" accept="image/*" type="file" id="metode_image">
-                                    </div>
-                                @endif
+                                <div class="col-sm-6">
+                                    <textarea name="metode" id="metode" class="form-control">{{optional($data->indikator)->metode}}</textarea>
+                                    @if (isset($metode) && !empty($metode->comment))
+                                        <p class="text-muted text-comment">Komentar: {{$metode->comment}}</p>
+                                        <hr>
+                                    @endif
+                                </div>
+                                <div class="col-sm-auto">
+                                    <p>atau</p>
+                                </div>
+                                <div class="col-auto flex-fill">
+                                    @if ($isImage)
+                                        <img class="img-fluid rounded" height="150px" width="150px" src="{{Storage::url(optional($data->indikator)->metode)}}">
+                                    @endif
+                                    <input class="form-control" name="metode_image" accept="image/*" type="file" id="metode_image">
+                                </div>
                             </div>
 
                             <div class="row mb-3">
@@ -305,15 +295,9 @@
     </section>
 @endsection
 
-@section('css')
-    <link href="{{asset('assets/vendor/mathquill/mathquill.css')}}" rel="stylesheet">
-@endsection
 @push('js')
-    <script src="{{asset('assets/vendor/mathquill/mathquill.min.js')}}"></script>
     <script>
         $(function () {
-            const MQ = MathQuill.getInterface(2);
-
             $('section.no-komposit-section').hide();
             $('section.komposit-section').hide();
             $('input[name="komposit"]').change(function () {
@@ -325,27 +309,6 @@
                     $('section.no-komposit-section').show();
                 }
             }).trigger('change');
-
-            let metode = MQ.MathField(document.getElementById('metode_editor'), {
-                spaceBehavesLikeTab: true,
-                handlers: {
-                    edit: function() {
-                        $('#metode').val(encodeURIComponent(metode.latex()));
-                    }
-                }
-            });
-
-            @php
-                $metode = optional($data->indikator)->metode;
-                if ($metode !== null && \Illuminate\Support\Str::startsWith($metode, 'public/')) {
-                    $metode = null;
-                }
-            @endphp
-
-            let oldMetode = decodeURIComponent('{{old('metode', $metode)}}');
-            if (oldMetode !== '') {
-                metode.latex(oldMetode);
-            }
         })
     </script>
 @endpush
