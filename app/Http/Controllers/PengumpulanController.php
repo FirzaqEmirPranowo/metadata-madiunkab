@@ -7,6 +7,7 @@ use App\Imports\MetadataIndikatorImport;
 use App\Imports\MetadataVariabelImport;
 use App\Models\Berkas;
 use App\Models\Data;
+use App\Models\Verifikasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
@@ -118,6 +119,7 @@ class PengumpulanController extends Controller
         $berkas = Berkas::findOrFail($berkasId);
 
         if (Storage::exists($berkas->path)) {
+            Verifikasi::where('data_id', $dataId)->where('category', 'berkas')->where('field', $berkasId)->delete();
             $berkas->delete();
             Storage::delete($berkas->path);
         }

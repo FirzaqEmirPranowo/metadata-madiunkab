@@ -47,7 +47,7 @@
                         <div class="card info-card revenue-card">
 
                             <div class="card-body">
-                                <h5 class="card-title">Data Lengkap</h5>
+                                <h5 class="card-title">Data Proses Pengumpulan</h5>
 
                                 <div class="d-flex align-items-center">
                                     <div
@@ -55,7 +55,7 @@
                                         <i class="bi bi-journal-check"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>{{$dataLengkap}}</h6>
+                                        <h6>{{$dataPengumpulan}}</h6>
                                         <span class="text-success small pt-1 fw-bold">Data</span>
 
                                     </div>
@@ -70,7 +70,7 @@
                         <div class="card info-card revenue-card">
 
                             <div class="card-body">
-                                <h5 class="card-title">Data Tidak Lengkap</h5>
+                                <h5 class="card-title">Data Siap Verifikasi</h5>
 
                                 <div class="d-flex align-items-center">
                                     <div
@@ -78,7 +78,7 @@
                                         <i class="bi bi-journal"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>{{$dataTidakLengkap}}</h6>
+                                        <h6>{{$dataVerifikasi}}</h6>
                                         <span class="text-success small pt-1 fw-bold">Data</span>
 
                                     </div>
@@ -94,7 +94,7 @@
 
 
                             <div class="card-body">
-                                <h5 class="card-title">Data Disetujui</h5>
+                                <h5 class="card-title">Data Siap Publikasi</h5>
 
                                 <div class="d-flex align-items-center">
                                     <div
