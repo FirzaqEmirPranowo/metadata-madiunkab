@@ -82,6 +82,9 @@
                                 </div>
                             </div>
 
+                            <a href="/data_{{auth()->user()->role->name}}/draft" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
+
+
                         </form><!-- End General Form Elements -->
 
                     </div>

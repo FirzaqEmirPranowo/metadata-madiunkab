@@ -12,7 +12,7 @@ class VerifikasiController extends Controller
 {
     public function index()
     {
-        $data = Data::whereIn('status_id', [Data::STATUS_BELUM_DIPERIKSA, Data::STATUS_REVISI])->with(['opd', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])->paginate();
+        $data = Data::whereIn('status_id', [Data::STATUS_BELUM_DIPERIKSA, Data::STATUS_REVISI, Data::STATUS_SIAP_PUBLIKASI])->with(['opd', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])->paginate();
 
         return view('pages.contents.walidata.verifikasi.index', compact('data'));
     }

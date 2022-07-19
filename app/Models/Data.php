@@ -104,6 +104,11 @@ class Data extends Model implements HasMedia
         return $this->hasMany(Verifikasi::class);
     }
 
+    public function publikasi()
+    {
+        return $this->hasOne(Publikasi::class);
+    }
+
     public function calculateProgress(): int
     {
         $progress = $this->progress ?? 0;
@@ -133,7 +138,6 @@ class Data extends Model implements HasMedia
 
     public function data_nonprodusen()
     {
-        // return Data::where('opd_id', '=', Auth::user()->opd_id)->get();
         return DB::table("data")
             ->join("opds", function ($join) {
                 $join->on("data.opd_id", "=", "opds.id");
@@ -145,7 +149,6 @@ class Data extends Model implements HasMedia
                 $join->on("data.user_id", "=", "users.id");
             })
             ->select("nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id", "data.id")
-            // ->where('opds.id', '=', Auth::user()->opd_id)
             ->get();
     }
 

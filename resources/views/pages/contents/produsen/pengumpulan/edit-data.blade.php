@@ -72,6 +72,8 @@
                                 </div>
                             @endif
 
+                        <a href="/data_{{auth()->user()->role->name}}/pengumpulan" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
+
                     </div>
                 </div>
 

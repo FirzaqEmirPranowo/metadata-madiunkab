@@ -120,6 +120,9 @@ Route::middleware(['role:walidata', 'auth:web'])->group(function () {
 
     Route::group(['prefix' => '/data_walidata/publikasi', 'as' => 'publikasi.'], function() {
         Route::get('/', [Walidata\PublikasiController::class, 'index'])->name('index');
+        Route::get('/{id}/organisasi', [Walidata\PublikasiController::class, 'organisasi'])->name('organisasi');
+        Route::post('/{id}/organisasi', [Walidata\PublikasiController::class, 'simpanOrganisasi'])->name('organisasi.store');
+        Route::post('organisasi/create', [Walidata\PublikasiController::class, 'createOrganisasi'])->name('organisasi.create');
     });
 
     Route::post('/data_walidata/import', [DataController::class, 'importData']);

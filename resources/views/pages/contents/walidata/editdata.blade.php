@@ -39,7 +39,7 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Jenis Data</label>
                 <div class="col-sm-10">
-                  <select id="jenis_data" name="jenis_data" class="form-select" aria-label="Default select example" value="{{$data->jenis_data}}">
+                  <select id="jenis_data" name="jenis_data" class="form-select">
                     <option selected value="{{$data->jenis_data}}">{{$data->jenis_data}}</option>
                     <option value="Indikator">Indikator</option>
                     <option value="Variabel">Variabel</option>
@@ -49,7 +49,7 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Produsen Data(PIC)</label>
                 <div class="col-sm-10">
-                  <select id="opd_id" name="opd_id" class="form-select" aria-label="Default select example" value="{{$data->opd_id}}">
+                  <select id="opd_id" name="opd_id" class="form-select">
                     <option  selected value="{{$data->opd_id}}">{{$data->opd->nama_opd}}</option>
                     @foreach($opd as $dt)
                     <option value="{{ $dt->id }}">{{ $dt->nama_opd }}</option>
@@ -60,7 +60,7 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Sumber Data</label>
                 <div class="col-sm-10">
-                  <select id="sumber_data" name="sumber_data" class="form-select" aria-label="Default select example" value="{{$data->sumber_data}}">
+                  <select id="sumber_data" name="sumber_data" class="form-select">
                     <option selected value="{{$data->sumber_data}}">{{$data->sumber_data}}</option>
                     <option value="RPJMD">RPJMD</option>
                     <option value="SPM">SPM</option>
@@ -77,6 +77,9 @@
                 </div>
               </div>
 
+            <a href="/data_{{auth()->user()->role->name}}/draft" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
+
+
             </form><!-- End General Form Elements -->
 
           </div>
@@ -84,7 +87,7 @@
 
       </div>
 
-      
+
     </div>
   </section>
   @endsection
