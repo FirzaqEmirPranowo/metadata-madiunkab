@@ -24,7 +24,7 @@
         <div class="card-body">
           <h5 class="card-title">Daftar Data</h5>
 
-          {{-- <a 
+          {{-- <a
             @if(Auth::user()->role_id == '1')
             href="/data_administrator/create"
             @elseif(Auth::user()->role_id == '2')
@@ -51,7 +51,7 @@
                                     <input type="file" name="file" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
                                     <button class="btn btn-primary" type="submit" id="button-addon2">Import</button>
                                 </div>
-                            </form>                    
+                            </form>
                         </div>
                       </div>
                     </div>
@@ -60,12 +60,12 @@
                   @endif --}}
                   <div class="mb-4">
                     <form id="berita-acara" action="{{ url('/data_walidata/export-pdf2') }}" >
-                    
+
                       <div class="row">
                         <div class="col-8">
-                          <select id="opd_id" name="opd_id" class="form-select" aria-label="Default select example">
+                          <select id="opd_id" name="opd_id" class="form-select select2">
                             <option  selected value="">Pilih OPD</option>
-                            <option   value="{{ encrypt('all') }}">Semua OPD</option>
+                            <option value="{{ encrypt('all') }}">Semua OPD</option>
                             @foreach($opd as $id => $nama)
                             <option value="{{ encrypt($id) }}">{{ $nama }}</option>
                             @endforeach
@@ -73,11 +73,11 @@
                         </div>
                         <div class="col-4 d-flex" id="action-buttons">
                           <button class="btn btn-primary mx-2" type="button" href="/draft" onclick="getData()"> Cari </button>
-                          
+
                           <button class="btn btn-success" id="btnijo"  onclick="confirmBeritacara('berita-acara')" type="submit" target="_blank"><i class="bi bi-download"></i> Unduh Berita Acara </button>
-                         
+
                           <a href="" class="btn btn-danger" id="btnred" data-bs-toggle="modal" data-bs-target="#beritaacara" target="_blank"><i class="bi bi-download"></i> Unduh Berita Acara</a>
-                         
+
                           <div class="modal fade" id="beritaacara" tabindex="-1">
                                 <div class="modal-dialog">
                                   <div class="modal-content">
@@ -90,12 +90,12 @@
                                     </div>
                                     <div class="modal-footer">
                                       <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                    
+
                                     </div>
                                   </div>
                                 </div>
                           </div>
-                         
+
                         </div>
                       </div>
                     </form>
@@ -128,14 +128,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
+    $(function() {
+        $('#opd_id').select2()
+    });
   function getData() {
     var value = $('#opd_id').val();
     if (value != ''){
       load(value);
-    } 
+    }
   }
-  
+
   // $(document).ready(function() {
   //   load('all');
   // });
@@ -150,7 +156,7 @@
     }else{
       $url= `{{ route('getData') }}?id=${id}`
     }
-    
+
 
     $('#datatable').dataTable({
       "ordering": false,
@@ -171,40 +177,40 @@
           }
           return json.data;
         }
-        
+
       },
-      
+
       columns: [
       {
         data: null,
         searchable: false,
         orderable: false,
         render: function (data, type, row, meta, draft_counter) {
-       
-         
-          return meta.row + meta.settings._iDisplayStart + 1;
-          
 
-        }  
+
+          return meta.row + meta.settings._iDisplayStart + 1;
+
+
+        }
       },
       {
-        data: 'nama_data', 
+        data: 'nama_data',
         name: 'nama_data'
       },
       {
-        data: 'opd_id', 
+        data: 'opd_id',
         name: 'opd_id'
       },
       {
-        data: 'jenis_data', 
+        data: 'jenis_data',
         name: 'jenis_data'
       },
       {
-        data: 'sumber_data', 
+        data: 'sumber_data',
         name: 'sumber_data'
       },
       {
-        data: 'status_id', 
+        data: 'status_id',
         name: 'status_id'
       },
       ],
@@ -220,14 +226,14 @@
                showCancelButton: true,
                confirmButtonColor: '#3085d6',
                cancelButtonColor: '#d33',
-              //  buttons: true, 
+              //  buttons: true,
                confirmButtonText: 'Yes, delete it!'
          })
              .then((willDelete) => {
                  if (willDelete) {
                      $('#'+item_id).submit();
                  } else {
-                   
+
                  }
              });
    };
