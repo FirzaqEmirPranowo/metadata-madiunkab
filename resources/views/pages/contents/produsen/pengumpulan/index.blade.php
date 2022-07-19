@@ -41,8 +41,8 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $dt->nama_data }}</td>
                                     <td>{{ $dt->jenis_data }}</td>
-                                    <td>{{ $dt->status_id == \App\Models\Data::STATUS_SETUJU ? 'Proses Pengumpulan' : $dt->opd->nama_opd }}</td>
-                                    <td>{{ $dt->status->status }}</td>
+                                    <td>{{ $dt->opd->nama_opd }}</td>
+                                    <td>{{ $dt->status_id == \App\Models\Data::STATUS_SETUJU ? 'Proses Pengumpulan' : $dt->status->status }}</td>
                                     <td>
                                         <div class="progress">
                                             <div class="progress-bar progress-bar-striped bg-primary progress-bar-animated" role="progressbar" style="width: {{$dt->calculateProgress()}}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" title="Total: {{$dt->calculateProgress()}}%"></div>
