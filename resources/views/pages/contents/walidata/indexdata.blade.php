@@ -92,17 +92,18 @@
                                                            data-bs-placement="bottom" title="Detail Data"><i
                                                                 class="bi bi-info-circle"></i></a>
                                                     </td>
-                                                    <td>
-                                                        <form id="restore-data-{{ $dt->id }}"
-                                                              action="{{ url('/data_walidata/restore/'.$dt->id) }}">
+                                                    @if (isset($status))
+                                                        <td>
+                                                            <form id="restore-data-{{ $dt->id }}"
+                                                                  action="{{ url('/data_walidata/restore/'.$dt->id) }}">
 
-                                                            <button type="button" class="btn btn-sm btn-success"
-                                                                    onclick="confirmRestore('restore-data-{{ $dt->id }}')"
-                                                                    data-bs-placement="bottom" title="Restore Data">
-                                                                <i class="bi bi-arrow-repeat"></i></button>
-                                                        </form>
-                                                    </td>
-                                                    @if (!isset($status))
+                                                                <button type="button" class="btn btn-sm btn-success"
+                                                                        onclick="confirmRestore('restore-data-{{ $dt->id }}')"
+                                                                        data-bs-placement="bottom" title="Restore Data">
+                                                                    <i class="bi bi-arrow-repeat"></i></button>
+                                                            </form>
+                                                        </td>
+                                                    @else
                                                         <td>
                                                             <a href="{{ route('edit_walidata',['id'=>$dt->id])  }}"
                                                                class="btn btn-sm btn-primary" data-bs-placement="bottom"
