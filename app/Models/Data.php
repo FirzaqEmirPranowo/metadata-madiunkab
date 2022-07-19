@@ -113,7 +113,7 @@ class Data extends Model implements HasMedia
         }
 
         if (!empty($this->standar)) {
-            $progress += 25;
+            $progress += 15;
         }
 
         if (!blank($this->indikator) && blank($this->variabel)) {
@@ -125,7 +125,7 @@ class Data extends Model implements HasMedia
         }
 
         if ($this->berkas->isNotEmpty()) {
-            $progress += 10;
+            $progress += 50;
         }
 
         return min(100, $progress);
