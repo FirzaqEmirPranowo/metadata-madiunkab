@@ -151,7 +151,7 @@ class PengumpulanController extends Controller
     {
         $data = Data::findOrFail($id);
 
-        $indikatorData = Excel::toCollection(new MetadataIndikatorImport($data->id, $data->namaData), $request->file('metadata'));
+        $indikatorData = Excel::toCollection(new MetadataIndikatorImport($data->id, $data->nama_data), $request->file('metadata'));
 
         $meta = data_get($indikatorData, '0.0', []);
         if ($meta->count() < 12) {
