@@ -7,6 +7,7 @@ use App\Models\Data;
 use App\Models\Verifikasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class VerifikasiController extends Controller
 {
@@ -30,7 +31,9 @@ class VerifikasiController extends Controller
         })->toArray();
 
         if ($data->status_id != Data::STATUS_PROSES_VERIFIKASI) {
-            return redirect()->back()->with('errors', 'Status Data belum selesai');
+            return redirect()->back()->with([
+                Alert::error('Gagal', 'Data tidak dapat verifikasi, karena status data bukan dalam proses verifikasi')
+            ]);
         }
 
         return view('pages.contents.walidata.verifikasi.berkas', compact('data', 'existingBerkas'));
@@ -39,12 +42,26 @@ class VerifikasiController extends Controller
     public function variabel($id)
     {
         $data = Data::with(['variabel', 'standar', 'verifikasi' => fn ($q) => $q->category('variabel')])->findOrFail($id);
+
+        if ($data->status_id != Data::STATUS_PROSES_VERIFIKASI) {
+            return redirect()->back()->with([
+                Alert::error('Gagal', 'Data tidak dapat verifikasi, karena status data bukan dalam proses verifikasi')
+            ]);
+        }
+
         return view('pages.contents.walidata.verifikasi.variabel', compact('data'));
     }
 
     public function indikator($id)
     {
         $data = Data::with(['indikator', 'standar', 'verifikasi' => fn ($q) => $q->category('indikator')])->findOrFail($id);
+
+        if ($data->status_id != Data::STATUS_PROSES_VERIFIKASI) {
+            return redirect()->back()->with([
+                Alert::error('Gagal', 'Data tidak dapat verifikasi, karena status data bukan dalam proses verifikasi')
+            ]);
+        }
+
         return view('pages.contents.walidata.verifikasi.indikator', compact('data'));
     }
 

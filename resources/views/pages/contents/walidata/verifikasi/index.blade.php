@@ -1,6 +1,7 @@
 @extends('pages.main.layout')
 
 @section('content')
+    @include('sweetalert::alert')
     <div class="pagetitle">
         <h1>Daftar Data Siap Verifikasi</h1>
         <nav>
