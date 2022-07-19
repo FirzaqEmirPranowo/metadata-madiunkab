@@ -7,19 +7,26 @@ use App\Models\Opd;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use Maatwebsite\Excel\Imports\HeadingRowFormatter;
 
 HeadingRowFormatter::default('none');
 
-class DataImport implements ToModel, WithHeadingRow
+class DataImport implements ToModel, WithHeadingRow, WithMultipleSheets
 {
-    /**
-     * @param array $row
-     *
-     * @return \Illuminate\Database\Eloquent\Model|null
-     */
+    public function sheets(): array
+    {
+        return [
+            new DataImport(),
+        ];
+    }
+
     public function model(array $row)
     {
+        if (!isset($row['OPD'])) {
+            throw new \Exception('Data tidak valid');
+        }
+
         $cek_opd = Opd::select('id')->where('nama_opd', '=', $row['OPD'])->first();
 
         if (!$cek_opd) {
@@ -27,7 +34,7 @@ class DataImport implements ToModel, WithHeadingRow
         }
         $existingData = Data::where('opd_id', $cek_opd->id)->where('nama_data', $row['Nama Data'])->first();
         if ($existingData) {
-            throw new \Exception('Data dengan nama tersebut sudah terdapat pada sistem');
+            throw new \Exception('Data dengan nama '. $row['Nama Data']  . '  sudah terdapat pada sistem');
         }
 
         $data = Data::create([
