@@ -63,25 +63,6 @@
                             </div>
                         </div>
 
-                        @if(auth()->user()->hasAnyRole('produsen'))
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label"></label>
-                                <div class="col-sm-10">
-                                    @php
-                                        $progress = $data->calculateProgress();
-                                    @endphp
-                                    @if($progress >= 60)
-                                        <button class="btn btn-outline-success"
-                                                {{$data->status_id == 4 ? 'disabled' : ''}} id="btnReadyVerification">{{$data->status_id == \App\Models\Data::STATUS_PROSES_VERIFIKASI ? 'Dalam tahap proses verifikasi' : 'Siap Verifikasi'}}
-                                            <i class="bi bi-check"></i></button>
-                                    @else
-                                        <small class="text-muted">Data ini belum mencapai minimal skor untuk di
-                                            verifikasi</small>
-                                    @endif
-                                </div>
-                            </div>
-                        @endif
-
                         <a href="/data_{{auth()->user()->role->name}}/pengumpulan" class="btn btn-outline-secondary"><i
                                 class="bi bi-arrow-left"></i> Kembali</a>
 
