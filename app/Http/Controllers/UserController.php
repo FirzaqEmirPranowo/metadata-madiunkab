@@ -21,8 +21,6 @@ class UserController extends Controller
     public function index()
     {
         $data = User::with('opd')->with('role')->get();
-        // dd($data);
-        // dd($data);
         return view('pages.contents.administrator.indexusers', compact('data'));
     }
 
@@ -132,7 +130,6 @@ class UserController extends Controller
                 'name' => $request->nama,
                 'email' => $request->email,
                 'username' => $request->username,
-                'password' => Hash::make('12345678'),
                 'role_id' => $request->role_id,
                 'opd_id' => $request->opd_id,
             ]);
@@ -144,7 +141,6 @@ class UserController extends Controller
                 'name' => $request->nama,
                 'email' => $request->email,
                 'username' => $request->username,
-                'password' => Hash::make('12345678'),
                 'role_id' => $request->role_id,
                 'opd_id' => $request->opd_id,
             ]);
@@ -156,7 +152,6 @@ class UserController extends Controller
                 'name' => $request->nama,
                 'username' => $request->username,
                 'email' => $request->email,
-                'password' => Hash::make('12345678'),
                 'role_id' => $request->role_id,
                 'opd_id' => $request->opd_id,
             ]);
@@ -175,9 +170,9 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        // dd($user);
+        activity()->log('Mengapus user: '. $user->username);
         $user->delete();
-        activity()->log('Mengapus User');
+
         return redirect('/user');
     }
 }

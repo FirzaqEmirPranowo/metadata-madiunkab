@@ -122,6 +122,13 @@ class DataController extends Controller
     {
         $data = Data::findOrFail($id);
 
+        if (!in_array($data->status_id, [Data::STATUS_SETUJU, Data::STATUS_TOLAK])) {
+
+            return redirect()
+                ->back()
+                ->with([Alert::error('Gagal', 'Data tidak dapat direstore, status harus setuju/tolak')]);
+        }
+
         $data->update([
             'status_id' => Data::STATUS_DRAFT,
             'progress' => 0,

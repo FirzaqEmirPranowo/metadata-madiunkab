@@ -96,6 +96,8 @@
                                                     <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>{{ $dt->status }}</span>
                                                 @elseif($dt->status_id == 2)
                                                     <span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i>{{ $dt->status }}</span>
+                                                @else
+                                                    <span class="badge bg-primary"><i class="bi bi-info-circle me-1"></i>{{ $dt->status }}</span>
                                                 @endif
                                             </td>
                                             <td>

@@ -18,8 +18,8 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Daftar Data</h5>
-            
-            <a 
+
+            <a
             @if(Auth::user()->role_id == '1')
             href="/data_administrator/create"
             @elseif(Auth::user()->role_id == '2')
@@ -46,19 +46,19 @@
                                     <input type="file" name="file" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
                                     <button class="btn btn-primary" type="submit" id="button-addon2">Import</button>
                                 </div>
-                            </form>                    
+                            </form>
                         </div>
                       </div>
                     </div>
                   </div>
                   @if(Auth::user()->role_id == '3')
                   <!-- Table with stripped rows -->
-                  
+
                   @if($draft == "0")
                   <a href="{{ url('/data_produsen/export-pdf') }}" class="btn btn-md btn-danger mb-3 float-right" target="_blank">Unduh Berita Acara</a>
 
                   @elseif($draft >= "0")
-                  
+
                   <a href="" class="btn btn-md btn-danger mb-3 float-right" data-bs-toggle="modal" data-bs-target="#beritaacara">Unduh Berita Acara</a>
                   <div class="modal fade" id="beritaacara" tabindex="-1">
                     <div class="modal-dialog">
@@ -72,12 +72,12 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-         
+
                         </div>
                       </div>
                     </div>
                   </div>
-                  @endif 
+                  @endif
                   @endif
             <!-- Table with stripped rows -->
             <table class="table datatable">
@@ -110,6 +110,8 @@
                     <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>{{ $dt->status }}</span>
                     @elseif($dt->status_id == 2)
                     <span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i>{{ $dt->status }}</span>
+                    @else
+                    <span class="badge bg-primary"><i class="bi bi-info-circle me-1"></i>{{ $dt->status }}</span>
                     @endif
                   </td>
                   <td>
@@ -117,7 +119,7 @@
                     {{-- <div class="btnConfirm" style="margin-bottom: 0;"> --}}
                       {{-- <a href="/data_administrator/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i>Edit</a>
                       <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_administrator/destroy/'.$dt->id) }}">
-                                
+
                         @csrf
                         <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i>HAPUS</button>
                       </form>
@@ -126,14 +128,14 @@
                     <div class="btnConfirm" style="margin-bottom: 0;">
                       <a href="/data_walidata/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i>Edit</a>
                       <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_walidata/destroy/'.$dt->id) }}">
-                                
+
                         @csrf
                         <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i>HAPUS</button>
                     </form> --}}
                     <a href="/data_administrator/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
                     <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_administrator/destroy/'.$dt->id) }}">
-                              
-                      
+
+
                       <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i></button>
                     </form>
                   {{-- </div> --}}
@@ -141,8 +143,8 @@
                   <div class="btnConfirm" style="margin-bottom: 0;">
                     <a href="/data_walidata/edit/{{ $dt->id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
                     <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_walidata/destroy/'.$dt->id) }}">
-                              
-                      
+
+
                       <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i></button>
                   </form>
                     </div>
@@ -150,7 +152,7 @@
                     {{-- <div class="btnConfirm" style="margin-bottom: 0;">
                       <a href="/data_produsen/edit/{{ $dt->id }}" class="btn btn-sm btn-primary">Edit</a>
                       <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/data_produsen/destroy/'.$dt->id) }}">
-                                
+
                         @csrf
                         <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
                       </form>
@@ -162,34 +164,34 @@
                       <div class="dropdown-content"> --}}
                         <div class="btnConfirm" style="margin-bottom: 0;">
                         <form  action="{{ url('/data_produsen/edit/'.($dt->id)) }}">
-                          
+
                           <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></button>
                         </form>
                         <form onsubmit="return confirm('Apakah anda Menghapus data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/destroy/'. ($dt->id) ) }}">
-                          
+
                           <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
                         </form>
                         @if($dt->user_id != Auth::user()->id)
                         <form onsubmit="return confirm('Apakah anda Menyetujui data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/setuju/'. ($dt->id)) }}">
-                             
+
                           <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-check-circle"></i></button>
                         </form>
                         <form onsubmit="return confirm('Apakah anda Menolak data : {{ $dt->nama_data }} ?');" action="{{ url('/data_produsen/tolak/'. ($dt->id)) }}">
-                          
+
                           <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-circle"></i></button>
                         </form>
                         @endif
                       </div>
                       {{-- </div>               --}}
                     {{-- </div>               --}}
-                    
-                        
-                               
+
+
+
                     @endif
-                    
-                  
+
+
                     </td>
-                    
+
                 </tr>
                   @endforeach
               </tbody>
@@ -202,7 +204,7 @@
       </div>
     </div>
   </section>
-  
+
   <script>
    /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */

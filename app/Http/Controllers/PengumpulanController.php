@@ -19,7 +19,7 @@ class PengumpulanController extends Controller
 {
     public function pengumpulan()
     {
-        $data = Data::whereIn('status_id', [Data::STATUS_SETUJU, Data::STATUS_REVISI])
+        $data = Data::where('status_id', Data::STATUS_SETUJU)
             ->when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))
             ->with(['opd', 'status', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])
             ->latest()
@@ -151,7 +151,7 @@ class PengumpulanController extends Controller
     {
         $data = Data::findOrFail($id);
 
-        $indikatorData = Excel::toCollection(new MetadataIndikatorImport($data->id), $request->file('metadata'));
+        $indikatorData = Excel::toCollection(new MetadataIndikatorImport($data->id, $data->namaData), $request->file('metadata'));
 
         $meta = data_get($indikatorData, '0.0', []);
         if ($meta->count() < 12) {
@@ -160,7 +160,7 @@ class PengumpulanController extends Controller
             ]);
         }
 
-        $import = new MetadataIndikatorImport($data->id);
+        $import = new MetadataIndikatorImport($data->id, $data->nama_data);
         $import->model($meta->all());
 
         return redirect()->back()->with([
@@ -213,7 +213,7 @@ class PengumpulanController extends Controller
 
         $data = Data::findOrFail($id);
 
-        $indikatorData = Excel::toCollection(new MetadataVariabelImport($data->id), $request->file('metadata'));
+        $indikatorData = Excel::toCollection(new MetadataVariabelImport($data->id, $data->nama_data), $request->file('metadata'));
 
         $meta = data_get($indikatorData, '0.0', []);
         if ($meta->count() < 14) {
@@ -222,7 +222,7 @@ class PengumpulanController extends Controller
             ]);
         }
 
-        $import = new MetadataVariabelImport($data->id);
+        $import = new MetadataVariabelImport($data->id, $data->nama_data);
         $import->model($meta->all());
 
         return redirect()->back()->with([

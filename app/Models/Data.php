@@ -224,7 +224,7 @@ class Data extends Model implements HasMedia
                 $join->on("data.user_id", "=", "users.id");
             })
             ->select("nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id", "data.id")
-            ->where('status_id', '=', '3')
+            ->whereIn('status_id', [Data::STATUS_SETUJU, Data::STATUS_BELUM_LENGKAP, Data::STATUS_LENGKAP, Data::STATUS_BELUM_DIPERIKSA, Data::STATUS_REVISI, Data::STATUS_SIAP_PUBLIKASI])
             ->where('opds.id', '=', Auth::user()->opd_id)
             ->get();
     }
@@ -244,7 +244,7 @@ class Data extends Model implements HasMedia
                 $join->on("data.user_id", "=", "users.id");
             })
             ->select("nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id", "data.id")
-            ->where('status_id', '=', '1')
+            ->whereIn('status_id', [Data::STATUS_SETUJU, Data::STATUS_BELUM_LENGKAP, Data::STATUS_LENGKAP, Data::STATUS_BELUM_DIPERIKSA, Data::STATUS_REVISI, Data::STATUS_SIAP_PUBLIKASI])
             ->where('opds.id', '=', Auth::user()->opd_id)
             ->get();
     }

@@ -2,7 +2,7 @@
 
 @section('title', 'Standar Data - ' . $data->nama_data)
 @section('content')
-
+    @include('sweetalert::alert')
     <div class="pagetitle">
         <h1>Standar Data</h1>
         <nav>

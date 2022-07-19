@@ -118,6 +118,10 @@ Route::middleware(['role:walidata', 'auth:web'])->group(function () {
     Route::get('/data_walidata/verifikasi/{id}/status', [Walidata\VerifikasiController::class, 'status'])->name('verifikasi.status');
     Route::patch('/data_walidata/verifikasi/{id}/complete', [Walidata\VerifikasiController::class, 'complete'])->name('verifikasi.complete');
 
+    Route::group(['prefix' => '/data_walidata/publikasi', 'as' => 'publikasi.'], function() {
+        Route::get('/', [Walidata\PublikasiController::class, 'index'])->name('index');
+    });
+
     Route::post('/data_walidata/import', [DataController::class, 'importData']);
     Route::get('/up-download/{id}', [UpdownloadController::class, 'download'])->name('user1');
     Route::get('/data_walidata/notif', [DataController::class, 'notif'])->name('notif');

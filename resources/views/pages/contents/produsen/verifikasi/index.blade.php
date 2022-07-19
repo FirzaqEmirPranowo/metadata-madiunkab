@@ -1,8 +1,11 @@
 @extends('pages.main.layout')
 
 @section('content')
+    @php
+        $role = auth()->user()->hasAnyRole('produsen') ? 'produsen' : 'walidata';
+    @endphp
     <div class="pagetitle">
-        <h1>Daftar Data Siap Verifikasi</h1>
+        <h1>Daftar Data Proses Verifikasi</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
@@ -18,6 +21,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Daftar Data</h5>
+                        <p>Halaman ini berisi daftar data yang berstatus proses verifikasi dan revisi.</p>
                         <table class="table datatable" id="tableVerifikasiData">
                             <thead>
                             <tr>
@@ -41,9 +45,10 @@
                                     <td>{{ $dt->updated_at->format('d/m/Y H:i A') }}</td>
                                     <td>
                                         <div class="d-flex flex-column gap-2">
-                                            <a class="btn btn-outline-primary btn-sm" href="/data_walidata/verifikasi/{{$dt->id}}/berkas"><i class="bi bi-file-binary-fill"></i> Verifikasi Berkas</a>
-                                            <a class="btn btn-outline-info btn-sm" href="/data_walidata/verifikasi/{{$dt->id}}/{{strtolower($dt->jenis_data)}}"><i class="bi bi-bar-chart"></i> Verifikasi MetaData {{$dt->jenis_data}}</a>
-                                            <a class="btn btn-outline-primary btn-sm btn-action" href="#" data-status-url="{{route('verifikasi.status', $dt->id)}}" data-complete-url="{{route('verifikasi.complete', $dt->id)}}"><i class="bi bi-three-dots"></i> Selesaikan?</a>
+                                            <a class="btn btn-outline-primary btn-sm" href="/data_{{$role}}/pengumpulan/{{$dt->id}}/data"><i class="bi bi-cloud-upload"></i> {{$role == 'produsen' ? 'Unggah Berkas' : 'Detail Berkas'}}</a>
+                                            <a class="btn btn-outline-primary btn-sm" href="/data_{{$role}}/pengumpulan/{{$dt->id}}/standar"><i class="bi bi-sim-fill"></i> Standar Data</a>
+                                            <a class="btn btn-outline-success btn-sm" href="/data_{{$role}}/pengumpulan/{{$dt->id}}/{{strtolower($dt->jenis_data)}}"><i class="bi bi-bar-chart"></i> Meta Data {{$dt->jenis_data}}</a>
+                                            <a class="btn btn-outline-success btn-sm" href="/data_{{$role}}/pengumpulan/{{$dt->id}}/kegiatan"><i class="bi bi-activity"></i> Meta Data Kegiatan</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -58,54 +63,3 @@
     </section>
 
 @endsection
-
-@push('js')
-    <script>
-        $(function() {
-            $('#tableVerifikasiData').on('click', 'a.btn-action', function (e) {
-                e.preventDefault();
-                Swal.showLoading();
-                let completeUrl = $(this).data('completeUrl');
-                $.get($(this).data('statusUrl'))
-                    .then(function(r) {
-                        if (Swal.isLoading()) Swal.hideLoading();
-
-                        if (r.ok === false) {
-                            Toast.fire({icon: 'error', title: r.message});
-                            return;
-                        }
-
-                        Swal.fire({
-                            icon: r.code === 1 ? 'info' : 'warning',
-                            title: 'Konfirmasi Selesai Proses Verifikasi',
-                            text: r.message,
-                            showCancelButton: true,
-                            cancelButtonText: 'Batal',
-                            confirmButtonText: 'Ya, Selesai',
-                            showLoaderOnConfirm: true,
-                            preConfirm: (comment) => {
-                                return $.ajax({url: completeUrl, method: 'PATCH'})
-                                    .then(response => {
-                                        if (!response.ok) {
-                                            throw new Error(response.message)
-                                        }
-                                        return response;
-                                    })
-                                    .catch(error => {
-                                        Swal.showValidationMessage(
-                                            `Request gagal: ${error}`
-                                        )
-                                    })
-                            },
-                            allowOutsideClick: () => !Swal.isLoading()
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                Toast.fire({icon: result.value.ok ? 'success' : 'error', title: result.value.message});
-                                setTimeout(() => window.location.reload(), 2000);
-                            }
-                        });
-                    });
-            })
-        });
-    </script>
-@endpush

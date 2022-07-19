@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\MetadataIndikator;
+use App\Models\StandarData;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use Maatwebsite\Excel\Concerns\WithStartRow;
@@ -10,16 +11,18 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 class MetadataIndikatorImport implements ToModel, WithMultipleSheets, WithStartRow
 {
     private int $dataId;
+    private string $namaData;
 
-    public function __construct($dataId)
+    public function __construct($dataId, $namaData)
     {
         $this->dataId = $dataId;
+        $this->namaData = $namaData;
     }
 
     public function sheets(): array
     {
         return [
-            new MetadataIndikatorImport($this->dataId),
+            new MetadataIndikatorImport($this->dataId, $this->namaData),
         ];
     }
 
@@ -30,13 +33,24 @@ class MetadataIndikatorImport implements ToModel, WithMultipleSheets, WithStartR
 
     public function model(array $row)
     {
+        StandarData::updateOrCreate(
+            ['data_id' => $this->dataId],
+            [
+                'konsep' => $row[2],
+                'definisi' => $row[3],
+                'klasifikasi' => $row[8],
+                'satuan' => $row[7],
+                'ukuran' => $row[6]
+            ]
+        );
+
         return MetadataIndikator::updateOrCreate(
             [
                 'data_id' => $this->dataId
             ],
             [
                 'data_id' => $this->dataId,
-                'nama' => $row[1],
+                'nama' => $this->namaData ?? $row[1],
                 'konsep' => $row[2],
                 'definisi' => $row[3],
                 'interpretasi' => $row[4],
@@ -54,10 +68,10 @@ class MetadataIndikatorImport implements ToModel, WithMultipleSheets, WithStartR
         );
     }
 
-    private function formatLevelEstimasi($level)
+    private function formatLevelEstimasi($level): string
     {
         if (empty($level)) {
-            return -1;
+            return 'nasional';
         }
 
         return strtolower(trim($level));
