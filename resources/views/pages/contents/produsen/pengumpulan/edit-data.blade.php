@@ -125,14 +125,17 @@
 
             berkasDz.on('addedfile', function(file) {
                 file.previewElement.addEventListener('click', () => window.open(file.previewUrl))
+                if (!('notify' in file)) {
+                    Toast.fire({icon: 'success', title: 'Berkas berhasil diunggah'});
+                }
             });
 
             $.each(existingBerkas, function (i, file) {
+                file.notify = false;
                 berkasDz.files.push(file);
                 berkasDz.emit('addedfile', file);
                 berkasDz.emit('complete', file);
             });
-
 
             $('#btnReadyVerification').on('click', function (e) {
                 e.preventDefault();
