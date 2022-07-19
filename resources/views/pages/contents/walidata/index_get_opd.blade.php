@@ -59,7 +59,7 @@
                   @if(Auth::user()->role_id == '3')
                   @endif --}}
                   <div class="mb-4">
-                    <form id="berita-acara" action="{{ url('/data_walidata/export-pdf2') }}" >
+                    <form id="berita-acara" action="{{ url('/data_walidata/export-pdf2') }}" target="_blank">
 
                       <div class="row">
                         <div class="col-8">
@@ -74,7 +74,7 @@
                         <div class="col-4 d-flex" id="action-buttons">
                           <button class="btn btn-primary mx-2" type="button" href="/draft" onclick="getData()"> Cari </button>
 
-                          <button class="btn btn-success" id="btnijo"  onclick="confirmBeritacara('berita-acara')" type="submit" target="_blank"><i class="bi bi-download"></i> Unduh Berita Acara </button>
+                          <button class="btn btn-success" id="btnijo" type="submit"><i class="bi bi-download"></i> Unduh Berita Acara </button>
 
                           <a href="" class="btn btn-danger" id="btnred" data-bs-toggle="modal" data-bs-target="#beritaacara" target="_blank"><i class="bi bi-download"></i> Unduh Berita Acara</a>
 
@@ -232,8 +232,6 @@
              .then((willDelete) => {
                  if (willDelete) {
                      $('#'+item_id).submit();
-                 } else {
-
                  }
              });
    };
