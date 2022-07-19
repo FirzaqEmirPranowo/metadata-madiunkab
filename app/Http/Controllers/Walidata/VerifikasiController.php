@@ -12,7 +12,7 @@ class VerifikasiController extends Controller
 {
     public function index()
     {
-        $data = Data::where('status_id', Data::STATUS_BELUM_DIPERIKSA)->with(['opd', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])->paginate();
+        $data = Data::whereIn('status_id', [Data::STATUS_BELUM_DIPERIKSA, Data::STATUS_REVISI])->with(['opd', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])->paginate();
 
         return view('pages.contents.walidata.verifikasi.index', compact('data'));
     }
@@ -148,6 +148,8 @@ class VerifikasiController extends Controller
             'status_id' => $isRevisi ? Data::STATUS_REVISI : Data::STATUS_SIAP_PUBLIKASI,
             'progress' => $isRevisi ? 50 : 100,
         ]);
+
+        activity()->causedBy(auth()->id())->performedOn($data)->log('Data telah diverifikasi dengan hasil: ' . ($isRevisi ? 'revisi' : 'lolos & siap dipublikasi'));
 
         return response()->json(['ok' => true, 'message' => 'Data telah diubah menjadi '. ($isRevisi ? 'revisi' : 'siap untuk dipublikasi')]);
     }

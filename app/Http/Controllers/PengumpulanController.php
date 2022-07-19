@@ -333,6 +333,8 @@ class PengumpulanController extends Controller
 
         $data->update(['progress' => 100, 'status_id' => Data::STATUS_BELUM_DIPERIKSA]);
 
+        activity()->causedBy(auth()->id())->performedOn($data)->log('Data diajukan ke tahap verifikasi');
+
         return response()->json(['ok' => true, 'message' => 'Sukses! Data dalam tahap verifikasi']);
     }
 

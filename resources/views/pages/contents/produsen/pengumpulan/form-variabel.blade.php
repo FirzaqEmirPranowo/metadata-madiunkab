@@ -189,7 +189,7 @@
                                 </div>
                             </div>
 
-                            @if(auth()->user()->hasAnyRole('produsen'))
+                            @if(auth()->user()->hasAnyRole('produsen') && !in_array($data->status_id, [\App\Models\Data::STATUS_SETUJU, \App\Models\Data::STATUS_REVISI]))
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label"></label>
                                     <div class="col-sm-10">
@@ -197,6 +197,8 @@
                                     </div>
                                 </div>
                             @endif
+
+                            <a href="/data_{{auth()->user()->role->name}}/pengumpulan" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
 
                         </form><!-- End General Form Elements -->
 
