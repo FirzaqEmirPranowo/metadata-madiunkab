@@ -150,28 +150,19 @@
                 </div>
                 <div class="modal-body">
                     <h6 class="modal-title"><i class="bi bi-caret-right-fill"></i>Sebelum import
-                        data menggunakan file excel silahkan download Template nya disini!
+                        data menggunakan file excel silahkan mengunduh template data melalui tombol berikut
                         <form action="{{ url('/up-download', 'DATA') }}">
                             <button type="submit" class="btn btn-sm btn-success">
                                 <i class="bi bi-download"></i> Template Data
                             </button>
                         </form>
                     </h6>
-                    <br>
-                    <h6 class="modal-title"><i class="bi bi-caret-right-fill"></i>Untuk panduan
-                        pengisian data, cocokan terlebih dulu isi data disini!
-                        <form action="{{ url('/up-download', 'PANDUAN') }}">
-                            <button type="submit" class="btn btn-sm btn-success">
-                                <i class="bi bi-download"></i> Panduan Data
-                            </button>
-                        </form>
-                    </h6>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal
                     </button>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#alasan">Ok
+                            data-bs-target="#alasan">Lanjutkan
                     </button>
                 </div>
             </div>

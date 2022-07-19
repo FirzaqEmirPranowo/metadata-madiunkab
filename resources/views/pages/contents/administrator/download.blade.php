@@ -18,8 +18,8 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Daftar User</h5>
-            
-                
+
+
             <a href="" class="btn btn-md btn-warning mb-3 float-right" data-bs-toggle="modal" data-bs-target="#basicModal">Upload Excel</a>
             <!-- Table with stripped rows -->
               <div class="modal fade" id="basicModal" tabindex="-1">
@@ -43,15 +43,16 @@
                                 <option value="DATA">TEMPLATE DATA</option>
                                 <option value="OPD">TEMPLATE OPD</option>
                                 <option value="USER">TEMPLATE USER</option>
-                                <option value="PANDUAN">PANDUAN DATA</option>
+                                  <option value="INDIKATOR">TEMPLATE INDIKATOR</option>
+                                  <option value="VARIABEL">TEMPLATE VARIABEL</option>
                               </select>
                             </div>
                             <div class="form-group">
                               <b>Keterangan</b>
                               <textarea class="form-control" name="keterangan"></textarea>
                             </div>
-                            
-                        </form>                    
+
+                        </form>
                     </div>
                   </div>
                 </div>
@@ -63,7 +64,7 @@
                   <th scope="col">Document</th>
                   <th scope="col">Keterangan</th>
                   <th scope="col">Opsi</th>
-                  
+
                 </tr>
               </thead>
               <tbody>
@@ -77,30 +78,30 @@
                     <table>
                       <tr>
                         <td>
-                          <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/upload-hapus', $dt->id) }}">      
+                          <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/upload-hapus', $dt->id) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
                             </form>
                         </td>
                         <td>
-                          <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/download', $dt->type) }}">      
- 
+                          <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ url('/download', $dt->type) }}">
+
                             <button type="submit" class="btn btn-sm btn-info"><i class="bi bi-download"></i></button>
                             </form>
                         </td>
                       </tr>
-                    
-                    
+
+
                     </table>
                   </td>
-                
-            
+
+
                 </tr>
                   @endforeach
 
               </tbody>
-              
+
             </table>
             <!-- End Table with stripped rows -->
 

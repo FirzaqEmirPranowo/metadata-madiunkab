@@ -42,7 +42,7 @@
                                 <label for="nama" class="col-sm-2 col-form-label">Nama Variabel</label>
                                 <div class="col-sm-10">
                                     <input id="nama" name="nama" type="text" class="form-control {{ isset($nama) ? ($nama->accepted ? 'is-valid' : 'is-invalid') : '' }}"
-                                           placeholder="Nama Variabel" value="{{old('nama', optional($data->variabel)->nama ?? $data->nama_data)}}">
+                                           placeholder="Nama Variabel" value="{{old('nama', $data->nama_data)}}" readonly>
                                     @if (isset($nama) && !empty($nama->comment))
                                         <p class="text-muted text-comment">Komentar: {{$nama->comment}}</p>
                                     @endif
@@ -212,7 +212,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Anda dapat meng-<em>import</em> metadata dari file Excel menggunakan template yang sudah disediakan.</p>
+                            <p>Anda dapat meng-<em>import</em> metadata dari file Excel menggunakan <a href="{{url('/up-download', 'VARIABEL')}}" class="text-primary">template data <i class="bi bi-download"></i></a>.</p>
                             <form enctype="multipart/form-data" action="{{route('import-variabel', $data->id)}}" id="formImport" method="POST">
                                 @csrf
                                 <div class="row mb-3">

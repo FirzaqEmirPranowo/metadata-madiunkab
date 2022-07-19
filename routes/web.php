@@ -123,7 +123,6 @@ Route::middleware(['role:walidata', 'auth:web'])->group(function () {
     });
 
     Route::post('/data_walidata/import', [DataController::class, 'importData']);
-    Route::get('/up-download/{id}', [UpdownloadController::class, 'download'])->name('user1');
     Route::get('/data_walidata/notif', [DataController::class, 'notif'])->name('notif');
     Route::get('/draft', [DataController::class, 'draft'])->name('draft');
 });
@@ -175,6 +174,7 @@ Route::middleware(['role:produsen', 'auth:web'])->group(function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/filepreview', [FileController::class, 'preview'])->name('filepreview');
+    Route::get('/up-download/{id}', [UpdownloadController::class, 'download']);
 });
 
 Route::get('/ajax/provinces', [WilayahController::class, 'province'])->name('ajax.provinces');

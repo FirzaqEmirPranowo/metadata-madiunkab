@@ -7,7 +7,7 @@
         <h1>Standar Data</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Daftar Pengumpulan Data</a></li>
+                <li class="breadcrumb-item"><a href="/data_{{auth()->user()->role->name}}/pengumpulan">Daftar Pengumpulan Data</a></li>
                 <li class="breadcrumb-item">Data - {{$data->nama_data}}</li>
                 <li class="breadcrumb-item active">Standar Data</li>
             </ol>
@@ -67,6 +67,8 @@
                                     </div>
                                 </div>
                             @endif
+
+                            <a href="/data_{{auth()->user()->role->name}}/pengumpulan" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
 
                         </form>
                     </div>
