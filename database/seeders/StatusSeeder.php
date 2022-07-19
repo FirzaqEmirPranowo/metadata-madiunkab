@@ -21,7 +21,7 @@ class StatusSeeder extends Seeder
             'Draf',
             'Belum Lengkap',
             'Lengkap',
-            'Belum Diperiksa',
+            'Proses Verifikasi',
             'Revisi',
             'Siap Publikasi',
             'Terpublikasi'

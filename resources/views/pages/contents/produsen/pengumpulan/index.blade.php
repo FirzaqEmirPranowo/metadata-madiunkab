@@ -42,7 +42,7 @@
                                     <td>{{ $dt->nama_data }}</td>
                                     <td>{{ $dt->jenis_data }}</td>
                                     <td>{{ $dt->opd->nama_opd }}</td>
-                                    <td>{{ $dt->status_id == \App\Models\Data::STATUS_SETUJU ? 'Proses Pengumpulan' : $dt->status->status }}</td>
+                                    <td>{{ $dt->status->status }}</td>
                                     <td>
                                         <div class="progress">
                                             <div class="progress-bar progress-bar-striped bg-primary progress-bar-animated" role="progressbar" style="width: {{$dt->calculateProgress()}}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" title="Total: {{$dt->calculateProgress()}}%"></div>
@@ -54,7 +54,6 @@
                                             <a class="btn btn-outline-primary btn-sm" href="/data_{{$role}}/pengumpulan/{{$dt->id}}/standar"><i class="bi bi-sim-fill"></i> Standar Data</a>
                                             <a class="btn btn-outline-success btn-sm" href="/data_{{$role}}/pengumpulan/{{$dt->id}}/{{strtolower($dt->jenis_data)}}"><i class="bi bi-bar-chart"></i> Meta Data {{$dt->jenis_data}}</a>
                                             <a class="btn btn-outline-success btn-sm" href="/data_{{$role}}/pengumpulan/{{$dt->id}}/kegiatan"><i class="bi bi-activity"></i> Meta Data Kegiatan</a>
-                                            <a class="btn btn-outline-success btn-sm" href="/data_{{$role}}"></a>
                                         </div>
                                     </td>
                                 </tr>
