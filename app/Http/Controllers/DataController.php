@@ -66,10 +66,6 @@ class DataController extends Controller
 
     public function store(Request $request)
     {
-        $status_id = Data::STATUS_DRAFT;
-        if (Auth::user()->role == '3' | Auth::user()->opd_id == $request->opd_id) {
-            $status_id = Data::STATUS_SETUJU;
-        }
         $user_id = Auth::user()->id;
 
         $existingData = Data::where('nama_data', trim($request->nama_data))->count();
@@ -84,7 +80,7 @@ class DataController extends Controller
             'opd_id' => $request->opd_id,
             'jenis_data' => $request->jenis_data,
             'sumber_data' => $request->sumber_data,
-            'status_id' => $status_id,
+            'status_id' => Data::STATUS_DRAFT,
             'user_id' => $user_id,
 
         ]);
