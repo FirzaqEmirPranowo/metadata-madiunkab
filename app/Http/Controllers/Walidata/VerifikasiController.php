@@ -12,7 +12,7 @@ class VerifikasiController extends Controller
 {
     public function index()
     {
-        $data = Data::whereIn('status_id', [Data::STATUS_BELUM_DIPERIKSA, Data::STATUS_REVISI, Data::STATUS_SIAP_PUBLIKASI])->with(['opd', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])->paginate();
+        $data = Data::whereIn('status_id', [Data::STATUS_PROSES_VERIFIKASI, Data::STATUS_REVISI, Data::STATUS_SIAP_PUBLIKASI])->with(['opd', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])->paginate();
 
         return view('pages.contents.walidata.verifikasi.index', compact('data'));
     }
@@ -29,7 +29,7 @@ class VerifikasiController extends Controller
             ];
         })->toArray();
 
-        if ($data->status_id != Data::STATUS_BELUM_DIPERIKSA) {
+        if ($data->status_id != Data::STATUS_PROSES_VERIFIKASI) {
             return redirect()->back()->with('errors', 'Status Data belum selesai');
         }
 
@@ -112,7 +112,7 @@ class VerifikasiController extends Controller
             return response()->json(['ok' => false, 'code' => 404, 'message' => 'Data tidak ditemukan']);
         }
 
-        if ($data->status_id != Data::STATUS_BELUM_DIPERIKSA) {
+        if ($data->status_id != Data::STATUS_PROSES_VERIFIKASI) {
             return response()->json(['ok' => false, 'code' => -2, 'message' => 'Status data tidak valid', 'status' => $data->status_id]);
         }
 
@@ -121,7 +121,7 @@ class VerifikasiController extends Controller
         }
 
         if ($data->verifikasi->where('accepted', 0)->count() > 0) {
-            return response()->json(['ok' => true, 'code' => 0, 'message' => 'Terdapat isian yang harus direvisi, apakah Anda yakin ingin mengajukan revisi?']);
+            return response()->json(['ok' => true, 'code' => 0, 'message' => 'Terdapat isian yang harus direvisi, apakah Anda yakin ingin menyelesaikan proses verifikasi?']);
         }
 
         return response()->json(['ok' => true, 'code' => 1, 'message' => 'Tidak ditemukan isian yang harus direvisi, apakah Anda yakin ingin menyelesaikan proses verifikasi?']);
@@ -135,7 +135,7 @@ class VerifikasiController extends Controller
             return response()->json(['ok' => false,'message' => 'Data tidak ditemukan']);
         }
 
-        if ($data->status_id != Data::STATUS_BELUM_DIPERIKSA) {
+        if ($data->status_id != Data::STATUS_PROSES_VERIFIKASI) {
             return response()->json(['ok' => false, 'message' => 'Status data tidak valid']);
         }
 

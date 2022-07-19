@@ -21,58 +21,69 @@
                     <div class="card-body">
                         <h5 class="card-title">Detail Data</h5>
 
-                            <div class="row mb-3">
-                                <label for="inputText" class="col-sm-2 col-form-label">Nama Data</label>
-                                <div class="col-sm-10">
-                                    <input id="nama_data" name="nama_data" type="text" class="form-control"
-                                           value="{{$data->nama_data}}" readonly>
-                                </div>
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-2 col-form-label">Nama Data</label>
+                            <div class="col-sm-10">
+                                <input id="nama_data" name="nama_data" type="text" class="form-control"
+                                       value="{{$data->nama_data}}" readonly>
                             </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">Jenis Data</label>
-                                <div class="col-sm-10">
-                                    <select id="jenis_data" name="jenis_data" class="form-select" disabled>
-                                        <option value="indikator" {{$data->jenis_data === 'indikator' ? 'checked' : ''}}>Indikator</option>
-                                        <option value="variabel" {{$data->jenis_data === 'variabel' ? 'checked' : ''}}>Variabel</option>
-                                    </select>
-                                </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Jenis Data</label>
+                            <div class="col-sm-10">
+                                <select id="jenis_data" name="jenis_data" class="form-select" disabled>
+                                    <option value="indikator" {{$data->jenis_data === 'indikator' ? 'checked' : ''}}>
+                                        Indikator
+                                    </option>
+                                    <option value="variabel" {{$data->jenis_data === 'variabel' ? 'checked' : ''}}>
+                                        Variabel
+                                    </option>
+                                </select>
                             </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" id="opd_id">Produsen Data(PIC)</label>
-                                <div class="col-sm-10">
-                                    <select id="opd_id" name="opd_id" class="form-select" disabled>
-                                        <option selected value="{{$data->opd_id}}">{{$data->opd->nama_opd}}</option>
-                                    </select>
-                                </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" id="opd_id">Produsen Data(PIC)</label>
+                            <div class="col-sm-10">
+                                <select id="opd_id" name="opd_id" class="form-select" disabled>
+                                    <option selected value="{{$data->opd_id}}">{{$data->opd->nama_opd}}</option>
+                                </select>
                             </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">Sumber Data</label>
-                                <div class="col-sm-10">
-                                    <select id="sumber_data" name="sumber_data" class="form-select" aria-label="Sumber Data" disabled>
-                                        <option value="RPJMD" {{ $data->sumber_data === 'RPJMD' ? 'checked' : '' }}>RPJMD</option>
-                                        <option value="SPM" {{ $data->sumber_data === 'SPM' ? 'checked' : '' }}>SPM</option>
-                                        <option value="SDGs" {{ $data->sumber_data === 'SDGs' ? 'checked' : '' }}>SDGs</option>
-                                    </select>
-                                </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Sumber Data</label>
+                            <div class="col-sm-10">
+                                <select id="sumber_data" name="sumber_data" class="form-select" aria-label="Sumber Data"
+                                        disabled>
+                                    <option value="RPJMD" {{ $data->sumber_data === 'RPJMD' ? 'checked' : '' }}>RPJMD
+                                    </option>
+                                    <option value="SPM" {{ $data->sumber_data === 'SPM' ? 'checked' : '' }}>SPM</option>
+                                    <option value="SDGs" {{ $data->sumber_data === 'SDGs' ? 'checked' : '' }}>SDGs
+                                    </option>
+                                </select>
                             </div>
+                        </div>
 
-                            @if(auth()->user()->hasAnyRole('produsen'))
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label"></label>
-                                    <div class="col-sm-10">
-                                        @php
-                                            $progress = $data->calculateProgress();
-                                        @endphp
-                                        @if($progress >= 60)
-                                            <button class="btn btn-outline-success" {{$data->status_id == 4 ? 'disabled' : ''}} id="btnReadyVerification">{{$data->status_id == \App\Models\Data::STATUS_BELUM_DIPERIKSA ? 'Dalam tahap proses verifikasi' : 'Siap Verifikasi'}} <i class="bi bi-check"></i></button>
-                                        @else
-                                            <small class="text-muted">Data ini belum mencapai minimal skor untuk di verifikasi</small>
-                                        @endif
-                                    </div>
+                        @if(auth()->user()->hasAnyRole('produsen'))
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    @php
+                                        $progress = $data->calculateProgress();
+                                    @endphp
+                                    @if($progress >= 60)
+                                        <button class="btn btn-outline-success"
+                                                {{$data->status_id == 4 ? 'disabled' : ''}} id="btnReadyVerification">{{$data->status_id == \App\Models\Data::STATUS_PROSES_VERIFIKASI ? 'Dalam tahap proses verifikasi' : 'Siap Verifikasi'}}
+                                            <i class="bi bi-check"></i></button>
+                                    @else
+                                        <small class="text-muted">Data ini belum mencapai minimal skor untuk di
+                                            verifikasi</small>
+                                    @endif
                                 </div>
-                            @endif
+                            </div>
+                        @endif
 
-                        <a href="/data_{{auth()->user()->role->name}}/pengumpulan" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
+                        <a href="/data_{{auth()->user()->role->name}}/pengumpulan" class="btn btn-outline-secondary"><i
+                                class="bi bi-arrow-left"></i> Kembali</a>
 
                     </div>
                 </div>
@@ -107,8 +118,13 @@
                                         @endphp
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td><a href="{{route('filepreview', ['payload' => Crypt::encryptString($berkas->path)])}}" target="_new">{{$berkas['name'] ?? '-'}} <i class="bi bi-link"></i></a></td>
-                                            <td><h5><span class="badge {{$v && $v->accepted ? 'border-success text-success' : 'border-danger text-danger'}}">{{$v && $v->accepted ? 'Disetujui' : 'Revisi'}}</span></h5></td>
+                                            <td>
+                                                <a href="{{route('filepreview', ['payload' => Crypt::encryptString($berkas->path)])}}"
+                                                   target="_new">{{$berkas['name'] ?? '-'}} <i
+                                                        class="bi bi-link"></i></a></td>
+                                            <td><h5><span
+                                                        class="badge {{$v && $v->accepted ? 'border-success text-success' : 'border-danger text-danger'}}">{{$v && $v->accepted ? 'Disetujui' : 'Revisi'}}</span>
+                                                </h5></td>
                                             <td>
                                                 <em>{{$v && $v->comment ? $v->comment : '-'}}</em>
                                             </td>
@@ -154,18 +170,18 @@
             });
 
             @if (auth()->user()->hasAnyRole('produsen'))
-                berkasDz.on('removedfile', function (file) {
-                    $.ajax({
-                        url: file.deleteUrl,
-                        method: 'DELETE',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{csrf_token()}}'
-                        }
-                    })
-                });
+            berkasDz.on('removedfile', function (file) {
+                $.ajax({
+                    url: file.deleteUrl,
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{csrf_token()}}'
+                    }
+                })
+            });
             @endif
 
-            berkasDz.on('addedfile', function(file) {
+            berkasDz.on('addedfile', function (file) {
                 file.previewElement.addEventListener('click', () => window.open(file.previewUrl))
                 if (!('notify' in file)) {
                     Toast.fire({icon: 'success', title: 'Berkas berhasil diunggah'});

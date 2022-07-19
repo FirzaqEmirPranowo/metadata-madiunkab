@@ -19,7 +19,7 @@ class StatusSeeder extends Seeder
             'Setuju',
             'Tolak',
             'Draf',
-            'Belum Lengkap',
+            'Proses Pengumpulan',
             'Lengkap',
             'Proses Verifikasi',
             'Revisi',

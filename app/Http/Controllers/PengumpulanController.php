@@ -47,7 +47,7 @@ class PengumpulanController extends Controller
             ];
         })->toArray();
 
-        if (!in_array($data->status_id, [Data::STATUS_SETUJU, Data::STATUS_BELUM_LENGKAP, Data::STATUS_REVISI, Data::STATUS_SIAP_PUBLIKASI])) {
+        if (!in_array($data->status_id, [Data::STATUS_SETUJU, Data::STATUS_PROSES_PENGUMPULAN, Data::STATUS_REVISI, Data::STATUS_SIAP_PUBLIKASI])) {
             return redirect()->back()->with('errors', 'Status Data belum selesai');
         }
 
@@ -327,11 +327,11 @@ class PengumpulanController extends Controller
             return response()->json(['ok' => false, 'message' => 'Mohon lengkapi isian metadata terlebih dahulu sebelum lanjut ke proses verifikasi']);
         }
 
-        if ($data->status_id == Data::STATUS_BELUM_DIPERIKSA) {
+        if ($data->status_id == Data::STATUS_PROSES_VERIFIKASI) {
             return response()->json(['ok' => false, 'message' => 'Data ini sedang dalam proses verifikasi']);
         }
 
-        $data->update(['progress' => 100, 'status_id' => Data::STATUS_BELUM_DIPERIKSA]);
+        $data->update(['progress' => 100, 'status_id' => Data::STATUS_PROSES_VERIFIKASI]);
 
         activity()->causedBy(auth()->id())->performedOn($data)->log('Data diajukan ke tahap verifikasi');
 

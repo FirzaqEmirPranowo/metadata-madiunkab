@@ -10,7 +10,7 @@ class VerifikasiController extends Controller
 {
     public function index()
     {
-        $data = Data::whereIn('status_id', [Data::STATUS_BELUM_DIPERIKSA, Data::STATUS_REVISI])
+        $data = Data::whereIn('status_id', [Data::STATUS_PROSES_VERIFIKASI, Data::STATUS_REVISI, Data::STATUS_SIAP_PUBLIKASI])
             ->with(['opd', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])
             ->where('opd_id', auth()->user()->opd_id)
             ->paginate();

@@ -17,12 +17,12 @@ class HomeController extends Controller
     {
         $data = Data::count();
         $disetujui = Data::where('status_id', Data::STATUS_SETUJU)->count();
-        $dataLengkap = Data::where('status_id')->where('progress', '>', 80)->count();
-        $dataTidakLengkap = Data::where('status_id', '>=', Data::STATUS_BELUM_LENGKAP)->where('progress', '<', 80)->count();
+        $dataPengumpulan = Data::where('status_id', Data::STATUS_PROSES_PENGUMPULAN)->count();
+        $dataVerifikasi = Data::where('status_id', '>=', Data::STATUS_PROSES_PENGUMPULAN)->count();
         $dataSiapPublish = Data::where('status_id', '=', Data::STATUS_SIAP_PUBLIKASI)->count();
         $dataTerbaru = Data::with('opd')->latest()->take(10)->get();
         $lastActivities = Activity::with('causer')->latest()->take(20)->get();
-        return view('pages.contents.walidata.dashboard', compact('disetujui', 'data', 'dataLengkap', 'dataTidakLengkap', 'dataSiapPublish', 'dataTerbaru', 'lastActivities'));
+        return view('pages.contents.walidata.dashboard', compact('disetujui', 'data', 'dataPengumpulan', 'dataTidakLengkap', 'dataSiapPublish', 'dataTerbaru', 'lastActivities'));
     }
 
     public function dashboardWalidata()
@@ -30,7 +30,7 @@ class HomeController extends Controller
         $data = Data::count();
         $disetujui = Data::where('status_id', Data::STATUS_SETUJU)->count();
         $dataLengkap = Data::where('status_id')->where('progress', '>', 80)->count();
-        $dataTidakLengkap = Data::where('status_id', '>=', Data::STATUS_BELUM_LENGKAP)->where('progress', '<', 80)->count();
+        $dataVerifikasi = Data::where('status_id', '>=', Data::STATUS_PROSES_PENGUMPULAN)->where('progress', '<', 80)->count();
         $dataSiapPublish = Data::where('status_id', '=', Data::STATUS_SIAP_PUBLIKASI)->count();
         $dataTerbaru = Data::with('opd')->latest()->take(10)->get();
         $lastActivities = Activity::with('causer')->latest()->take(20)->get();
@@ -43,7 +43,7 @@ class HomeController extends Controller
         $data = Data::where('opd_id', $opdId)->count();
         $disetujui = Data::where('opd_id', $opdId)->where('status_id', Data::STATUS_SETUJU)->count();
         $dataLengkap = Data::where('opd_id', $opdId)->where('status_id')->where('progress', '>', 80)->count();
-        $dataTidakLengkap = Data::where('opd_id', $opdId)->where('status_id', '>=', Data::STATUS_BELUM_LENGKAP)->where('progress', '<', 80)->count();
+        $dataTidakLengkap = Data::where('opd_id', $opdId)->where('status_id', '>=', Data::STATUS_PROSES_PENGUMPULAN)->where('progress', '<', 80)->count();
         $dataSiapPublish = Data::where('opd_id', $opdId)->where('status_id', '=', Data::STATUS_SIAP_PUBLIKASI)->count();
         $dataTerbaru = Data::where('opd_id', $opdId)->with('opd', 'status')->latest()->take(10)->get();
 
