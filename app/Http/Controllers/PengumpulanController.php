@@ -33,7 +33,12 @@ class PengumpulanController extends Controller
         $data = Data::with(['opd', 'berkas'])
             ->when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))
             ->findOrFail($id);
-        $existingBerkas = $data->berkas->transform(function ($b) use ($data) {
+
+        if ($data->status_id == Data::STATUS_REVISI) {
+            $data->load('verifikasi');
+        }
+
+        $existingBerkas = $data->berkas->map(function ($b) use ($data) {
             return [
                 'name' => $b->name,
                 'size' => $b->size,

@@ -93,7 +93,7 @@
                                 <label for="metode" class="col-sm-2 col-form-label">Metode / Rumus Perhitungan</label>
                                 <div class="row col-sm-8">
                                     @php
-                                        $isImage = \Illuminate\Support\Str::startsWith(optional($data->indikator)->metode, 'public/');
+                                        $isImage = Str::startsWith(optional($data->indikator)->metode, 'public/');
                                     @endphp
                                     <div class="col-sm-{{$isImage ? 4 : 8}}">
                                         <textarea name="metode" id="metode" class="form-control" style="height: 100px" spellcheck="false" placeholder="Metode / Rumus Perhitungan"></textarea>

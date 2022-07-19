@@ -64,7 +64,7 @@
                                             $progress = $data->calculateProgress();
                                         @endphp
                                         @if($progress >= 60)
-                                            <button class="btn btn-outline-success" {{$data->status_id == 4 ? 'disabled' : ''}} id="btnReadyVerification">{{$data->status_id == 4 ? 'Dalam tahap proses verifikasi' : 'Siap Verifikasi'}} <i class="bi bi-check"></i></button>
+                                            <button class="btn btn-outline-success" {{$data->status_id == 4 ? 'disabled' : ''}} id="btnReadyVerification">{{$data->status_id == \App\Models\Data::STATUS_BELUM_DIPERIKSA ? 'Dalam tahap proses verifikasi' : 'Siap Verifikasi'}} <i class="bi bi-check"></i></button>
                                         @else
                                             <small class="text-muted">Data ini belum mencapai minimal skor untuk di verifikasi</small>
                                         @endif
@@ -81,10 +81,50 @@
         </div>
     </section>
 
+    @if($data->relationLoaded('verifikasi'))
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title">Revisi Berkas Data</div>
+                            <div class="table-responsive">
+                                <table class="table table-stripped datatable">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nama Berkas</th>
+                                        <th>Status</th>
+                                        <th>Komentar</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($data->berkas as $berkas)
+                                        @php
+                                            $v = $data->verifikasi->firstWhere('field', $berkas['id']);
+                                        @endphp
+                                        <tr>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td><a href="{{route('filepreview', ['payload' => Crypt::encryptString($berkas->path)])}}" target="_new">{{$berkas['name'] ?? '-'}} <i class="bi bi-link"></i></a></td>
+                                            <td><h5><span class="badge {{$v && $v->accepted ? 'border-success text-success' : 'border-danger text-danger'}}">{{$v && $v->accepted ? 'Disetujui' : 'Revisi'}}</span></h5></td>
+                                            <td>
+                                                <em>{{$v && $v->comment ? $v->comment : '-'}}</em>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endif
+
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
-
                 <div class="card">
                     <div class="card-body">
                         <div class="card-title">Berkas Data</div>

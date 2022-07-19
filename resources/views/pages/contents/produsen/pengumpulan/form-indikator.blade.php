@@ -43,7 +43,7 @@
                                 <label for="nama" class="col-sm-2 col-form-label">Nama Indikator</label>
                                 <div class="col-sm-10">
                                     <input id="nama" name="nama" type="text" class="form-control {{ isset($nama) ? ($nama->accepted ? 'is-valid' : 'is-invalid') : '' }}"
-                                           placeholder="Nama Indikator" value="{{old('nama', optional($data->indikator)->nama ?? $data->nama_data)}}" readonly>
+                                           placeholder="Nama Indikator" value="{{old('nama', $data->nama_data)}}" readonly>
                                     @if (isset($nama) && !empty($nama->comment))
                                         <p class="text-muted text-comment">Komentar: {{$nama->comment}}</p>
                                     @endif
