@@ -191,11 +191,11 @@
                                                                                 </div>
                                                                                 <div class="modal-footer">
                                                                                     <button type="button" class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Cancel
+                                                                                            data-bs-dismiss="modal">Batal
                                                                                     </button>
                                                                                     <button type="button" class="btn btn-primary"
                                                                                             data-bs-toggle="modal"
-                                                                                            data-bs-target="#alasan">Ok
+                                                                                            data-bs-target="#alasan">Lanjutkan
                                                                                     </button>
                                                                                 </div>
                                                                             </div>
@@ -211,22 +211,21 @@
                                                                                             data-bs-dismiss="modal"
                                                                                             aria-label="Close"></button>
                                                                                 </div>
-                                                                                <div class="modal-body">
+                                                                                <div class="modal-body px-3">
                                                                                     <form
                                                                                         action="{{ url('data_produsen/alasan', $dt->id) }}"
                                                                                         method="post" enctype="multipart/form-data">
                                                                                         @csrf
-                                                                                        <div class="input-group mb-3">
-                                                                                            <input type="text" name="alasan"
+                                                                                        <div class="row mb-3">
+                                                                                            <textarea type="text" name="alasan"
                                                                                                    id="alasan" class="form-control"
-                                                                                                   placeholder="Berikan Alasan"
-                                                                                                   aria-label="Berikan Alasan"
-                                                                                                   aria-describedby="button-addon2">
-                                                                                            <button class="btn btn-primary"
-                                                                                                    type="submit"
-                                                                                                    id="button-addon2">Kirim
-                                                                                            </button>
+                                                                                                   placeholder="Berikan Alasan Penolakan"
+                                                                                                   aria-label="Berikan Alasan Penolakan" required></textarea>
                                                                                         </div>
+
+                                                                                        <button class="btn btn-primary" type="submit" id="button-addon2">
+                                                                                            Kirim <i class="bi bi-send"></i>
+                                                                                        </button>
                                                                                     </form>
                                                                                 </div>
 
