@@ -40,15 +40,8 @@ class UserController extends Controller
         return view('pages.contents.administrator.createuser', (compact('data', 'opd', 'role')));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-
         if ($request->role_id == '1') {
             $administrator = User::create([
                 'name' => $request->nama,
@@ -59,8 +52,7 @@ class UserController extends Controller
                 'opd_id' => $request->opd_id,
             ]);
             $administrator->assignRole('administrator');
-            activity()->performedOn($administrator)->log('Membuat User');
-            return redirect('/user');
+            activity()->performedOn($administrator)->log('membuat user (admin): '. $request->username);
         } elseif ($request->role_id == '2') {
             $walidata = User::create([
                 'name' => $request->nama,
@@ -71,8 +63,7 @@ class UserController extends Controller
                 'opd_id' => $request->opd_id,
             ]);
             $walidata->assignRole('walidata');
-            activity()->performedOn($walidata)->log('Membuat User');
-            return redirect('/user');
+            activity()->performedOn($walidata)->log('membuat user (walidata): ' . $request->username);
         } elseif ($request->role_id == '3') {
             $produsen = User::create([
                 'name' => $request->nama,
@@ -83,9 +74,10 @@ class UserController extends Controller
                 'opd_id' => $request->opd_id,
             ]);
             $produsen->assignRole('produsen');
-            activity()->performedOn($produsen)->log('Membuat User');
-            return redirect('/user');
+            activity()->performedOn($produsen)->log('membuat user (produsen): ' . $request->username);
         }
+
+        return redirect('/user');
     }
 
     /**
