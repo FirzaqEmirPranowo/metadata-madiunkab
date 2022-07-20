@@ -48,7 +48,10 @@ class DataImport implements ToModel, WithHeadingRow, WithMultipleSheets
 
         ]);
 
-        activity()->performedOn($data)->log('Import Daftar Data');
+        activity()
+            ->causedBy(auth()->id())
+            ->performedOn($data)
+            ->log('Import data');
 
         return $data;
     }

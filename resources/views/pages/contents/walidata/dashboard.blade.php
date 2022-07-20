@@ -160,13 +160,14 @@
                 </div>
             </div>
             <div class="col-lg-4">
-                <div class="card">
+                <div class="card dashboard">
                     <div class="card-body"><h5 class="card-title">Aktivitas Terbaru</h5>
-                        <div class="activity d-flex flex-column gap-2 justify-content-evenly">
+                        <div class="activity">
                             @foreach($lastActivities as $a)
-                                <div class="activity-item d-flex justify-content-between">
+                                <div class="activity-item d-flex">
                                     <div class="activite-label">{{optional($a->created_at)->diffForHumans()}}</div>
-                                    <div class="activity-content"> {{$a->causer->name }} {{$a->description}}</div>
+                                    <i class="bi bi-circle-fill activity-badge text-muted align-self-start"></i>
+                                    <div class="activity-content"><small>{{$a->causer->name }} - {{$a->description}}</small></div>
                                 </div>
                             @endforeach
                         </div>
