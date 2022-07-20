@@ -23,15 +23,15 @@
 
                         <ul class="nav nav-tabs nav-tabs-bordered d-flex text-center" role="tablist">
                             <li class="nav-item flex-fill" role="presentation">
-                                <a href="/data_produsen/draft" class="nav-link {{!isset($status) ? 'active' : ''}} w-100" id="draft-tab">Draft</a>
+                                <a href="/data_produsen/draft" class="nav-link {{!isset($status) ? 'active' : ''}} w-100" id="draft-tab"><i class="bi bi-list-ul"></i> Draft</a>
                             </li>
 
                             <li class="nav-item flex-fill" role="presentation">
-                                <a href="/data_produsen/selesai_konfirmasi" class="nav-link w-100 {{isset($status) && $status == 'disetujui' ? 'active' : ''}}" id="disetujui-tab">Disetujui</a>
+                                <a href="/data_produsen/selesai_konfirmasi" class="nav-link w-100 {{isset($status) && $status == 'disetujui' ? 'active' : ''}}" id="disetujui-tab"><i class="bi bi-list-check"></i> Disetujui</a>
                             </li>
 
                             <li class="nav-item flex-fill" role="presentation">
-                                <a href="/data_produsen/tolak_konfirmasi" class="nav-link w-100 {{isset($status) && $status == 'ditolak' ? 'active' : ''}}" id="ditolak-tab">Ditolak</a>
+                                <a href="/data_produsen/tolak_konfirmasi" class="nav-link w-100 {{isset($status) && $status == 'ditolak' ? 'active' : ''}}" id="ditolak-tab"><i class="bi bi-list-nested"></i> Ditolak</a>
                             </li>
                         </ul>
 
