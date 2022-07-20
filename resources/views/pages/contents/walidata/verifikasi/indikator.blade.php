@@ -96,7 +96,7 @@
                                         $isImage = Str::startsWith(optional($data->indikator)->metode, 'public/');
                                     @endphp
                                     <div class="col-sm-{{$isImage ? 4 : 8}}">
-                                        <textarea name="metode" id="metode" class="form-control" style="height: 100px" spellcheck="false" placeholder="Metode / Rumus Perhitungan"></textarea>
+                                        <textarea name="metode" id="metode" class="form-control" style="height: 100px" spellcheck="false" placeholder="Metode / Rumus Perhitungan">{{optional($data->indikator)->metode}}</textarea>
                                     </div>
                                     @if ($isImage)
                                         <div class="col-sm-4">
