@@ -146,7 +146,7 @@
                                                                                         <div class="input-group mb-3">
                                                                                             <button type="button"
                                                                                                     class="btn btn-secondary"
-                                                                                                    data-bs-dismiss="modal">Cancel
+                                                                                                    data-bs-dismiss="modal">Batal
                                                                                             </button>
                                                                                             <button class="btn btn-primary"
                                                                                                     type="submit"

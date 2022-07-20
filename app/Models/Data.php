@@ -240,6 +240,7 @@ class Data extends Model implements HasMedia
                 $join->on("data.user_id", "=", "users.id");
             })
             ->select("nama_opd", "nama_data", "jenis_data", "sumber_data", "status_id", "status", "name", "user_id", "opds.id", "data.id")
+            ->where('opds.id', '=', auth()->user()->opd_id)
             ->whereNotIn('status_id', [Data::STATUS_TOLAK, Data::STATUS_DRAFT])
             ->get();
     }
