@@ -30,8 +30,9 @@ class DataImport implements ToModel, WithHeadingRow, WithMultipleSheets
         $cek_opd = Opd::select('id')->where('nama_opd', '=', $row['OPD'])->first();
 
         if (!$cek_opd) {
-            throw new \Exception('OPD tidak ditemukan');
+            throw new \Exception('OPD '. $row['OPD']  .' tidak ditemukan');
         }
+
         $existingData = Data::where('opd_id', $cek_opd->id)->where('nama_data', $row['Nama Data'])->first();
         if ($existingData) {
             throw new \Exception('Data dengan nama '. $row['Nama Data']  . '  sudah terdapat pada sistem');
