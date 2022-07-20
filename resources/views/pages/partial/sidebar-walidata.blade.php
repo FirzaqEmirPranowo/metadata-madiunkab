@@ -43,9 +43,9 @@
 
         <li class="nav-heading">Publikasi Data</li>
         <li class="nav-item">
-            <a class="nav-link {{request()->routeIs('publikasi.*') ? 'collapse' : 'collapsed'}}" href="#">
+            <a class="nav-link {{request()->routeIs('publikasi.*') ? 'collapse' : 'collapsed'}}" href="{{route('publikasi.index')}}">
                 <i class="bi bi-send"></i>
-                <span>Draft Publikasi</span>
+                <span>Publikasi Data</span>
             </a>
         </li>
 
