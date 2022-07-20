@@ -78,6 +78,13 @@ class PublikasiController extends Controller
         }
 
         $data = Data::findOrFail($id);
+
+        if ($data->status_id != Data::STATUS_SIAP_PUBLIKASI) {
+            return redirect()->back()->with([
+                Alert::error('Gagal', 'Status data belum siap untuk dipublikasi')
+            ]);
+        }
+
         $data->publikasi()->updateOrCreate(
             ['data_id' => $data->id],
             ['org_id' => $request->org_id]
@@ -106,6 +113,13 @@ class PublikasiController extends Controller
         ]);
 
         $data = Data::findOrFail($id);
+
+        if ($data->status_id != Data::STATUS_SIAP_PUBLIKASI) {
+            return redirect()->back()->with([
+                Alert::error('Gagal', 'Status data belum siap untuk dipublikasi')
+            ]);
+        }
+
         $data->publikasi()->updateOrCreate(
             ['data_id' => $data->id],
             [
@@ -132,6 +146,12 @@ class PublikasiController extends Controller
     public function publish($id)
     {
         $data = Data::with(['publikasi', 'opd'])->findOrFail($id);
+
+        if ($data->status_id != Data::STATUS_SIAP_PUBLIKASI) {
+            return redirect()->back()->with([
+                Alert::error('Gagal', 'Status data belum siap untuk dipublikasi')
+            ]);
+        }
 
         if (empty($data->publikasi) || empty($data->publikasi->org_id)) {
             return redirect()->back()->with([

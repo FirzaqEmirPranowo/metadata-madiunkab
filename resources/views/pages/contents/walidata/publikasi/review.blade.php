@@ -109,13 +109,14 @@
                                         </div>
                                     </div>
 
-
-                                    <div class="row mb-3">
-                                        <div class="col-sm-2"></div>
-                                        <div class="col-sm-10">
-                                            <button class="btn btn-lg btn-outline-primary" id="btnConfirmation"><i class="bi bi-send-check"></i> Publikasi</button>
+                                    @if($data->status_id == \App\Models\Data::STATUS_SIAP_PUBLIKASI)
+                                        <div class="row mb-3">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-10">
+                                                <button class="btn btn-lg btn-outline-primary" id="btnConfirmation"><i class="bi bi-send-check"></i> Publikasi</button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif
 
                                     <a href="{{route('publikasi.index')}}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
                                 </div>
