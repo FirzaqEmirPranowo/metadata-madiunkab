@@ -49,6 +49,9 @@
                                             <a class="btn btn-outline-primary btn-sm" href="/data_{{$role}}/pengumpulan/{{$dt->id}}/standar"><i class="bi bi-sim-fill"></i> Standar Data</a>
                                             <a class="btn btn-outline-success btn-sm" href="/data_{{$role}}/pengumpulan/{{$dt->id}}/{{strtolower($dt->jenis_data)}}"><i class="bi bi-bar-chart"></i> Meta Data {{$dt->jenis_data}}</a>
                                             <a class="btn btn-outline-success btn-sm" href="/data_{{$role}}/pengumpulan/{{$dt->id}}/kegiatan"><i class="bi bi-activity"></i> Meta Data Kegiatan</a>
+                                            @if($role == 'produsen' && $dt->calculateProgress() >= 60 && ($dt->status_id == \App\Models\Data::STATUS_PROSES_PENGUMPULAN || $dt->status_id = \App\Models\Data::STATUS_SETUJU || $dt->status_id == \App\Models\Data::STATUS_REVISI))
+                                                <a class="btn btn-verify btn-outline-success" href="{{route('siap-verifikasi', $dt->id)}}">Siap Verifikasi<i class="bi bi-check"></i></a>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>
@@ -63,3 +66,44 @@
     </section>
 
 @endsection
+
+@push('js')
+    <script>
+        $(function() {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            });
+
+            $('table.table').on('click', 'a.btn-verify', function (e) {
+                e.preventDefault();
+                let url = $(this).attr('href');
+
+                swalWithBootstrapButtons.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: 'Pastikan semua metadata sudah terisi lengkap sebelum memasuki proses verifikasi!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ajukan Verifikasi!',
+                    cancelButtonText: 'Batal',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: url,
+                            method: 'PATCH',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{csrf_token()}}'
+                            }
+                        })
+                            .then((r) => Swal.fire(r.ok ? 'Sukses' : 'Gagal', r.message, r.ok ? 'success' : 'error'))
+                            .catch(() => Swal.fire('Error', 'Terjadi galat saat memproses permintaan', 'error'));
+                    }
+                })
+            });
+        });
+    </script>
+@endpush
