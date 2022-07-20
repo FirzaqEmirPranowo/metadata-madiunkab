@@ -17,8 +17,8 @@ class HomeController extends Controller
     {
         $data = Data::count();
         $disetujui = Data::where('status_id', Data::STATUS_SETUJU)->count();
-        $dataPengumpulan = Data::where('status_id', Data::STATUS_PROSES_PENGUMPULAN)->count();
-        $dataVerifikasi = Data::where('status_id', '>=', Data::STATUS_PROSES_VERIFIKASI)->count();
+        $dataPengumpulan = Data::whereIn('status_id', [Data::STATUS_PROSES_PENGUMPULAN, Data::STATUS_SETUJU])->count();
+        $dataVerifikasi = Data::whereIn('status_id', [Data::STATUS_PROSES_VERIFIKASI, Data::STATUS_REVISI])->count();
         $dataSiapPublish = Data::where('status_id', '=', Data::STATUS_SIAP_PUBLIKASI)->count();
         $dataTerbaru = Data::with('opd')->latest()->take(10)->get();
         $lastActivities = Activity::with('causer')->latest()->take(20)->get();
@@ -29,8 +29,8 @@ class HomeController extends Controller
     {
         $data = Data::count();
         $disetujui = Data::where('status_id', Data::STATUS_SETUJU)->count();
-        $dataPengumpulan = Data::where('status_id', Data::STATUS_PROSES_PENGUMPULAN)->count();
-        $dataVerifikasi = Data::where('status_id', '>=', Data::STATUS_PROSES_VERIFIKASI)->count();
+        $dataPengumpulan = Data::whereIn('status_id', [Data::STATUS_PROSES_PENGUMPULAN, Data::STATUS_SETUJU])->count();
+        $dataVerifikasi = Data::whereIn('status_id', [Data::STATUS_PROSES_VERIFIKASI, Data::STATUS_REVISI])->count();
         $dataSiapPublish = Data::where('status_id', '=', Data::STATUS_SIAP_PUBLIKASI)->count();
         $dataTerbaru = Data::with('opd')->latest()->take(10)->get();
         $lastActivities = Activity::with('causer')->latest()->take(20)->get();
@@ -41,8 +41,8 @@ class HomeController extends Controller
     {
         $opdId = auth()->user()->opd_id;
         $data = Data::where('opd_id', $opdId)->count();
-        $dataPengumpulan = Data::where('opd_id', $opdId)->where('status_id', Data::STATUS_PROSES_PENGUMPULAN)->count();
-        $dataVerifikasi = Data::where('opd_id', $opdId)->where('status_id', Data::STATUS_PROSES_VERIFIKASI)->count();
+        $dataPengumpulan = Data::whereIn('status_id', [Data::STATUS_PROSES_PENGUMPULAN, Data::STATUS_SETUJU])->count();
+        $dataVerifikasi = Data::whereIn('status_id', [Data::STATUS_PROSES_VERIFIKASI, Data::STATUS_REVISI])->count();
         $dataTidakLengkap = Data::where('opd_id', $opdId)->where('status_id', '>=', Data::STATUS_PROSES_PENGUMPULAN)->count();
         $dataSiapPublish = Data::where('opd_id', $opdId)->where('status_id', '=', Data::STATUS_SIAP_PUBLIKASI)->count();
         $dataTerbaru = Data::where('opd_id', $opdId)->with('opd', 'status')->latest()->take(10)->get();
