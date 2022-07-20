@@ -20,6 +20,7 @@ class CreateBerkasTable extends Migration
             $table->string('name');
             $table->integer('size');
             $table->longText('path');
+            $table->string('resource_id')->nullable();
             $table->timestamps();
         });
     }

@@ -123,6 +123,10 @@ Route::middleware(['role:walidata', 'auth:web'])->group(function () {
         Route::get('/{id}/organisasi', [Walidata\PublikasiController::class, 'organisasi'])->name('organisasi');
         Route::post('/{id}/organisasi', [Walidata\PublikasiController::class, 'simpanOrganisasi'])->name('organisasi.store');
         Route::post('organisasi/create', [Walidata\PublikasiController::class, 'createOrganisasi'])->name('organisasi.create');
+        Route::get('/{id}/dataset', [Walidata\PublikasiController::class, 'dataset'])->name('dataset');
+        Route::post('/{id}/dataset', [Walidata\PublikasiController::class, 'simpanDataset'])->name('dataset.store');
+        Route::get('/{id}/review', [Walidata\PublikasiController::class, 'review'])->name('review');
+        Route::post('/{id}/publish', [Walidata\PublikasiController::class, 'publish'])->name('publish');
     });
 
     Route::post('/data_walidata/import', [DataController::class, 'importData']);

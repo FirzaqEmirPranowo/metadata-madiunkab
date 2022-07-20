@@ -45,7 +45,7 @@
       <td><img src="<?php echo $pict ?>" width="120px" height="150px" alt=""></td>
       <td class="kop">
         <font size="5"><b>PEMERINTAH KABUPATEN MADIUN</b></font>
-        <font size="7"><b>SEKRETARIAT DAERAH</b></font><br>
+        <font size="6"><b>SEKRETARIAT DAERAH</b></font><br>
         <font size="2">Jalan Alun – alun Utara Nomor 1-3 Madiun</font><br>
         <font size="2">Telepon ( 0351 ) 448000 - 44870007</font><br>
         <font size="2">Website http://www.madiunkab.go.id</font><br>
@@ -100,7 +100,7 @@
       <td><font size="3">KETIGA</font></td>
       <td><font width="100px"> :</font></td>
       <td style="padding-top:20px"><font width="100px"> Dalam hal pengumpulan data dilaksanakan melaui portal Satu Data
-        Kabupuaten Madiun di laman www.data.madiunkab.go.id</font></td>
+        Kabupuaten Madiun di laman data.madiunkab.go.id</font></td>
     </tr>
   </table>
   <br>

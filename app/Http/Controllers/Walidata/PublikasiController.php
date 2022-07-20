@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Walidata;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendFilesToCKAN;
 use App\Models\Data;
 use App\Services\CkanApi\Facades\CkanApi;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class PublikasiController extends Controller
     {
         $data = Data::where('status_id', [Data::STATUS_SIAP_PUBLIKASI, Data::STATUS_TERPUBLIKASI])
             ->when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))
-            ->with(['opd', 'status', 'berkas', 'indikator', 'variabel', 'standar', 'kegiatan'])
+            ->with(['opd', 'status'])
             ->latest()
             ->get();
 
@@ -24,7 +25,7 @@ class PublikasiController extends Controller
 
     public function organisasi($id)
     {
-        $data = Data::findOrFail($id);
+        $data = Data::with(['publikasi'])->findOrFail($id);
         $orgs = CkanApi::organization()->all();
         $orgs = $orgs['result'] ?? [];
 
@@ -63,8 +64,107 @@ class PublikasiController extends Controller
         ]);
     }
 
-    public function simpanOrganisasi(Request $request)
+    public function simpanOrganisasi($id, Request $request)
     {
+        $request->validate([
+            'org_id' => 'required|uuid'
+        ]);
 
+        $res = CkanApi::organization()->show($request->org_id);
+        if (isset($res['success']) && !$res['success']) {
+            return redirect()->back()->with([
+                Alert::error('Gagal', 'OPD/Organisasi tidak tersedia pada CKAN')
+            ]);
+        }
+
+        $data = Data::findOrFail($id);
+        $data->publikasi()->updateOrCreate(
+            ['data_id' => $data->id],
+            ['org_id' => $request->org_id]
+        );
+
+        Alert::success('Berhasil', 'Organisasi berhasil dipilih');
+
+        return redirect()->back();
+    }
+
+    public function dataset($id)
+    {
+        $data = Data::with('publikasi')->findOrFail($id);
+        $orgs = CkanApi::organization()->all();
+        $orgs = $orgs['result'] ?? [];
+
+        return view('pages.contents.walidata.publikasi.dataset', compact('data', 'orgs'));
+    }
+
+    public function simpanDataset($id, Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string',
+            'description' => 'nullable|string',
+            'visibility' => 'required|numeric|in:0,1'
+        ]);
+
+        $data = Data::findOrFail($id);
+        $data->publikasi()->updateOrCreate(
+            ['data_id' => $data->id],
+            [
+                'title' => $request->get('title'),
+                'description' => $request->get('description'),
+                'visibility' => $request->get('visibility')
+            ]
+        );
+
+        Alert::success('Berhasil', 'Informasi dataset berhasil disimpan');
+
+        return redirect()->back();
+    }
+
+    public function review($id)
+    {
+        $data = Data::with(['publikasi', 'berkas'])->findOrFail($id);
+        $orgs = CkanApi::organization()->all();
+        $orgs = $orgs['result'] ?? [];
+
+        return view('pages.contents.walidata.publikasi.review', compact('data', 'orgs'));
+    }
+
+    public function publish($id)
+    {
+        $data = Data::with(['publikasi', 'opd'])->findOrFail($id);
+
+        if (empty($data->publikasi) || empty($data->publikasi->org_id)) {
+            return redirect()->back()->with([
+                Alert::error('Gagal', 'Data publikasi kosong')
+            ]);
+        }
+
+        $dataset = CkanApi::dataset()->create([
+            'owner_org' => $data->publikasi->org_id,
+            'title' => $data->publikasi->title,
+            'name' => $slug = Str::slug($data->publikasi->title),
+            'url' => $slug,
+            'notes' => $data->publikasi->description,
+            'private' => $data->publikasi->visibility == 0,
+        ]);
+
+        if (empty($dataset['result']) || (isset($dataset['success']) && !$dataset['success'])) {
+            return redirect()->back()->with([
+                Alert::error('Gagal', 'Gagal mempublikasi data, Response ckan tidak valid')
+            ]);
+        }
+
+        $data->publikasi->update([
+            'dataset_id' => $dataset['result']['id'],
+            'published_at' => now(),
+            'slug' => $slug,
+            'status' => Data::STATUS_TERPUBLIKASI
+        ]);
+
+        SendFilesToCKAN::dispatch($data, $dataset['result']['id']);
+
+        return redirect()->back()->with([
+            Alert::success('Berhasil', 'Data berhasil dipublikasi ke CKAN.')
+        ]);
     }
 }

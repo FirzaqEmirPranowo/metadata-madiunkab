@@ -17,10 +17,13 @@ class CreatePublikasiTable extends Migration
         Schema::create('publikasi', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Data::class, 'data_id')->nullable()->constrained('data')->nullOnDelete()->cascadeOnUpdate();
-            $table->string('title')->nullable();
             $table->uuid('org_id')->nullable();
-            $table->mediumText('tags_id')->nullable();
+            $table->string('title')->nullable();
             $table->longText('description')->nullable();
+            $table->boolean('visibility')->nullable();
+            $table->mediumText('slug')->nullable();
+            $table->string('dataset_id')->nullable();
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });
     }

@@ -34,7 +34,7 @@
                                     <div class="row mb-3">
                                         <label for="nama_data" class="col-sm-2 col-form-label">Nama Data</label>
                                         <div class="col-sm-10">
-                                            <input id="nama_data" name="judul_kegiatan" type="text" class="form-control" placeholder="Nama Data" value="{{$data->nama_data}}" disabled>
+                                            <input id="nama_data" name="nama_data" type="text" class="form-control" placeholder="Nama Data" value="{{$data->nama_data}}" disabled>
                                         </div>
                                     </div>
 
@@ -60,9 +60,9 @@
                                         <label for="org_id" class="col-sm-2 col-form-label">Organisasi/OPD</label>
                                         <div class="col-sm-10">
                                             <select class="form-select" id="org_id" name="org_id" required>
-                                                <option value="-1">- Pilih Data -</option>
+                                                <option value="-1" {{empty(optional($data->publikasi)->org_id) ? 'selected' : ''}}>- Pilih Data -</option>
                                                 @foreach($orgs as $org)
-                                                    <option value="{{$org['id']}}">{{$org['display_name']}}</option>
+                                                    <option value="{{$org['id']}}" {{old('org_id', optional($data->publikasi)->org_id) == $org['id'] ? 'selected' : ''}}>{{$org['display_name']}}</option>
                                                 @endforeach
                                             </select>
                                             <small class="text-muted">Organisasi ini sebagai kepemilikian data yang akan dipublikasi</small>

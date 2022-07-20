@@ -41,11 +41,11 @@
             </a>
         </li>
 
-        <li class="nav-heading">Publikasi Data</li>
+        <li class="nav-heading">Penyebarluasan Data</li>
         <li class="nav-item">
             <a class="nav-link {{request()->routeIs('publikasi.*') ? 'collapse' : 'collapsed'}}" href="{{route('publikasi.index')}}">
                 <i class="bi bi-send"></i>
-                <span>Publikasi Data</span>
+                <span>Penyebarluasan Data</span>
             </a>
         </li>
 
