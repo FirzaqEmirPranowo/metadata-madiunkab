@@ -64,7 +64,7 @@
                             <div class="row mb-3">
                                 <label for="definisi" class="col-sm-2 col-form-label">Definisi</label>
                                 <div class="col-sm-8">
-                                    <input id="definisi" name="definisi" type="text" class="form-control {{ $definisi ? ($definisi->accepted ? 'is-valid' : 'is-invalid') : '' }} bg-light" placeholder="Definisi" value="{{old('definisi', optional($data->variabel)->definisi ?? optional($data->standar)->definisi)}}" disabled>
+                                    <textarea id="definisi" name="definisi" type="text" class="form-control {{ $definisi ? ($definisi->accepted ? 'is-valid' : 'is-invalid') : '' }} bg-light" placeholder="Definisi" disabled>{{old('definisi', optional($data->variabel)->definisi ?? optional($data->standar)->definisi)}}</textarea>
                                 </div>
                                 <div class="col-sm-2">
                                     <div class="btn-group-sm">
@@ -78,7 +78,7 @@
                             <div class="row mb-3">
                                 <label for="interpretasi" class="col-sm-2 col-form-label">Interpretasi</label>
                                 <div class="col-sm-8">
-                                    <input id="interpretasi" name="interpretasi" type="text" class="form-control {{ $interpretasi ? ($interpretasi->accepted ? 'is-valid' : 'is-invalid') : '' }} bg-light" placeholder="Interpretasi" value="{{old('interpretasi', optional($data->indikator)->interpretasi)}}" disabled>
+                                    <textarea id="interpretasi" name="interpretasi" type="text" class="form-control {{ $interpretasi ? ($interpretasi->accepted ? 'is-valid' : 'is-invalid') : '' }} bg-light" placeholder="Interpretasi">{{old('interpretasi', optional($data->indikator)->interpretasi)}}</textarea>
                                 </div>
                                 <div class="col-sm-2">
                                     <div class="btn-group-sm">
