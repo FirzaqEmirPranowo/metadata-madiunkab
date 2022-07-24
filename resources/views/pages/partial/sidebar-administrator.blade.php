@@ -20,15 +20,6 @@
         </a>
       </li><!-- End Dashboard Nav -->
 
-      {{-- <li class="nav-heading">Perencanaan Data</li> --}}
-
-      <li class="nav-item">
-        <a class="nav-link collapsed " href="/data_administrator/verifikasi_data">
-          <i class="bi bi-file-earmark-check"></i>
-          <span>Daftar Data</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
-
 
       <li class="nav-heading">Master Data</li>
 
