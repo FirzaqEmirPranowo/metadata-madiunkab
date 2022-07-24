@@ -102,8 +102,6 @@ class PublikasiController extends Controller
         $orgs = CkanApi::organization()->all(['limit' => 1000]);
         $orgs = $orgs['result'] ?? [];
 
-        dd(count($orgs));
-
         return view('pages.contents.walidata.publikasi.dataset', compact('data', 'orgs'));
     }
 
