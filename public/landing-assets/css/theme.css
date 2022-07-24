@@ -1012,6 +1012,8 @@ a.text-dark:hover, a.text-dark:focus {
 
 .navbar {
   min-height: 70px;
+    border-style: unset !important;
+    border-width: unset !important;
 }
 
 .navbar.sticky {
