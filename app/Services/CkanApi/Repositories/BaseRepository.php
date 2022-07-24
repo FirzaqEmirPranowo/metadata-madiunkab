@@ -92,7 +92,7 @@ class BaseRepository
      */
     protected function responseToJson(ResponseInterface $response)
     {
-        return json_decode((string)$response->getBody(), true);
+        return json_decode((string)$response->getBody() ?? '[]', true);
     }
 
     /**

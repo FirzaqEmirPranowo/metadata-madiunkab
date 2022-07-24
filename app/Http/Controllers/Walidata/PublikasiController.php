@@ -178,7 +178,9 @@ class PublikasiController extends Controller
             'dataset_id' => $dataset['result']['id'],
             'published_at' => now(),
             'slug' => $slug,
-            'status' => Data::STATUS_TERPUBLIKASI
+        ]);
+        $data->update([
+            'status_id' => Data::STATUS_TERPUBLIKASI
         ]);
 
         SendFilesToCKAN::dispatch($data, $dataset['result']['id']);

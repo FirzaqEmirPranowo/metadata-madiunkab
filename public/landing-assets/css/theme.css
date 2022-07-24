@@ -1518,8 +1518,23 @@ a.text-dark:hover, a.text-dark:focus {
 
 .banner-seo-check {
   padding: 0;
-  background-image: radial-gradient(circle, #3d1361 0%, #5439F8);
-  color: #fff;
+    background-image: linear-gradient(
+        45deg,
+        hsl(240deg 68% 55%) 0%,
+        hsl(226deg 76% 55%) 7%,
+        hsl(220deg 78% 58%) 15%,
+        hsl(217deg 74% 63%) 26%,
+        hsl(215deg 65% 69%) 39%,
+        hsl(193deg 79% 58%) 52%,
+        hsl(177deg 65% 57%) 64%,
+        hsl(138deg 63% 74%) 74%,
+        hsl(66deg 70% 75%) 82%,
+        hsl(65deg 71% 81%) 88%,
+        hsl(63deg 72% 86%) 93%,
+        hsl(62deg 76% 92%) 97%,
+        hsl(60deg 100% 98%) 100%
+    );
+ color: #fff;
 }
 
 .banner-seo-check .wrap {
@@ -1541,7 +1556,7 @@ a.text-dark:hover, a.text-dark:focus {
   position: absolute;
   top: 6px;
   right: 6px;
-} 
+}
 
 
 .card-pricing {

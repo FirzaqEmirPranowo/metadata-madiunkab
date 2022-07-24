@@ -101,146 +101,28 @@
         <div class="row pt-0">
             <div class="col-lg-12">
                 <div class="text-center wow fadeInUp">
-                    <div class="subhead">Highlight Data</div>
-                    <h2 class="title-section">Portal Data</h2>
+                    <div class="subhead">Daftar Kelompok Data</div>
+                    <h2 class="title-section">Kelompok Data</h2>
                     <div class="divider mx-auto"></div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3">
-                <div class="card-service wow fadeInUp">
-                    <div class="header">
-                        <img style="width: 100px;" src="../landing-assets/img/services/covid19.gif" alt="">
-                    </div>
-                    <div class="body">
-                        <h5 class="text-secondary">Covid 19</h5>
-                        <a href="{{route('dataset')}}" class="btn btn-ungu">Lihat</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card-service wow fadeInUp">
-                    <div class="header">
-                        <img style="width: 100px;" src="../landing-assets/img/services/kependudukan.gif" alt="">
-                    </div>
-                    <div class="body">
-                        <h5 class="text-secondary">Kependudukan</h5>
-                        <a href="{{route('dataset')}}" class="btn btn-ungu">Lihat</a>
+            @foreach($groups as $group)
+                <div class="col-lg-4">
+                    <div class="card-service wow fadeInUp h-100 d-flex flex-column align-items-stretch">
+                        <div class="header">
+                            @if(!empty($group['image_display_url']) )
+                                <img style="width: 100px;" src="{{$group['image_display_url']}}" class="mb-2" loading="lazy" alt="{{$group['title']}}">
+                            @endif
+                            <h5 class="text-primary">{{$group['display_name'] ?? '-'}}</h5>
+                        </div>
+                        <div class="body">
+                            <a href="{{route('dataset', ['group' => $group['name'] ?? '-'])}}" class="btn btn-outline-primary">Lihat</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card-service wow fadeInUp">
-                    <div class="header">
-                        <img style="width: 100px;" src="../landing-assets/img/services/kesehatan.gif" alt="">
-                    </div>
-                    <div class="body">
-                        <h5 class="text-secondary">Kesehatan</h5>
-                        <a href="{{route('dataset')}}" class="btn btn-ungu">Lihat</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3">
-                <div class="card-service wow fadeInUp">
-                    <div class="header">
-                        <img style="width: 100px;" src="../landing-assets/img/services/keuangan.gif" alt="">
-                    </div>
-                    <div class="body">
-                        <h5 class="text-secondary">Keuangan</h5>
-                        <a href="{{route('dataset')}}" class="btn btn-ungu">Lihat</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card-service wow fadeInUp">
-                    <div class="header">
-                        <img style="width: 100px;" src="../landing-assets/img/services/lingkungan.gif" alt="">
-                    </div>
-                    <div class="body">
-                        <h5 class="text-secondary">Lingkungan Hidup</h5>
-                        <a href="{{route('dataset')}}" class="btn btn-ungu">Lihat</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card-service wow fadeInUp">
-                    <div class="header">
-                        <img style="width: 100px;" src="../landing-assets/img/services/pariwisata.gif" alt="">
-                    </div>
-                    <div class="body">
-                        <h5 class="text-secondary">Pariwisata&Kebudayaan</h5>
-                        <a href="{{route('dataset')}}" class="btn btn-ungu">Lihat</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card-service wow fadeInUp">
-                    <div class="header">
-                        <img style="width: 100px;" src="../landing-assets/img/services/pekerjaan.gif" alt="">
-                    </div>
-                    <div class="body">
-                        <h5 class="text-secondary">Pekerjaan Umum</h5>
-                        <a href="{{route('dataset')}}" class="btn btn-ungu">Lihat</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card-service wow fadeInUp">
-                    <div class="header">
-                        <img style="width: 100px;" src="../landing-assets/img/services/pendidikan.gif" alt="">
-                    </div>
-                    <div class="body">
-                        <h5 class="text-secondary">Pendidikan</h5>
-                        <a href="{{route('dataset')}}" class="btn btn-ungu">Lihat</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card-service wow fadeInUp">
-                    <div class="header">
-                        <img style="width: 100px;" src="../landing-assets/img/services/bencana.gif" alt="">
-                    </div>
-                    <div class="body">
-                        <h6 class="text-secondary">Penanggulangan Bencana</h6>
-                        <a href="{{route('dataset')}}" class="btn btn-ungu">Lihat</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card-service wow fadeInUp">
-                    <div class="header">
-                        <img style="width: 100px;" src="../landing-assets/img/services/perhubungan.gif" alt="">
-                    </div>
-                    <div class="body">
-                        <h5 class="text-secondary">Perhubungan</h5>
-                        <a href="{{route('dataset')}}" class="btn btn-ungu">Lihat</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card-service wow fadeInUp">
-                    <div class="header">
-                        <img style="width: 100px;" src="../landing-assets/img/services/sosial.gif" alt="">
-                    </div>
-                    <div class="body">
-                        <h5 class="text-secondary">Sosial</h5>
-                        <a href="{{route('dataset')}}" class="btn btn-ungu">Lihat</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card-service wow fadeInUp">
-                    <div class="header">
-                        <img style="width: 100px;" src="../landing-assets/img/services/teknologi.gif" alt="">
-                    </div>
-                    <div class="body">
-                        <h5 class="text-secondary">Teknologi</h5>
-                        <a href="{{route('dataset')}}" class="btn btn-ungu">Lihat</a>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div> <!-- .container -->
 </div> <!-- .page-section -->

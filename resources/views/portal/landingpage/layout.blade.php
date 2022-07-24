@@ -43,7 +43,7 @@
                 <img src="/assets/img/services/service-4.png" alt="">
             </div> -->
             <div class="header">
-                <img style="width:200px; height:60px" src="/landing-assets/img/services/logo2.png" alt="">
+                <a href="{{url('/')}}"><img style="width:200px; height:60px" src="/landing-assets/img/services/logo2.png" alt="{{config('app.name')}}"></a>
 
             </div>
             <!-- <a href="#" class="navbar-brand">Satu<span class="text-primary">Data</span></a> -->

@@ -9,7 +9,9 @@ class PortalController extends Controller
 {
     public function index()
     {
-        return view('portal.landingpage.beranda');
+        $groups = CkanApi::group()->all();
+        $groups = $groups['result'] ?? [];
+        return view('portal.landingpage.beranda', compact('groups'));
     }
 
     public function tentang()
