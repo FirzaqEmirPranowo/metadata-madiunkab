@@ -119,7 +119,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-primary" onclick="document.getElementById('formCreateOrg').submit()">Simpan Data <i class="bi bi-send"></i></button>
+                    <button type="button" class="btn btn-primary" onclick="document.getElementById('formCreateOrg').submit()">Buat Organisasi <i class="bi bi-send"></i></button>
                 </div>
             </div>
         </div>
