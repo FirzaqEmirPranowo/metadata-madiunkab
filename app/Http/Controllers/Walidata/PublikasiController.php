@@ -7,6 +7,7 @@ use App\Jobs\SendFilesToCKAN;
 use App\Models\Data;
 use App\Services\CkanApi\Facades\CkanApi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -169,8 +170,11 @@ class PublikasiController extends Controller
         ]);
 
         if (empty($dataset['result']) || (isset($dataset['success']) && !$dataset['success'])) {
+            Log::error('Gagal publikasi data: '. json_encode($dataset), ['Publikasi']);
+
+            $errorMsg = isset($dataset['error']) && isset($dataset['error']['name']) ? implode(PHP_EOL, $dataset['error']['name']) : '';
             return redirect()->back()->with([
-                Alert::error('Gagal', 'Gagal mempublikasi data, Response ckan tidak valid')
+                Alert::error('Gagal', 'Gagal mempublikasi data, Response ckan tidak valid: ' . $errorMsg)
             ]);
         }
 
