@@ -27,7 +27,7 @@ class PublikasiController extends Controller
     public function organisasi($id)
     {
         $data = Data::with(['publikasi'])->findOrFail($id);
-        $orgs = CkanApi::organization(['limit' => 1000])->all();
+        $orgs = CkanApi::organization()->all(['limit' => 1000]);
         $orgs = $orgs['result'] ?? [];
 
         return view('pages.contents.walidata.publikasi.organisasi', compact('data', 'orgs'));
@@ -99,8 +99,10 @@ class PublikasiController extends Controller
     public function dataset($id)
     {
         $data = Data::with('publikasi')->findOrFail($id);
-        $orgs = CkanApi::organization()->all();
+        $orgs = CkanApi::organization()->all(['limit' => 1000]);
         $orgs = $orgs['result'] ?? [];
+
+        dd(count($orgs));
 
         return view('pages.contents.walidata.publikasi.dataset', compact('data', 'orgs'));
     }
@@ -138,7 +140,7 @@ class PublikasiController extends Controller
     public function review($id)
     {
         $data = Data::with(['publikasi', 'berkas'])->findOrFail($id);
-        $orgs = CkanApi::organization(['limit' => 1000])->all();
+        $orgs = CkanApi::organization()->all(['limit' => 1000]);
         $orgs = $orgs['result'] ?? [];
 
         return view('pages.contents.walidata.publikasi.review', compact('data', 'orgs'));

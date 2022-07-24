@@ -9,7 +9,7 @@ class PortalController extends Controller
 {
     public function index()
     {
-        $groups = CkanApi::group(['limit' => 60])->all();
+        $groups = CkanApi::group()->all(['limit' => 60]);
         $groups = $groups['result'] ?? [];
         return view('portal.landingpage.beranda', compact('groups'));
     }
