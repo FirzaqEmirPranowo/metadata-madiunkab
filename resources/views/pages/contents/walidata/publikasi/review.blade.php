@@ -96,7 +96,7 @@
                                                     <tr>
                                                         <td>{{$loop->iteration}}</td>
                                                         <td>
-                                                            <a href="{{route('filepreview', ['payload' => Crypt::encryptString($berkas->path)])}}"
+                                                            <a href="{{route('filepreview', ['payload' => Crypt::encryptString($berkas->path)])}}" download=""
                                                                target="_new">{{$berkas['name'] ?? '-'}} <i class="bi bi-link"></i>
                                                             </a>
                                                         </td>
