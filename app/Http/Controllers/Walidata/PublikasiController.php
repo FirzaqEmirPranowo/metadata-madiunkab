@@ -15,7 +15,7 @@ class PublikasiController extends Controller
 {
     public function index()
     {
-        $data = Data::where('status_id', [Data::STATUS_SIAP_PUBLIKASI, Data::STATUS_TERPUBLIKASI])
+        $data = Data::whereIn('status_id', [Data::STATUS_SIAP_PUBLIKASI, Data::STATUS_TERPUBLIKASI])
             ->when(auth()->user()->hasAnyRole('produsen'), fn($q) => $q->where('opd_id', auth()->user()->opd_id))
             ->with(['opd', 'status'])
             ->latest()
