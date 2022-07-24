@@ -56,7 +56,7 @@
             <div class="navbar-collapse collapse" id="navbarContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item {{ Request::segment(1) === '/' ? 'active' : null }}">
-                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link" href="/">Beranda</a>
                     </li>
                     <li class="nav-item {{ request()->routeIs('dataset') ? 'active' : null }}">
                         <a class="nav-link" href="{{route('dataset')}}">Dataset</a>
@@ -104,18 +104,16 @@
 
             <div class="col-lg-3 py-3">
                 <div class="social-media-button">
-                    <a href="#"><span class="mai-logo-facebook-f"></span></a>
-                    <a href="#"><span class="mai-logo-twitter"></span></a>
-                    <a href="#"><span class="mai-logo-google-plus-g"></span></a>
-                    <a href="#"><span class="mai-logo-instagram"></span></a>
-                    <a href="#"><span class="mai-logo-youtube"></span></a>
+                    <a href="https://www.facebook.com/pemkab.madiun/" rel="noreferrer"><span class="mai-logo-facebook-f"></span></a>
+                    <a href="https://twitter.com/pemkab_madiun" rel="noreferrer"><span class="mai-logo-twitter"></span></a>
+                    <a href="https://www.instagram.com/pemkabmadiun/" rel="noreferrer"><span class="mai-logo-instagram"></span></a>
+                    <a href="https://www.youtube.com/channel/UCv2HWvm0mF1gHJ327SMhn1Q" rel="noreferrer"><span class="mai-logo-youtube"></span></a>
                 </div>
 
             </div>
         </div>
 
-        <p class="text-center" style="margin-top: -60px;" id="copyright">Copyright &copy; {{date('Y')}}. PEMERINTAH
-            KABUPATEN MADIUN <a href="" target="_blank"></a></p>
+        <p class="text-center" style="margin-top: -60px;" id="copyright">Copyright &copy; {{date('Y')}}. PEMERINTAH KABUPATEN MADIUN <a href="" target="_blank"></a></p>
     </div>
 </footer>
 
