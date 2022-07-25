@@ -42,6 +42,14 @@
                                     <td>
                                         <div class="d-flex flex-column gap-2">
                                             <a class="btn btn-outline-primary btn-sm" href="{{route('publikasi.organisasi', $dt->id)}}"><i class="bi bi-info-circle"></i> Detail</a>
+
+                                            @if($dt->status_id == \App\Models\Data::STATUS_TERPUBLIKASI)
+                                                <a class="btn btn-outline-success btn-sm" href="{{route('export-data', $dt->id)}}"><i class="bi bi-file-zip"></i> Export</a>
+
+                                                @if(!empty(optional($dt->publikasi)->slug))
+                                                    <a href="{{config('ckan_api.url')}}/dataset/{{$dt->publikasi->slug}}" class="btn btn-outline-primary btn-sm" target="_new">CKAN <i class="bi bi-app-indicator"></i></a>
+                                                @endif
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

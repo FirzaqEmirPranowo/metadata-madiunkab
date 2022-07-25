@@ -181,7 +181,7 @@ Route::middleware(['role:produsen', 'auth:web'])->group(function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/filepreview', [FileController::class, 'preview'])->name('filepreview');
     Route::get('/up-download/{id}', [UpdownloadController::class, 'download']);
-    Route::get('/export/{id}', [DataController::class, 'exportData'])->name('export-data');
+    Route::get('/export/{id}', [Walidata\PublikasiController::class, 'exportData'])->name('export-data');
 });
 
 Route::get('/ajax/provinces', [WilayahController::class, 'province'])->name('ajax.provinces');
