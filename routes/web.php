@@ -24,8 +24,8 @@ Route::get('/masuk', function () {
 Route::get('/', [PortalController::class, 'index']);
 Route::get('/tentang', [PortalController::class, 'tentang']);
 Route::get('/dataset', [PortalController::class, 'data'])->name('dataset');
-Route::get('/berita', [PortalController::class, 'berita']);
-Route::get('/ckan', [PortalController::class, 'ckan']);
+//Route::get('/berita', [PortalController::class, 'berita']);
+
 Auth::routes();
 
 Route::middleware(['role:administrator', 'auth:web'])->group(function () {
@@ -44,7 +44,6 @@ Route::middleware(['role:administrator', 'auth:web'])->group(function () {
         return back();
     });
     Route::get('/data_administrator/verifikasi_data', [DataController::class, 'verifikasi_data'])->name('data_administrator');
-
 
     Route::get('/opd', [OpdController::class, 'index'])->name('opd');
     Route::get('/opd/create', [OpdController::class, 'create'])->name('opd');
@@ -182,6 +181,7 @@ Route::middleware(['role:produsen', 'auth:web'])->group(function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/filepreview', [FileController::class, 'preview'])->name('filepreview');
     Route::get('/up-download/{id}', [UpdownloadController::class, 'download']);
+    Route::get('/export/{id}', [DataController::class, 'exportData'])->name('export-data');
 });
 
 Route::get('/ajax/provinces', [WilayahController::class, 'province'])->name('ajax.provinces');

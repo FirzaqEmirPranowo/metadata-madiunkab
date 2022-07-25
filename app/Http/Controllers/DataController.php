@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DataExport;
 use App\Imports\DataImport;
 use App\Models\Data;
 use App\Models\Document;
@@ -11,10 +12,13 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 use SweetAlert;
 use Yajra\DataTables\Facades\DataTables;
+use ZipArchive;
+use ZipStream\File;
 
 
 class DataController extends Controller
@@ -532,5 +536,47 @@ class DataController extends Controller
                 Alert::error('Gagal', $exception->getMessage() . PHP_EOL . '. Pastikan Anda menggunakan template yang tepat.')
             ]);
         }
+    }
+
+    public function exportData($id)
+    {
+        $data = Data::with(['opd', 'berkas', 'standar', 'status'])
+            ->when(auth()->user()->hasAnyRole('produsen'), fn ($q) => $q->where('opd_id', auth()->user()->opd_id))
+            ->findOrFail($id);
+
+        if (in_array(strtolower($data->jenis_data), ['variabel', 'indikator'])) {
+            $data->with(strtolower($data->jenis_data));
+        }
+
+        $export = new DataExport($data);
+
+        if ($data->berkas->isEmpty()) {
+            return Excel::download($export, $data->name . '.xlsx', \MaatWebsite\Excel\Excel::XLSX);
+        }
+
+        Excel::store($export, 'exports/data-' . $data->id . '.xlsx', 'local', \Maatwebsite\Excel\Excel::XLSX);
+        $filePath = Storage::path('exports/data-' . $data->id . '.xlsx');
+
+        $archive = new ZipArchive();
+        $tmpArchivePath = Storage::path('tmp/'. uniqid());
+        Storage::put($tmpArchivePath, NULL);
+
+        if ($archive->open($tmpArchivePath, ZipArchive::CREATE) !== TRUE) {
+            return redirect()->back()->with([
+                Alert::error('Gagal', 'Gagal membuat berkas zip')
+            ]);
+        }
+
+        $archive->addFile($filePath, 'Informasi Data.xlsx');
+        foreach ($data->berkas as $berkas) {
+            $archive->addFile(Storage::path($berkas->path), 'berkas/' . $berkas->name);
+        }
+
+        $archive->close();
+
+        return response()->file($tmpArchivePath, [
+            'Content-Type' => 'application/x-zip',
+            'Content-Disposition' => 'attachment; filename="' . $data->nama_data . '.zip"',
+        ]);
     }
 }

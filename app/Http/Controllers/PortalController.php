@@ -50,12 +50,4 @@ class PortalController extends Controller
     {
         return view('portal.landingpage.berita');
     }
-    public function ckan()
-    {
-        return view('portal.landingpage.ckan');
-    }
-    // public function ckan()
-    // {
-    //     return redirect('login');
-    // }
 }

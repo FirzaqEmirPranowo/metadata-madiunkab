@@ -109,6 +109,13 @@
                                     @endif
 
                                 </form>
+
+                                <div class="row">
+                                    <div class="col-sm-2"></div>
+                                    <div class="col-sm-10">
+                                        <a href="{{route('export-data', $data->id)}}" download="" class="btn btn-outline-success"><i class="bi bi-file-zip"></i> Export Data</a>
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 @foreach($detail as $dt)
