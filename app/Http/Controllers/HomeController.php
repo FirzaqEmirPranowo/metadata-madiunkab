@@ -20,9 +20,10 @@ class HomeController extends Controller
         $dataPengumpulan = Data::whereIn('status_id', [Data::STATUS_PROSES_PENGUMPULAN, Data::STATUS_SETUJU])->count();
         $dataVerifikasi = Data::whereIn('status_id', [Data::STATUS_PROSES_VERIFIKASI, Data::STATUS_REVISI])->count();
         $dataSiapPublish = Data::where('status_id', '=', Data::STATUS_SIAP_PUBLIKASI)->count();
+        $dataTerpublikasi = Data::where('status_id', '=', Data::STATUS_TERPUBLIKASI)->count();
         $dataTerbaru = Data::with('opd')->latest()->take(10)->get();
         $lastActivities = Activity::with('causer')->latest()->take(20)->get();
-        return view('pages.contents.walidata.dashboard', compact('disetujui', 'data', 'dataPengumpulan', 'dataVerifikasi', 'dataSiapPublish', 'dataTerbaru', 'lastActivities'));
+        return view('pages.contents.walidata.dashboard', compact('disetujui', 'data', 'dataPengumpulan', 'dataVerifikasi', 'dataSiapPublish', 'dataTerpublikasi', 'dataTerbaru', 'lastActivities'));
     }
 
     public function dashboardWalidata()
@@ -32,9 +33,10 @@ class HomeController extends Controller
         $dataPengumpulan = Data::whereIn('status_id', [Data::STATUS_PROSES_PENGUMPULAN, Data::STATUS_SETUJU])->count();
         $dataVerifikasi = Data::whereIn('status_id', [Data::STATUS_PROSES_VERIFIKASI, Data::STATUS_REVISI])->count();
         $dataSiapPublish = Data::where('status_id', '=', Data::STATUS_SIAP_PUBLIKASI)->count();
+        $dataTerpublikasi = Data::where('status_id', '=', Data::STATUS_TERPUBLIKASI)->count();
         $dataTerbaru = Data::with('opd')->latest()->take(10)->get();
         $lastActivities = Activity::with('causer')->latest()->take(20)->get();
-        return view('pages.contents.walidata.dashboard', compact('disetujui', 'data', 'dataPengumpulan', 'dataVerifikasi', 'dataSiapPublish', 'dataTerbaru', 'lastActivities'));
+        return view('pages.contents.walidata.dashboard', compact('disetujui', 'data', 'dataPengumpulan', 'dataVerifikasi', 'dataSiapPublish', 'dataTerpublikasi', 'dataTerbaru', 'lastActivities'));
     }
 
     public function dashboardProdusen()
@@ -45,8 +47,9 @@ class HomeController extends Controller
         $dataVerifikasi = Data::where('opd_id', $opdId)->whereIn('status_id', [Data::STATUS_PROSES_VERIFIKASI, Data::STATUS_REVISI])->count();
         $dataTidakLengkap = Data::where('opd_id', $opdId)->where('status_id', '>=', Data::STATUS_PROSES_PENGUMPULAN)->count();
         $dataSiapPublish = Data::where('opd_id', $opdId)->where('status_id', '=', Data::STATUS_SIAP_PUBLIKASI)->count();
+        $dataTerpublikasi = Data::where('opd_id', $opdId)->where('status_id', '=', Data::STATUS_TERPUBLIKASI)->count();
         $dataTerbaru = Data::where('opd_id', $opdId)->with('opd', 'status')->latest()->take(10)->get();
 
-        return view('pages.contents.produsen.dashboard', compact('dataPengumpulan', 'data', 'dataVerifikasi', 'dataTidakLengkap', 'dataSiapPublish', 'dataTerbaru'));
+        return view('pages.contents.produsen.dashboard', compact('dataPengumpulan', 'data', 'dataVerifikasi', 'dataTidakLengkap', 'dataSiapPublish', 'dataTerpublikasi', 'dataTerbaru'));
     }
 }

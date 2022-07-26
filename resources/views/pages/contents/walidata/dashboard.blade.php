@@ -20,7 +20,7 @@
                 <div class="row">
 
                     <!-- Sales Card -->
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="col">
                         <div class="card info-card sales-card">
 
                             <div class="card-body">
@@ -40,10 +40,9 @@
                             </div>
 
                         </div>
-                    </div><!-- End Sales Card -->
+                    </div>
 
-                    <!-- Revenue Card -->
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="col">
                         <div class="card info-card revenue-card">
 
                             <div class="card-body">
@@ -63,10 +62,9 @@
                             </div>
 
                         </div>
-                    </div><!-- End Revenue Card -->
+                    </div>
 
-                    <!-- Revenue Card -->
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="col">
                         <div class="card info-card revenue-card">
 
                             <div class="card-body">
@@ -86,10 +84,9 @@
                             </div>
 
                         </div>
-                    </div><!-- End Revenue Card -->
+                    </div>
 
-                    <!-- Revenue Card -->
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="col">
                         <div class="card info-card revenue-card">
 
 
@@ -110,15 +107,29 @@
                             </div>
 
                         </div>
-                    </div><!-- End Revenue Card -->
+                    </div>
 
+                    <div class="col">
+                        <div class="card info-card revenue-card">
 
-                    <!-- Customers Card -->
+                            <div class="card-body">
+                                <h5 class="card-title">Data Terpublikasi</h5>
 
-                    <!-- Reports -->
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-check-circle"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{$dataTerpublikasi}}</h6>
+                                        <span class="text-success small pt-1 fw-bold">Data</span>
 
-                    <!-- Recent Sales -->
-                    <!-- Top Selling -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
 
                 </div>
             </div><!-- End Left side columns -->
